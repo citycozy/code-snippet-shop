@@ -82,5 +82,17 @@
     max-height: 280px;
 }
 
-.
+    .quantity-input-group {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .quantity-button {
+        flex: 1;
+    }
+
+    body {
+        background-color: lightgray;
+    }
 

@@ -34,10 +34,6 @@ public class FrontMapping {
         return "/products/cart_not_empty";
     }
 
-    @GetMapping("cart-2")
-    public String cart2(){
-        return "/products/cart_not_empty";
-    }
 
 
 }
