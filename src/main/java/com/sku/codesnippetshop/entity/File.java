@@ -3,13 +3,12 @@ package com.sku.codesnippetshop.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class File {
 
@@ -18,15 +17,15 @@ public class File {
     @NotNull
     private Long fileId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id")
     private Brand brandId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item itemId;
 
-    @Column(name = "file_name", columnDefinition = "TEXT")
+    @Column(name = "file_name")
     @NotNull
     private String fileName;
 }

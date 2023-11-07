@@ -2,18 +2,19 @@ package com.sku.codesnippetshop.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@EntityListeners(AuditingEntityListener.class)
 public class Member {
 
     @Id
@@ -47,12 +48,12 @@ public class Member {
 
     @NotNull
     @Column(name = "create_date")
-    @CreationTimestamp
-    private Timestamp createDate;
+    @CreatedDate
+    private LocalDateTime createDate;
 
     @NotNull
     @Column(name = "modify_date")
-    @UpdateTimestamp
-    private Timestamp modifyDate;
+    @LastModifiedDate
+    private LocalDateTime modifyDate;
 
 }

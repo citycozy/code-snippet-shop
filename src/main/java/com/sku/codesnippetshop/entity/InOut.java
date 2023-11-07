@@ -2,11 +2,16 @@ package com.sku.codesnippetshop.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import org.hibernate.annotations.CreationTimestamp;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EntityListeners(AuditingEntityListener.class)
 public class InOut {
 
     @Id
@@ -16,12 +21,12 @@ public class InOut {
     private Long inOutId;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member memberId;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item itemId;
 
@@ -31,7 +36,7 @@ public class InOut {
 
     @NotNull
     @Column(name = "create_date")
-    @CreationTimestamp
-    private Timestamp createDate;
+    @CreatedDate
+    private LocalDateTime createDate;
 
 }
