@@ -25,12 +25,12 @@ public class Dibs {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member_id", referencedColumnName = "member_id")
     private Member memberId;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Item_id")
+    @JoinColumn(name = "Item_id", referencedColumnName = "item_id")
     private Item itemId;
 
     @NotNull

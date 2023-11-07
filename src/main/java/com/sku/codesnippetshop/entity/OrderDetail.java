@@ -18,17 +18,17 @@ import lombok.NoArgsConstructor;
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "order_id", referencedColumnName = "order_id")
     private Order orderId;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id")
+    @JoinColumn(name = "item_id", referencedColumnName = "item_id")
     private Item itemId;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "review_id")
+    @JoinColumn(name = "review_id", referencedColumnName = "review_id")
     private Review reviewId;
 
     @NotNull
