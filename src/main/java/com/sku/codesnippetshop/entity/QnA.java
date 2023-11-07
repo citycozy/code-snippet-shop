@@ -28,11 +28,11 @@ public class QnA {
     private Member memberId;
 
     @NotNull
-    @Column(name = "category",length = 20, columnDefinition = "default 'Q'")
+    @Column(name = "category",length = 20)
     private String category;
 
     @NotNull
-    @Column(name = "status", columnDefinition = "default '답변을 기다리는 중'")
+    @Column(name = "status")
     private String status;
 
 

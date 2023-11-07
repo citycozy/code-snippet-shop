@@ -50,7 +50,7 @@ public class Order {
     private LocalDateTime modifyDate;
 
     @NotNull
-    @Column(name = "status", columnDefinition = "default '정상'")
+    @Column(name = "status")
     private String status;
 
 }

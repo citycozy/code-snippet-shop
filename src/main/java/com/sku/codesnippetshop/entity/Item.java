@@ -38,11 +38,11 @@ public class Item {
     private String content;
 
     @NotNull
-    @Column(name = "rating", columnDefinition = "decimal(2,1) default 0.0")
+    @Column(name = "rating")
     private BigDecimal rating;
 
     @NotNull
-    @Column(name = "review_count", columnDefinition = "int default 0")
+    @Column(name = "review_count")
     private int reviewCount;
 
     @NotNull

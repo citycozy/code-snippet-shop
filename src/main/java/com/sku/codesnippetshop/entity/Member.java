@@ -36,11 +36,11 @@ public class Member {
     private String name;
 
     @NotNull
-    @Column(name = "grade",length = 100, columnDefinition = "default '일반'")
+    @Column(name = "grade",length = 100)
     private String grade;
 
     @NotNull
-    @Column(name = "role",length = 100, columnDefinition = "default '회원'")
+    @Column(name = "role",length = 100)
     private String role;
 
     @Column(name = "current_address",length = 100)

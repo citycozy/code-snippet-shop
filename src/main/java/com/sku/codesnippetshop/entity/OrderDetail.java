@@ -32,7 +32,7 @@ import lombok.NoArgsConstructor;
     private Review reviewId;
 
     @NotNull
-    @Column(name = "quantity", columnDefinition = "int default 1")
+    @Column(name = "quantity")
     private int quantity;
 
 }

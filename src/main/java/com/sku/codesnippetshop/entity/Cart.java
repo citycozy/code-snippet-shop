@@ -34,7 +34,7 @@ public class Cart {
     private Item itemId;
 
     @NotNull
-    @Column(name = "quantity", columnDefinition = "default 1")
+    @Column(name = "quantity")
     private int quantity;
 
     @NotNull
