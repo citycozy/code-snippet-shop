@@ -18,7 +18,7 @@
 </head>
 <body>
 
-<div th:replace="/includes/header :: header"></div>
+<div th:replace="~{/includes/header :: header}"></div>
 <main>
 
     <section class="py-5 text-center container border-bottom">
@@ -217,6 +217,8 @@
     </div>
 
 </main>
-<div th:replace="/includes/footer :: footer"></div>
+
+<div th:replace="~{/includes/footer :: footer}"></div>
+
 </body>
 </html>
