@@ -15,17 +15,26 @@
     <!--    아이콘-->
     <!-- header css -->
     <link rel="stylesheet" th:href="@{/css/header.css}">
-    <!-- item-detail css -->
-    <link rel="stylesheet" th:href="@{/css/item-detail.css}">
 
-    <!-- main-tag css -->
-    <link rel="stylesheet" th:href="@{/css/main-tag.css}">
+    <!-- cart css -->
+    <link rel="stylesheet" th:href="@{/css/cart.css}">
     <title>상품 상세</title>
 </head>
 <body>
 <div th:replace="~{/includes/header :: header}"></div>
 
-main
+<section class="py-5 text-center container border-bottom">
+
+    <h3><b>장바구니가 비어있습니다.</b></h3>
+    <a href="#" class="btn btn-secondary my-2 text-center mt-3">쇼핑 계속하기</a>
+    <div class="row pt-lg-5 pb-3 col-9 text-center mx-auto">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <div class="imgBox d-flex justify-content-center">
+                <img src="/images/icon/emptycart.png" class="d-block w-50" alt="">
+            </div>
+        </div>
+    </div>
+</section>
 
 <div th:replace="~{/includes/footer :: footer}"></div>
 </body>

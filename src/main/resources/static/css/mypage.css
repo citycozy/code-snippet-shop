@@ -1,0 +1,22 @@
+main{
+    background: lightgray;
+}
+section>div{
+    background: white;
+    border-radius: 25px;
+}
+#user-property-box{
+    border-right: 2px solid black;
+}
+#user-manage-btn-box>a{
+    border-radius: 30px;
+}
+.imgBox img {
+    max-width: 50px;
+    max-height: 50px;
+}
+#content-box div{
+    border-radius: 20px;
+    padding-top: 3px;
+}
+

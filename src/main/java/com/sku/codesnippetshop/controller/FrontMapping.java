@@ -19,10 +19,14 @@ public class FrontMapping {
     public String join(){
         return "/join/join";
     }
+    @GetMapping("mypage")
+    public String mypage(){
+        return "/mypage/mypage";
+    }
 
-    @GetMapping("cart")
+    @GetMapping("empty-cart")
     public String cart(){
-        return "/products/cart";
+        return "products/cart_empty";
     }
 
 
