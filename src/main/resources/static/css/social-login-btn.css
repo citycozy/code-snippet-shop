@@ -1,0 +1,131 @@
+.mfs_form form.ui.form > .field {
+    font-size: 14px;
+    margin: 0 0 8px
+}
+
+.mfs_form form.ui.form .field input {
+    height: 42px;
+    margin: 0
+}
+
+.mfs_form form.ui.form .field .ui.button {
+    height: 44px;
+    letter-spacing: .03em;
+    margin: 0 0 4px
+}
+
+.mfs_form form.ui.form .additional-fields {
+    margin-top: 10px
+}
+
+.mfs_form form.ui.form .additional-fields a {
+    color: #afafaf;
+    font-size: 13px;
+    text-decoration: none
+}
+
+.mfs_form form.ui.form .order-tracking-fields .ui.button {
+    font-size: 14px;
+    line-height: 44px;
+    border: 1px solid #d2d2d2
+}
+
+.mfs_form form.ui.form .order-tracking-fields {
+    margin-bottom: 4px
+}
+
+.mfs_form form.ui.form .cmsign-social-fields {
+    padding: 4px 0;
+    text-align: center
+}
+
+.mfs_form form.ui.form .cmsign-social-fields a {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 42px;
+    max-width: 300px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 42px;
+    text-align: center;
+    text-decoration: none;
+    padding: 0 5px 0 15px;
+    box-sizing: border-box
+}
+
+.mfs_form form.ui.form .cmsign-social-fields a.naver {
+    color: #fff
+}
+
+.mfs_form form.ui.form .cmsign-social-fields a img {
+    position: absolute;
+    top: 50%;
+    left: 18px;
+    transform: translate(0, -50%)
+}
+
+.mfs_form form.ui.form .cmsign-social-fields.three.fields a {
+    padding-left: 20px
+}
+
+.mfs_form form.ui.form .cmsign-social-fields.three.fields a img {
+    left: 12px
+}
+
+.mfs_form form.ui.form .cmsign-social-fields a.facebook {
+    background-color: #1877f2
+}
+
+.mfs_form form.ui.form .cmsign-social-fields a.facebook img {
+    left: 15px
+}
+
+.mfs_form form.ui.form .cmsign-social-fields a.google {
+    color: #202020;
+    border: 1px solid #ccc
+}
+
+.mfs_form form.ui.form .cmsign-social-fields a.kakao {
+    color: #202020;
+    background-color: #ffe600
+}
+
+.mfs_form form.ui.form .cmsign-social-fields a.instagram {
+    background: linear-gradient(45deg, #fcd81d 0, #fcd81d 5%, #eb1c24 50%, #a33a93 95%, #a33a93 100%)
+}
+
+.mfs_form form.ui.form .cmsign-social-fields a.line {
+    background-color: #00c300
+}
+
+.mfs_form form.ui.form .cmsign-social-fields a.line img {
+    left: 17px
+}
+
+.mfs_form form.ui.form .cmsign-social-fields a.naver {
+    background-color: #23c704
+}
+
+.mfs_form .ui.form .divider.field .msm-form-divider::after, .mfs_form .ui.form .divider.field .msm-form-divider::before {
+    background-color: #e2e2e2
+}
+
+.mfs_form .ui.form .divider.field .msm-form-divider {
+    color: #afafaf;
+    font-size: 13px
+}
+
+@media (max-width: 767px) {
+    .mfs_form form.ui.form .cmsign-social-fields.fields .field {
+        width: 100% !important;
+        text-align: center;
+        margin: 0 0 1em;
+        padding: 0 !important
+    }
+
+    .mfs_form form.ui.form .cmsign-social-fields.fields .field:last-child {
+        margin-bottom: 0
+    }
+}

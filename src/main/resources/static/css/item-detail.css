@@ -1,0 +1,13 @@
+#item-information{
+    background: white;
+    border-radius: 25px;
+}
+#product-price{
+    align-items: flex-end;
+}
+#box-btn>button{
+    border-radius: 25px;
+}
+.short-input{
+    width: 40px;
+}

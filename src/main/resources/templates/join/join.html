@@ -1,0 +1,192 @@
+<!Doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- 부트스트랩 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!--    부트스트랩-->
+    <!--    아이콘-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!--    아이콘-->
+    <!-- header css -->
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+
+
+    <title>상품 상세</title>
+</head>
+<body>
+<div th:replace="/includes/header :: header"></div>
+
+<div class="site-content-container container">
+
+    <div id="primary" class="content-area">
+        <main id="main" class="site-main">
+            <div class="text-center">
+                <h1>회원가입</h1>
+            </div>
+
+
+            <div id="post-12991" class="post-12991 page type-page status-publish hentry">
+
+                <div class="entry-content">
+                    <link rel="stylesheet" id="msm-semantic-css-css"
+                          href="https://test.codemshop.com/wp-content/plugins/mshop-mcommerce-premium-s2/lib/mshop-members-s2/assets/vendor/semantic/semantic.min.css?ver=3.4.2"
+                          type="text/css" media="all">
+                    <link rel="stylesheet" id="msm-font-awesome-css"
+                          href="https://test.codemshop.com/wp-content/plugins/mshop-mcommerce-premium-s2/lib/mshop-members-s2/assets/font-awesome/css/font-awesome.min.css?ver=3.4.2"
+                          type="text/css" media="all">
+                    <link rel="stylesheet" id="msm-form-style-css"
+                          href="https://test.codemshop.com/wp-content/plugins/mshop-mcommerce-premium-s2/lib/mshop-members-s2/assets/css/mshop-members-form.css?ver=3.4.2"
+                          type="text/css" media="all">
+                    <link rel="stylesheet" id="msm-semantic-calendar-css-css"
+                          href="https://test.codemshop.com/wp-content/plugins/mshop-mcommerce-premium-s2/lib/mshop-members-s2/assets/vendor/semantic-ui-calendar/calendar.min.css?ver=3.4.2"
+                          type="text/css" media="all">
+                    <div class="memberswrap">
+                        <div id="mshop_form_12990" class="ui mfs_form " style=" ">
+                            <style>
+                            </style>
+                            <div class="mshop-members-message"></div>
+                            <form class="ui form" data-id="12990" data-slug="register-checkout" data-error_popup="no"
+                                  data-type="register" onsubmit="return false">
+
+                                <div class="required sixteen wide field" style="" data-element_name="user_login"
+                                     data-form_slug="register-checkout">
+                                    <label for="user_login">이메일</label>
+                                    <input type="text" name="user_login" value="" maxlength=""
+                                           placeholder="이메일을 입력하세요.">
+                                </div>
+
+                                <div class="required sixteen wide field">
+                                    <label for="password">비밀번호</label>
+                                    <input type="password" id="password" name="password" value=""
+                                           autocomplete="new-password" placeholder="비밀번호를 입력하세요.">
+                                </div>
+
+                                <div class="required sixteen wide field">
+                                    <label for="confirm_password">비밀번호 확인</label>
+                                    <input type="password" id="confirm_password" name="confirm_password" value=""
+                                           autocomplete="new-password" placeholder="비밀번호 확인을 입력하세요.">
+                                </div>
+
+                                <div class="required sixteen wide field" style="" data-element_name="first_name"
+                                     data-form_slug="register-checkout">
+                                    <label for="first_name">이름</label>
+                                    <input type="text" name="first_name" value="" maxlength="" placeholder="이름을 입력하세요.">
+                                </div>
+
+
+                                <div class="required sixteen wide field phone-field phone_number"
+                                     data-element_name="phone_number" data-form_slug="register-checkout" style="">
+                                    <label for="phone_number">휴대폰번호</label>
+
+
+                                    <div class="three fields phone-number-wrapper">
+                                        <div class="field">
+                                            <select name="part1" class="ui dropdown phone-part">
+                                                <option value="010" selected="">010</option>
+                                                <option value="011">011</option>
+                                                <option value="016">016</option>
+                                                <option value="017">017</option>
+                                                <option value="019">019</option>
+                                                <option value="070">070</option>
+                                            </select>
+                                        </div>
+                                        <div class="field">
+                                            <input type="text" name="part2" class="phone-part" maxlength="4" value="">
+                                        </div>
+                                        <div class="field">
+                                            <input type="text" name="part3" class="phone-part" maxlength="4" value="">
+                                        </div>
+
+                                        <input type="hidden" name="phone_number" value="">
+                                    </div>
+
+                                </div>
+
+
+                                <div class="required msaddr_widget field" data-id="billing">
+                                    <label>주소를 입력하세요.</label>
+                                    <div class="two fields">
+                                        <div class="field">
+                                            <input type="text" name="billing_postcode" data-validate="billing"
+                                                   placeholder="우편번호" value="" style="width:100px;" readonly="">
+                                            <input type="button" class="button" name="msm_address_search" value="주소검색">
+                                        </div>
+                                        <div class="field">
+                                        </div>
+                                    </div>
+                                    <div class="two fields">
+                                        <div class="field">
+                                            <input type="text" name="billing_address_1" data-validate="billing"
+                                                   placeholder="기본주소" value="" readonly="">
+                                        </div>
+                                        <div class="field">
+                                            <input type="text" name="billing_address_2" placeholder="상세주소" value="">
+                                        </div>
+                                    </div>
+                                    <div class="ui scrolling small modal form mshop_address_search billing">
+                                        <div class="header">
+                                            주소 검색
+                                        </div>
+                                        <div class="scrolling content">
+                                            <div class="search_wrapper">
+                                                <div class="field">
+                                                    <input type="text" class="msaddr_keyword" name="billing_search"
+                                                           placeholder="">
+                                                </div>
+                                                <div class="field result">
+                                                    <table class="ui celled table unstackable mshop_address_result">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="postalcode">우펀번호</th>
+                                                            <th>주소</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="field pagination">
+                                                    <div class="ui right floated pagination menu">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="actions">
+                                            <div class="ui black deny button">취소</div>
+                                            <div class="ui positive right labeled icon button">
+                                                확인
+                                                <i class="checkmark icon"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="sixteen wide field" style="text-align: center">
+                                    <input id="button" type="button" class="submit black sixteen wide ui button"
+                                           name="button" value="회원가입">
+                                </div>
+
+
+                            </form>
+                        </div>
+                    </div>
+
+                </div><!-- .entry-content -->
+            </div><!-- #post-12991 -->
+
+        </main><!-- #main -->
+    </div><!-- #primary -->
+
+
+</div>
+
+<div th:replace="/includes/footer :: footer"></div>
+</body>
+</html>
