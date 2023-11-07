@@ -8,7 +8,8 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter public class OrderDetail {
+@Getter
+public class OrderDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,5 +35,4 @@ import lombok.NoArgsConstructor;
     @NotNull
     @Column(name = "quantity")
     private int quantity;
-
 }
