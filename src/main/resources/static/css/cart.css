@@ -1,3 +1,86 @@
-body{
-    background: lightgray;
+
+
+    /* Header Boxed */
+@media (min-width: 1025px) {
+
+    .whb-boxed:not(.whb-sticked):not(.whb-full-width) .whb-main-header {
+        max-width: 1192px;
+    }
 }
+
+.container {
+    max-width: 1222px;
+}
+
+@media (min-width: 1292px) {
+
+    [data-vc-full-width] {
+        left: calc((-100vw - -1222px) / 2);
+    }
+
+    [data-vc-full-width]:not([data-vc-stretch-content]) {
+        padding-left: calc((100vw - 1222px) / 2);
+        padding-right: calc((100vw - 1222px) / 2);
+    }
+
+    .platform-Windows [data-vc-full-width] {
+        left: calc((-100vw - -1239px) / 2);
+    }
+
+    .platform-Windows [data-vc-full-width]:not([data-vc-stretch-content]) {
+        padding-left: calc((100vw - 1239px) / 2);
+        padding-right: calc((100vw - 1239px) / 2);
+    }
+
+    .browser-Edge [data-vc-full-width] {
+        left: calc((-100vw - -1234px) / 2);
+    }
+
+    .browser-Edge [data-vc-full-width]:not([data-vc-stretch-content]) {
+        padding-left: calc((100vw - 1234px) / 2);
+        padding-right: calc((100vw - 1234px) / 2);
+    }
+}
+
+
+
+/* Quickview */
+.popup-quick-view {
+    max-width: 920px;
+}
+
+/* Shop popup */
+.woodmart-promo-popup {
+    max-width: 800px;
+}
+
+/* Header Banner */
+.header-banner {
+    height: 40px;
+}
+
+.header-banner-display .website-wrapper {
+    margin-top:40px;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+
+    /* header Banner */
+
+    .header-banner {
+        height: 40px;
+    }
+
+    .header-banner-display .website-wrapper {
+        margin-top:40px;
+    }
+
+}
+
+.woodmart-woocommerce-layered-nav .woodmart-scroll-content {
+    max-height: 280px;
+}
+
+.
+
