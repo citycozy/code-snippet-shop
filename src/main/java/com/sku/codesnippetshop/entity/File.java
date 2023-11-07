@@ -18,11 +18,11 @@ public class File {
     private Long fileId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "brand_id", referencedColumnName = "brand_id")
+    @JoinColumn(name = "brand_id")
     private Brand brandId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id", referencedColumnName = "item_id")
+    @JoinColumn(name = "item_id")
     private Item itemId;
 
     @Column(name = "file_name")

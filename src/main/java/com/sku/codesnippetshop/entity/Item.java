@@ -26,7 +26,7 @@ public class Item {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "brand_id", referencedColumnName = "brand_id")
+    @JoinColumn(name = "brand_id")
     private Brand brandId;
 
     @NotNull
