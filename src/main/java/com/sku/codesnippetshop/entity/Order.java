@@ -1,5 +1,6 @@
 package com.sku.codesnippetshop.entity;
 
+import com.sku.codesnippetshop.domain.Member.domain.Member;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
