@@ -1,9 +1,9 @@
-package com.sku.codesnippetshop.entity;
+package com.sku.codesnippetshop.domain.Address;
 
+import com.sku.codesnippetshop.domain.Member.domain.Member;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -34,12 +34,12 @@ public class Address {
     private String address;
 
     @NotNull
-    @Column(name = "create_date")
+    @Column(name = "reg_dt")
     @CreatedDate
-    private LocalDateTime createDate;
+    private LocalDateTime regDt;
 
     @NotNull
-    @Column(name = "modify_date")
+    @Column(name = "mod_dt")
     @LastModifiedDate
-    private LocalDateTime modifyDate;
+    private LocalDateTime modDt;
 }
