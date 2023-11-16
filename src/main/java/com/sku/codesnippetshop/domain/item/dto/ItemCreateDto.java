@@ -6,9 +6,10 @@ import lombok.*;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class ItemRegDto {
+public class ItemCreateDto {
 
     private String name;
+    private Long brandId;
     private String content;
     private int quantity;
 }
