@@ -4,7 +4,6 @@ import com.sku.codesnippetshop.domain.item.dto.ItemReadDto;
 import com.sku.codesnippetshop.domain.item.dto.ItemRegDto;
 import com.sku.codesnippetshop.domain.item.dto.ItemUpdateDto;
 import com.sku.codesnippetshop.domain.item.service.ItemService;
-import com.sku.codesnippetshop.global.error.DuplicatedException;
 import com.sku.codesnippetshop.global.error.NotFoundException;
 import com.sku.codesnippetshop.global.response.ResponseFormat;
 import com.sku.codesnippetshop.global.response.ResponseStatus;

@@ -1,7 +1,5 @@
 package com.sku.codesnippetshop.domain.item.service;
 
-import com.sku.codesnippetshop.domain.Member.domain.Member;
-import com.sku.codesnippetshop.domain.Member.dto.MemberCreateDTO;
 import com.sku.codesnippetshop.domain.item.dao.ItemRepository;
 import com.sku.codesnippetshop.domain.item.domain.Item;
 import com.sku.codesnippetshop.domain.item.dto.ItemReadDto;
