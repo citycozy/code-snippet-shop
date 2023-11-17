@@ -1,11 +1,10 @@
 package com.sku.codesnippetshop.domain.item.domain;
 
+import com.sku.codesnippetshop.domain.Brand.domain.Brand;
 import com.sku.codesnippetshop.domain.item.dto.ItemReadDto;
-import com.sku.codesnippetshop.domain.item.dto.ItemRegDto;
+import com.sku.codesnippetshop.domain.item.dto.ItemCreateDto;
 import com.sku.codesnippetshop.domain.item.dto.ItemUpdateDto;
-import com.sku.codesnippetshop.entity.Brand;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,51 +25,51 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "item_id")
-    @NotNull
+
     private Long itemId;
 
-    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id", referencedColumnName = "brand_id")
-    private Brand brandId;
+    private Brand brand;
 
-    @NotNull
+
     @Column(name = "name",length = 30)
     private String name;
 
-    @NotNull
+
     @Column(name = "content")
     private String content;
 
-    @NotNull
+
     @Column(name = "rating")
     private BigDecimal rating;
 
-    @NotNull
+
     @Column(name = "review_count")
     private int reviewCount;
 
-    @NotNull
+
     @Column(name = "created_date")
     @CreatedDate
     private LocalDateTime regDt;
 
-    @NotNull
+
     @Column(name = "modified_date")
     @LastModifiedDate
     private LocalDateTime modDt;
 
-    @NotNull
+
     @Column(name = "quantity")
     private int quantity;
 
     @Builder
-    private Item(String name, String content, int quantity) {
+    private Item(String name, String content, int quantity, Brand brand) {
         this.name = name;
         this.content = content;
         this.rating = BigDecimal.ZERO;
         this.reviewCount = 0;
         this.quantity = quantity;
+        this.brand = brand;
     }
 
     public void updateItem(ItemUpdateDto update) {
@@ -90,11 +89,12 @@ public class Item {
                 .quantity(item.getQuantity())
                 .build();
     }
-    public static Item dtoToEntity(ItemRegDto reg) {
+    public static Item dtoToEntity(ItemCreateDto reg, Brand brand) {
         return Item.builder()
                 .name(reg.getName())
                 .content(reg.getContent())
                 .quantity(reg.getQuantity())
+                .brand(brand)
                 .build();
     }
 }

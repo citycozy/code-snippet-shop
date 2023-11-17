@@ -1,7 +1,7 @@
 package com.sku.codesnippetshop.domain.item.api;
 
 import com.sku.codesnippetshop.domain.item.dto.ItemReadDto;
-import com.sku.codesnippetshop.domain.item.dto.ItemRegDto;
+import com.sku.codesnippetshop.domain.item.dto.ItemCreateDto;
 import com.sku.codesnippetshop.domain.item.dto.ItemUpdateDto;
 import com.sku.codesnippetshop.domain.item.service.ItemService;
 import com.sku.codesnippetshop.global.error.NotFoundException;
@@ -21,9 +21,9 @@ public class ItemController {
     /* 제품 등록 컨트롤러
     param : 등록 제품 info */
     @PostMapping
-    public ResponseFormat<Void> regItem(@RequestBody @Validated ItemRegDto reg) {
+    public ResponseFormat<Void> regItem(@RequestBody ItemCreateDto create) {
         try {
-            itemService.regItem(reg);
+            itemService.regItem(create);
             return ResponseFormat.success(ResponseStatus.SUCCESS_CREATE);
         } catch (RuntimeException e) {
             return ResponseFormat.error(ResponseStatus.FAIL_BAD_REQUEST);

@@ -1,9 +1,11 @@
 package com.sku.codesnippetshop.domain.item.service;
 
+import com.sku.codesnippetshop.domain.Brand.dao.BrandRepository;
+import com.sku.codesnippetshop.domain.Brand.domain.Brand;
 import com.sku.codesnippetshop.domain.item.dao.ItemRepository;
 import com.sku.codesnippetshop.domain.item.domain.Item;
 import com.sku.codesnippetshop.domain.item.dto.ItemReadDto;
-import com.sku.codesnippetshop.domain.item.dto.ItemRegDto;
+import com.sku.codesnippetshop.domain.item.dto.ItemCreateDto;
 import com.sku.codesnippetshop.domain.item.dto.ItemUpdateDto;
 import com.sku.codesnippetshop.global.error.NotFoundException;
 import com.sku.codesnippetshop.global.response.ResponseStatus;
@@ -17,12 +19,14 @@ import org.springframework.stereotype.Service;
 public class ItemService {
 
     private final ItemRepository itemRepository;
-
+    private final BrandRepository brandRepository;
     /* 제품 등록 서비스
     param : 등록 제품 info*/
     @Transactional
-    public void regItem(ItemRegDto reg) {
-        final Item item = Item.dtoToEntity(reg);
+    public void regItem(ItemCreateDto create) {
+        final Brand brand = brandRepository.findById(create.getBrandId()).orElseThrow(()->new NotFoundException(ResponseStatus.FAIL_NOT_FOUND));
+
+        final Item item = Item.dtoToEntity(create, brand);
         itemRepository.save(item);
     }
 

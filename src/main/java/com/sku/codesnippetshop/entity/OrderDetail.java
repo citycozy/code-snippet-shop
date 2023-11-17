@@ -1,5 +1,6 @@
 package com.sku.codesnippetshop.entity;
 
+import com.sku.codesnippetshop.domain.Order.domain.Order;
 import com.sku.codesnippetshop.domain.item.domain.Item;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
