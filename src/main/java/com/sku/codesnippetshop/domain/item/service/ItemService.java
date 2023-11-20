@@ -1,7 +1,7 @@
 package com.sku.codesnippetshop.domain.item.service;
 
-import com.sku.codesnippetshop.domain.Brand.dao.BrandRepository;
-import com.sku.codesnippetshop.domain.Brand.domain.Brand;
+import com.sku.codesnippetshop.domain.brand.dao.BrandRepository;
+import com.sku.codesnippetshop.domain.brand.domain.Brand;
 import com.sku.codesnippetshop.domain.item.dao.ItemRepository;
 import com.sku.codesnippetshop.domain.item.domain.Item;
 import com.sku.codesnippetshop.domain.item.dto.ItemReadDto;
@@ -36,7 +36,7 @@ public class ItemService {
         final Item item = itemRepository
                 .findById(itemId)
                 .orElseThrow(()-> new NotFoundException(ResponseStatus.FAIL_NOT_FOUND));
-        return Item.entityToDto(item);
+        return Item.entityToDTO(item);
     }
 
     /* 제품 정보 수정 서비스

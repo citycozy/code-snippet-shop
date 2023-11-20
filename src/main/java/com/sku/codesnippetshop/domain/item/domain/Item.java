@@ -1,6 +1,6 @@
 package com.sku.codesnippetshop.domain.item.domain;
 
-import com.sku.codesnippetshop.domain.Brand.domain.Brand;
+import com.sku.codesnippetshop.domain.brand.domain.Brand;
 import com.sku.codesnippetshop.domain.item.dto.ItemReadDto;
 import com.sku.codesnippetshop.domain.item.dto.ItemCreateDto;
 import com.sku.codesnippetshop.domain.item.dto.ItemUpdateDto;
@@ -78,7 +78,7 @@ public class Item {
         this.quantity = update.getQuantity();
     }
 
-    public static ItemReadDto entityToDto(Item item) {
+    public static ItemReadDto entityToDTO(Item item) {
         return ItemReadDto.builder()
                 .name(item.getName())
                 .content(item.getContent())
