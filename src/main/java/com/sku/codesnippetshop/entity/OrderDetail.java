@@ -2,6 +2,7 @@ package com.sku.codesnippetshop.entity;
 
 import com.sku.codesnippetshop.domain.order.domain.Order;
 import com.sku.codesnippetshop.domain.item.domain.Item;
+import com.sku.codesnippetshop.domain.review.domain.Review;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
