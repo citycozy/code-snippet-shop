@@ -1,7 +1,6 @@
-package com.sku.codesnippetshop.entity;
+package com.sku.codesnippetshop.domain.address;
 
 import com.sku.codesnippetshop.domain.member.domain.Member;
-import com.sku.codesnippetshop.domain.item.domain.Item;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -17,13 +16,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @EntityListeners(AuditingEntityListener.class)
-public class Dibs {
+public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "dib_id")
+    @Column(name = "address_id")
     @NotNull
-    private Long dibId;
+    private Long addressId;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
@@ -31,17 +30,16 @@ public class Dibs {
     private Member memberId;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id", referencedColumnName = "item_id")
-    private Item itemId;
+    @Column(name = "address")
+    private String address;
 
     @NotNull
-    @Column(name = "create_date")
+    @Column(name = "reg_dt")
     @CreatedDate
-    private LocalDateTime createDate;
+    private LocalDateTime regDt;
 
     @NotNull
-    @Column(name = "modify_date")
+    @Column(name = "mod_dt")
     @LastModifiedDate
-    private LocalDateTime modifyDate;
+    private LocalDateTime modDt;
 }
