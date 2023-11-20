@@ -26,7 +26,7 @@ public class OrderService {
     param : 생성 주문 info  */
     @Transactional
     public void createOrder(OrderCreateDTO create) {
-        System.out.println(create.getMemberId());
+
         final Member member = memberRepository.findById(create.getMemberId()).orElseThrow(()->new NotFoundException(ResponseStatus.FAIL_NOT_FOUND));
         final Order order = Order.dtoToEntity(create, member);
         orderRepository.save(order);
