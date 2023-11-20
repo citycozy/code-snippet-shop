@@ -1,10 +1,10 @@
 package com.sku.codesnippetshop.domain.orderdetail.domain;
 
-import com.sku.codesnippetshop.domain.order.domain.Order;
 import com.sku.codesnippetshop.domain.item.domain.Item;
+import com.sku.codesnippetshop.domain.order.domain.Order;
 import com.sku.codesnippetshop.domain.orderdetail.dto.OrderDetailCreateDTO;
 import com.sku.codesnippetshop.domain.orderdetail.dto.OrderDetailReadDTO;
-import com.sku.codesnippetshop.entity.Review;
+import com.sku.codesnippetshop.domain.review.domain.Review;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
