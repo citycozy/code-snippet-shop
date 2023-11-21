@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
+
+import java.util.List;
 import java.util.Optional;
 
 @Getter
@@ -52,6 +54,7 @@ public class ResponseFormat <T> {
                 .statusCode(responseStatus.getStatusCode())
                 .build();
     }
+    
 
     public static <T> ResponseFormat<T> successWithData(String message,
                                                         HttpStatus status,

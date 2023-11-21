@@ -16,6 +16,10 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -29,34 +33,33 @@ public class OrderDetailService {
     /* 주문 상세 생성 서비스
     param : 생성 주문 상세 info  */
     @Transactional
-    public void createOrderDetail(OrderDetailCreateDTO create) {
-        final Order order = orderRepository.findById(create.getOrderId()).orElseThrow(()->new NotFoundException(ResponseStatus.FAIL_NOT_FOUND));
-        final Item item = itemRepository.findById(create.getItemId()).orElseThrow(()->new NotFoundException(ResponseStatus.FAIL_NOT_FOUND));
-        final Review review = reviewRepository.findById(create.getReviewId()).orElseThrow(()->new NotFoundException(ResponseStatus.FAIL_NOT_FOUND));
+    public void createOrderDetail(OrderDetailCreateDTO create, Long orderId) {
+        final Order order = orderRepository.findById(orderId).orElseThrow(() -> new NotFoundException(ResponseStatus.FAIL_NOT_FOUND));
+        final Item item = itemRepository.findById(create.getItemId()).orElseThrow(() -> new NotFoundException(ResponseStatus.FAIL_NOT_FOUND));
+        final Review review = reviewRepository.findById(create.getReviewId()).orElseThrow(() -> new NotFoundException(ResponseStatus.FAIL_NOT_FOUND));
         final OrderDetail orderDetail = OrderDetail.dtoToEntity(create, order, item, review);
         orderDetailRepository.save(orderDetail);
     }
 
     /* 주문 상세 읽기 서비스
     param : 읽을 주문 상세 아이디  */
-    public OrderDetailReadDTO getOrderDetailByOrderDetailId(Long orderDetialId) {
-
-        final OrderDetail orderDetail = orderDetailRepository
-                .findById(orderDetialId)
-                .orElseThrow(()-> new NotFoundException(ResponseStatus.FAIL_NOT_FOUND));
-
-        return OrderDetail.entityToDTO(orderDetail);
+    public List<OrderDetailReadDTO> getOrderDetailListByOrderId(Long orderId) {
+        return orderDetailRepository.findByOrder_OrderId(orderId)
+                .stream()
+                .map(OrderDetail::entityToDTO)
+                .collect(Collectors.toList());
     }
 
-    /* 주문 정보 삭제 서비스
-    param : 삭제 주문 아이디(pk) */
-    @Transactional
-    public void deleteOrderDetailByOrderDetailId(Long orderDetailId) {
-        final OrderDetail orderDetail = orderDetailRepository
-                .findById(orderDetailId)
-                .orElseThrow(()-> new NotFoundException(ResponseStatus.FAIL_NOT_FOUND));
-        orderDetailRepository.deleteById(orderDetailId);
-    }
+
+//    /* 주문 정보 삭제 서비스
+//    param : 삭제 주문 아이디(pk) */
+//    @Transactional
+//    public void deleteOrderDetailByOrderDetailId(Long orderDetailId) {
+//        final OrderDetail orderDetail = orderDetailRepository
+//                .findById(orderDetailId)
+//                .orElseThrow(()-> new NotFoundException(ResponseStatus.FAIL_NOT_FOUND));
+//        orderDetailRepository.deleteById(orderDetailId);
+//    }
 
 
 }

@@ -4,6 +4,8 @@ import com.sku.codesnippetshop.domain.order.dto.OrderCreateDTO;
 import com.sku.codesnippetshop.domain.order.dto.OrderReadDTO;
 import com.sku.codesnippetshop.domain.order.dto.OrderUpdateDTO;
 import com.sku.codesnippetshop.domain.order.service.OrderService;
+import com.sku.codesnippetshop.domain.orderdetail.dto.OrderDetailCreateDTO;
+import com.sku.codesnippetshop.domain.orderdetail.service.OrderDetailService;
 import com.sku.codesnippetshop.global.error.NotFoundException;
 import com.sku.codesnippetshop.global.response.ResponseFormat;
 import com.sku.codesnippetshop.global.response.ResponseStatus;
@@ -16,13 +18,16 @@ import org.springframework.web.bind.annotation.*;
 public class OrderController {
 
     private final OrderService orderService;
-
+    private final OrderDetailService orderDetailService;
     /* 주문 정보 등록 컨트롤러
     param : 등록 주문 정보 info */
     @PostMapping
     public ResponseFormat<Void> regItem(@RequestBody OrderCreateDTO create) {
         try {
-            orderService.createOrder(create);
+            Long orderId = orderService.createOrder(create);
+            for(OrderDetailCreateDTO orderDetail : create.getOrderDetails()) {
+                orderDetailService.createOrderDetail(orderDetail, orderId);
+            }
             return ResponseFormat.success(com.sku.codesnippetshop.global.response.ResponseStatus.SUCCESS_CREATE);
         } catch (RuntimeException e) {
             return ResponseFormat.error(ResponseStatus.FAIL_BAD_REQUEST);
