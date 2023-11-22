@@ -46,6 +46,7 @@ public class OrderDetail {
 
     public static OrderDetailReadDTO entityToDTO(OrderDetail orderDetail) {
         return OrderDetailReadDTO.builder()
+                .orderDetailId(orderDetail.getOrderDetailId())
                 .orderId(orderDetail.getOrder().getOrderId())
                 .itemId(orderDetail.getItem().getItemId())
                 .reviewId(orderDetail.getReview().getReviewId())

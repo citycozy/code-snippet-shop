@@ -4,6 +4,7 @@ import com.sku.codesnippetshop.domain.member.domain.Member;
 import com.sku.codesnippetshop.domain.order.dto.OrderCreateDTO;
 import com.sku.codesnippetshop.domain.order.dto.OrderReadDTO;
 import com.sku.codesnippetshop.domain.order.dto.OrderUpdateDTO;
+import com.sku.codesnippetshop.domain.orderdetail.dto.OrderDetailReadDTO;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -14,6 +15,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -82,6 +84,20 @@ public class Order {
                 .modDt(order.getModifyDate())
                 .build();
     }
+
+    public static OrderReadDTO entityToDTO(Order order, List<OrderDetailReadDTO> orderDetailReadDTOS) {
+        return OrderReadDTO.builder()
+                .memberId(order.getMember().getMemberId())
+                .totalPrice(order.getTotalPrice())
+                .paymentMethod(order.getPaymentMethod())
+                .deliveryRequest(order.getDeliveryRequest())
+                .status(order.getStatus())
+                .orderDetailReadDTOList(orderDetailReadDTOS)
+                .regDt(order.getCreateDate())
+                .modDt(order.getModifyDate())
+                .build();
+    }
+
 
     public static Order dtoToEntity(OrderCreateDTO create, Member member){
         return Order.builder()
