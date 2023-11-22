@@ -8,39 +8,74 @@ import com.sku.codesnippetshop.domain.order.domain.Order;
 import com.sku.codesnippetshop.domain.order.dto.OrderCreateDTO;
 import com.sku.codesnippetshop.domain.order.dto.OrderReadDTO;
 import com.sku.codesnippetshop.domain.order.dto.OrderUpdateDTO;
+import com.sku.codesnippetshop.domain.orderdetail.dao.OrderDetailRepository;
+import com.sku.codesnippetshop.domain.orderdetail.domain.OrderDetail;
+import com.sku.codesnippetshop.domain.orderdetail.dto.OrderDetailCreateDTO;
+import com.sku.codesnippetshop.domain.orderdetail.dto.OrderDetailReadDTO;
+import com.sku.codesnippetshop.domain.orderdetail.service.OrderDetailService;
 import com.sku.codesnippetshop.global.error.NotFoundException;
 import com.sku.codesnippetshop.global.response.ResponseStatus;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class OrderService {
 
+    private final OrderDetailService orderDetailService;
+
+
     private final OrderRepository orderRepository;
+    private final OrderDetailRepository orderDetailRepository;
     private final MemberRepository memberRepository;
 
     /* 주문 생성 서비스
     param : 생성 주문 info  */
     @Transactional
-    public void createOrder(OrderCreateDTO create) {
+    public Long createOrder(OrderCreateDTO create) {
 
         final Member member = memberRepository.findById(create.getMemberId()).orElseThrow(()->new NotFoundException(ResponseStatus.FAIL_NOT_FOUND));
         final Order order = Order.dtoToEntity(create, member);
         orderRepository.save(order);
+        System.out.println(order.getOrderId());
+        return order.getOrderId();
     }
 
-    /* 주문 읽기 서비스
+    /* 주문 + 주문 상세 읽기 서비스
     param : 읽을 주문 아이디  */
-    public OrderReadDTO getOrderByOrderId(Long orderId) {
+    public OrderReadDTO getOrderAndOrderDetailsByOrderId(Long orderId) {
         final Order order = orderRepository
                 .findById(orderId)
                 .orElseThrow(()-> new NotFoundException(ResponseStatus.FAIL_NOT_FOUND));
+        final List<OrderDetail> orderDetails = orderDetailRepository.findByOrder_OrderId(orderId);
 
-        return Order.entityToDTO(order);
+        List<OrderDetailReadDTO> orderDetailDTOs = orderDetails.stream()
+                .map(OrderDetail::entityToDTO)
+                .toList();
+
+
+        return Order.entityToDTO(order, orderDetailDTOs);
     }
+
+
+    /* 전체 주문 읽기 서비스
+    param : 읽을 주문 아이디  */
+    public List<OrderReadDTO> getAllOrder( ) {
+        final List<Order> orderList = orderRepository
+                .findAll();
+        List<OrderReadDTO> orderReadDTOList = new ArrayList<>();
+        for(Order order : orderList) {
+            orderReadDTOList.add(Order.entityToDTO(order));
+        }
+        return orderReadDTOList;
+    }
+
 
     /* 주문 정보 수정 서비스
     param : 수정 주문 아이디(pk), 수정 주문 정보 info */

@@ -7,7 +7,6 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class OrderDetailCreateDTO {
-    private Long orderId;
     private Long itemId;
     private Long reviewId;
     private int quantity;

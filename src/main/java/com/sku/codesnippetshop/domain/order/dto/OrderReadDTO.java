@@ -1,8 +1,10 @@
 package com.sku.codesnippetshop.domain.order.dto;
 
+import com.sku.codesnippetshop.domain.orderdetail.dto.OrderDetailReadDTO;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Builder
@@ -18,4 +20,5 @@ public class OrderReadDTO {
     private LocalDateTime modDt;
     private String status;
 
+    private List<OrderDetailReadDTO> orderDetailReadDTOList;
 }
