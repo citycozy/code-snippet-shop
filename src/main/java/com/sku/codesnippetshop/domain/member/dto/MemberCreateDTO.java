@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberCreateDTO {
 
-    private String email;
+    private String username;
     private String password;
     private String name;
     private String currentAddress;

@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberReadDTO {
 
-    private String email;
+    private String username;
     private String password;
     private String name;
     private String grade;

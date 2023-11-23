@@ -27,7 +27,7 @@ public class Member {
     private Long memberId;
 
     @Column(name = "email", unique = true, length = 100)
-    private String email;
+    private String username;
 
     @Column(name = "password")
     private String password;
@@ -54,8 +54,8 @@ public class Member {
 
 
     @Builder
-    private Member(String email, String password, String name, String currentAddress) {
-        this.email = email;
+    private Member(String username, String password, String name, String currentAddress) {
+        this.username = username;
         this.password = password;
         this.name = name;
         this.role = UserRole.USER;
@@ -72,7 +72,7 @@ public class Member {
 
     public static MemberReadDTO entityToDto(Member member) {
         return MemberReadDTO.builder()
-                .email(member.getEmail())
+                .username(member.getUsername())
                 .password(member.getPassword())
                 .name(member.getName())
                 .grade(member.getGrade())
@@ -85,7 +85,7 @@ public class Member {
 
     public static Member dtoToEntity(MemberCreateDTO create) {
         return Member.builder()
-                .email(create.getEmail())
+                .username(create.getUsername())
                 .password(create.getPassword())
                 .name(create.getName())
                 .currentAddress(create.getCurrentAddress())
