@@ -53,12 +53,12 @@ public class OrderService {
         final Order order = orderRepository
                 .findById(orderId)
                 .orElseThrow(()-> new NotFoundException(ResponseStatus.FAIL_NOT_FOUND));
+
         final List<OrderDetail> orderDetails = orderDetailRepository.findByOrder_OrderId(orderId);
 
         List<OrderDetailReadDTO> orderDetailDTOs = orderDetails.stream()
                 .map(OrderDetail::entityToDTO)
                 .toList();
-
 
         return Order.entityToDTO(order, orderDetailDTOs);
     }
