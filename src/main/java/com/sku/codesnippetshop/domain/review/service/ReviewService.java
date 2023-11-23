@@ -26,10 +26,12 @@ public class ReviewService {
     /* 리뷰 생성 서비스
     param : 생성 리뷰 info  */
     @Transactional
-    public void createReview(ReviewCreateDTO create) {
+    public Review createReview(ReviewCreateDTO create) {
         final Member member = memberRepository.findById(create.getMemberId()).orElseThrow(()->new NotFoundException(ResponseStatus.FAIL_NOT_FOUND));
         final Review review = Review.dtoToEntity(create, member);
         reviewRepository.save(review);
+
+        return review;
     }
 
     /* 리뷰 읽기 서비스

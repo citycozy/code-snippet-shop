@@ -1,5 +1,7 @@
 package com.sku.codesnippetshop.domain.review.api;
 
+import com.sku.codesnippetshop.domain.orderdetail.service.OrderDetailService;
+import com.sku.codesnippetshop.domain.review.domain.Review;
 import com.sku.codesnippetshop.domain.review.dto.ReviewCreateDTO;
 import com.sku.codesnippetshop.domain.review.dto.ReviewReadDTO;
 import com.sku.codesnippetshop.domain.review.dto.ReviewUpdateDTO;
@@ -16,13 +18,16 @@ import org.springframework.web.bind.annotation.*;
 public class ReviewController {
 
     private final ReviewService reviewService;
+    private final OrderDetailService orderDetailService;
 
-    /* 리뷰 정보 등록 컨트롤러
-    param : 등록 리뷰 정보 info */
+    /* 구매한 제품의 리뷰 등록 및 해당 제품 리뷰 갱신 컨트롤러
+    param : 생성 리뷰 정보 info */
     @PostMapping
-    public ResponseFormat<Void> regItem(@RequestBody ReviewCreateDTO create) {
+    public ResponseFormat<Void> regItem(@RequestBody ReviewCreateDTO create, @RequestParam Long orderDetailId ) {
         try {
-            reviewService.createReview(create);
+
+            final Review review = reviewService.createReview(create);
+            orderDetailService.updateOrderDetailByReview(review, orderDetailId);
             return ResponseFormat.success(com.sku.codesnippetshop.global.response.ResponseStatus.SUCCESS_CREATE);
         } catch (RuntimeException e) {
             return ResponseFormat.error(ResponseStatus.FAIL_BAD_REQUEST);
