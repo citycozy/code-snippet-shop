@@ -77,4 +77,19 @@ public class MemberController {
             return ResponseFormat.error(ResponseStatus.FAIL_BAD_REQUEST);
         }
     }
+
+    @PostMapping("/email-check")
+    public ResponseFormat<Void> checkDuplicateEmail(@RequestBody String username) {
+        try {
+            memberService.isEmailAlreadyExists(username);
+            return ResponseFormat.success(ResponseStatus.SUCCESS_NO_CONTENT);
+        }
+        catch (DuplicatedException e) {
+            return ResponseFormat.error(ResponseStatus.FAIL_EMAIL_DUPLICATED);
+        }catch (NotFoundException e) {
+            return ResponseFormat.error(ResponseStatus.FAIL_NOT_FOUND);
+        } catch (RuntimeException e) {
+            return ResponseFormat.error(ResponseStatus.FAIL_BAD_REQUEST);
+        }
+    }
 }
