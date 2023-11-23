@@ -6,6 +6,7 @@ import com.sku.codesnippetshop.domain.orderdetail.dto.OrderDetailCreateDTO;
 import com.sku.codesnippetshop.domain.orderdetail.dto.OrderDetailReadDTO;
 import com.sku.codesnippetshop.domain.review.domain.Review;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Null;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,7 +22,7 @@ public class OrderDetail {
     @Column(name = "order_detail_id")
     private Long orderDetailId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
 
@@ -45,13 +46,18 @@ public class OrderDetail {
     }
 
     public static OrderDetailReadDTO entityToDTO(OrderDetail orderDetail) {
-        return OrderDetailReadDTO.builder()
+        OrderDetailReadDTO.OrderDetailReadDTOBuilder builder = OrderDetailReadDTO.builder()
                 .orderDetailId(orderDetail.getOrderDetailId())
                 .orderId(orderDetail.getOrder().getOrderId())
                 .itemId(orderDetail.getItem().getItemId())
-                .reviewId(orderDetail.getReview().getReviewId())
-                .quantity(orderDetail.getQuantity())
-                .build();
+                .quantity(orderDetail.getQuantity());
+
+        if(orderDetail.getReview()!=null)
+            builder.reviewId(orderDetail.getReview().getReviewId());
+        else
+            builder.reviewId(null);
+
+        return builder.build();
     }
 
     public static OrderDetail dtoToEntity(OrderDetailCreateDTO create, Order order, Item item){
