@@ -80,6 +80,7 @@ public class Item {
 
     public static ItemReadDto entityToDTO(Item item) {
         return ItemReadDto.builder()
+                .brandId(item.getBrand().getBrandId())
                 .name(item.getName())
                 .content(item.getContent())
                 .rating(item.getRating())

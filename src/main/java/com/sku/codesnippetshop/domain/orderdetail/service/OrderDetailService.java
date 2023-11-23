@@ -36,8 +36,7 @@ public class OrderDetailService {
     public void createOrderDetail(OrderDetailCreateDTO create, Long orderId) {
         final Order order = orderRepository.findById(orderId).orElseThrow(() -> new NotFoundException(ResponseStatus.FAIL_NOT_FOUND));
         final Item item = itemRepository.findById(create.getItemId()).orElseThrow(() -> new NotFoundException(ResponseStatus.FAIL_NOT_FOUND));
-        final Review review = reviewRepository.findById(create.getReviewId()).orElseThrow(() -> new NotFoundException(ResponseStatus.FAIL_NOT_FOUND));
-        final OrderDetail orderDetail = OrderDetail.dtoToEntity(create, order, item, review);
+        final OrderDetail orderDetail = OrderDetail.dtoToEntity(create, order, item);
         orderDetailRepository.save(orderDetail);
     }
 
@@ -48,6 +47,16 @@ public class OrderDetailService {
                 .stream()
                 .map(OrderDetail::entityToDTO)
                 .collect(Collectors.toList());
+    }
+
+
+    /* 주문한 제품의 작성 리뷰 저장 서비스
+    param : 생성된 리뷰 Id */
+    @Transactional
+    public void updateOrderDetailByReview(Review review, Long orderDetailId) {
+        final OrderDetail orderDetail = orderDetailRepository.findById(orderDetailId).orElseThrow(() -> new NotFoundException(ResponseStatus.FAIL_NOT_FOUND));
+        orderDetail.updateReview(review);
+        orderDetailRepository.save(orderDetail);
     }
 
 

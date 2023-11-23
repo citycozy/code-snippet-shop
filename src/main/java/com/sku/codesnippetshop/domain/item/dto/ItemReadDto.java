@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ItemReadDto {
-
+    private Long brandId;
     private String name;
     private String content;
     private BigDecimal rating;

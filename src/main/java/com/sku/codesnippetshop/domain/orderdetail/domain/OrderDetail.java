@@ -54,14 +54,16 @@ public class OrderDetail {
                 .build();
     }
 
-    public static OrderDetail dtoToEntity(OrderDetailCreateDTO create, Order order, Item item, Review review){
+    public static OrderDetail dtoToEntity(OrderDetailCreateDTO create, Order order, Item item){
         return OrderDetail.builder()
                 .order(order)
                 .item(item)
-                .review(review)
                 .quantity(create.getQuantity())
                 .build();
     }
 
+    public void updateReview (Review review){
+        this.review = review;
+    }
 
 }
