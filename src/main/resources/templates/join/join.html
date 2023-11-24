@@ -18,6 +18,45 @@
 
 
     <title>상품 상세</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        // 회원가입
+        $(document).ready(function() {
+            $('#button').click(function() {
+                var formData = {
+                    username: $('input[name=email]').val(),
+                    password: $('input[name=password]').val(),
+                    name: $('input[name=name]').val(),
+                    currentAddress: $('input[name=currentAddress]').val()
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/members',
+                    data: JSON.stringify(formData),
+                    contentType: 'application/json',
+                    success: function(response) {
+                        console.log(response);
+                    },
+                    error: function(error) {
+                        console.error('Ajax request failed:', error);
+                    }
+                });
+            });
+        });
+
+        // 비밀번호 확인
+        function validatePassword() {
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirm_password").value;
+
+            if (password !== confirmPassword) {
+                alert("비밀번호가 일치하지 않습니다.");
+                return false;
+            }
+            return true;
+        }
+    </script>
 </head>
 <body>
 <div th:replace="~{/includes/header :: header}"></div>
@@ -52,12 +91,12 @@
                             </style>
                             <div class="mshop-members-message"></div>
                             <form class="ui form" data-id="12990" data-slug="register-checkout" data-error_popup="no"
-                                  data-type="register" onsubmit="return false">
+                                  data-type="register" onsubmit="return validatePassword();">
 
-                                <div class="required sixteen wide field" style="" data-element_name="user_login"
+                                <div class="required sixteen wide field" style="" data-element_name="email"
                                      data-form_slug="register-checkout">
-                                    <label for="user_login">이메일</label>
-                                    <input type="text" name="user_login" value="" maxlength=""
+                                    <label for="email">이메일</label>
+                                    <input type="text" id="email" name="email" value="" maxlength=""
                                            placeholder="이메일을 입력하세요.">
                                 </div>
 
@@ -75,103 +114,21 @@
 
                                 <div class="required sixteen wide field" style="" data-element_name="first_name"
                                      data-form_slug="register-checkout">
-                                    <label for="first_name">이름</label>
-                                    <input type="text" name="first_name" value="" maxlength="" placeholder="이름을 입력하세요.">
-                                </div>
-
-
-                                <div class="required sixteen wide field phone-field phone_number"
-                                     data-element_name="phone_number" data-form_slug="register-checkout" style="">
-                                    <label for="phone_number">휴대폰번호</label>
-
-
-                                    <div class="three fields phone-number-wrapper">
-                                        <div class="field">
-                                            <select name="part1" class="ui dropdown phone-part">
-                                                <option value="010" selected="">010</option>
-                                                <option value="011">011</option>
-                                                <option value="016">016</option>
-                                                <option value="017">017</option>
-                                                <option value="019">019</option>
-                                                <option value="070">070</option>
-                                            </select>
-                                        </div>
-                                        <div class="field">
-                                            <input type="text" name="part2" class="phone-part" maxlength="4" value="">
-                                        </div>
-                                        <div class="field">
-                                            <input type="text" name="part3" class="phone-part" maxlength="4" value="">
-                                        </div>
-
-                                        <input type="hidden" name="phone_number" value="">
-                                    </div>
-
+                                    <label for="name">이름</label>
+                                    <input type="text" id="name" name="name" value="" maxlength="" placeholder="이름을 입력하세요.">
                                 </div>
 
 
                                 <div class="required msaddr_widget field" data-id="billing">
-                                    <label>주소를 입력하세요.</label>
-                                    <div class="two fields">
-                                        <div class="field">
-                                            <input type="text" name="billing_postcode" data-validate="billing"
-                                                   placeholder="우편번호" value="" style="width:100px;" readonly="">
-                                            <input type="button" class="button" name="msm_address_search" value="주소검색">
-                                        </div>
-                                        <div class="field">
-                                        </div>
-                                    </div>
-                                    <div class="two fields">
-                                        <div class="field">
-                                            <input type="text" name="billing_address_1" data-validate="billing"
-                                                   placeholder="기본주소" value="" readonly="">
-                                        </div>
-                                        <div class="field">
-                                            <input type="text" name="billing_address_2" placeholder="상세주소" value="">
-                                        </div>
-                                    </div>
-                                    <div class="ui scrolling small modal form mshop_address_search billing">
-                                        <div class="header">
-                                            주소 검색
-                                        </div>
-                                        <div class="scrolling content">
-                                            <div class="search_wrapper">
-                                                <div class="field">
-                                                    <input type="text" class="msaddr_keyword" name="billing_search"
-                                                           placeholder="">
-                                                </div>
-                                                <div class="field result">
-                                                    <table class="ui celled table unstackable mshop_address_result">
-                                                        <thead>
-                                                        <tr>
-                                                            <th class="postalcode">우펀번호</th>
-                                                            <th>주소</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="field pagination">
-                                                    <div class="ui right floated pagination menu">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="actions">
-                                            <div class="ui black deny button">취소</div>
-                                            <div class="ui positive right labeled icon button">
-                                                확인
-                                                <i class="checkmark icon"></i>
-                                            </div>
-                                        </div>
+                                    <label for="currentAddress">주소를 입력하세요.</label>
+                                    <div class="field">
+                                        <input type="text" id="currentAddress" name="currentAddress" placeholder="주소를 입력하세요." value="">
                                     </div>
                                 </div>
 
 
-                                <div class="sixteen wide field" style="text-align: center">
-                                    <input id="button" type="button" class="submit black sixteen wide ui button"
-                                           name="button" value="회원가입">
-                                </div>
+                                <input id="button" type="submit" class="submit black sixteen wide ui button" name="button" value="회원가입">
+
 
 
                             </form>

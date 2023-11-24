@@ -29,6 +29,11 @@ public class FrontMapping {
         return "products/cart_empty";
     }
 
+    @GetMapping("detail")
+    public String detail() {
+        return "products/detail";
+    }
+
     @GetMapping("cart-2")
     public String cart2(){
         return "/products/cart_not_empty";
