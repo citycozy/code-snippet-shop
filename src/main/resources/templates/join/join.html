@@ -24,7 +24,7 @@
         $(document).ready(function() {
             $('#button').click(function() {
                 var formData = {
-                    username: $('input[name=username]').val(),
+                    username: $('input[name=email]').val(),
                     password: $('input[name=password]').val(),
                     name: $('input[name=name]').val(),
                     currentAddress: $('input[name=currentAddress]').val()
@@ -114,8 +114,8 @@
 
                                 <div class="required sixteen wide field" style="" data-element_name="first_name"
                                      data-form_slug="register-checkout">
-                                    <label for="username">이름</label>
-                                    <input type="text" id="username" name="username" value="" maxlength="" placeholder="이름을 입력하세요.">
+                                    <label for="name">이름</label>
+                                    <input type="text" id="name" name="name" value="" maxlength="" placeholder="이름을 입력하세요.">
                                 </div>
 
 
