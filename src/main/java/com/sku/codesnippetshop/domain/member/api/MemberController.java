@@ -78,9 +78,10 @@ public class MemberController {
         }
     }
 
-    @PostMapping("/email-check")
+        @PostMapping("/email-check")
     public ResponseFormat<Void> checkDuplicateEmail(@RequestBody String username) {
         try {
+            System.out.println(username);
             memberService.isEmailAlreadyExists(username);
             return ResponseFormat.success(ResponseStatus.SUCCESS_NO_CONTENT);
         }
