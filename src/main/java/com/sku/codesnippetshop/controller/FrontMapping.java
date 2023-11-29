@@ -44,5 +44,11 @@ public class FrontMapping {
         return "/mypage/profile-edit";
     }
 
+    @GetMapping("join-welcome")
+    public String joinWelcome(){
+        return "/join/join-welcome";
+    }
+
+
 
 }
