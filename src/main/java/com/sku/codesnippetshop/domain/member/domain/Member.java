@@ -73,7 +73,6 @@ public class Member {
     public static MemberReadDTO entityToDto(Member member) {
         return MemberReadDTO.builder()
                 .username(member.getUsername())
-                .password(member.getPassword())
                 .name(member.getName())
                 .grade(member.getGrade())
                 .role(member.getRole())

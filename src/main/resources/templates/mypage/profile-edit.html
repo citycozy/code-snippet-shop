@@ -1,0 +1,120 @@
+<!Doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+    <!-- 부트스트랩 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!--    부트스트랩-->
+
+    <!-- header css -->
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <!-- 제이쿼리 cdn-->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- mypage css -->
+    <link rel="stylesheet" th:href="@{/css/mypage.css}">
+    <title>프로필 수정</title>
+</head>
+<body>
+<div th:replace="~{/includes/header :: header}"></div>
+<main>
+    <section class="py-5 text-center container border-bottom">
+
+        <h3>프로필 수정</h3>
+        <div class="row pt-lg-5 pb-3 col-9 text-center mx-auto">
+            <div class="col-lg-10 col-md-8 mx-auto">
+                <div class="row">
+                    <div class="col-6 text-end" id="user-property-box">
+                        <h5 class="fw-light">수정 이름 </h5>
+                        <h5 class="fw-light">수정 주소</h5>
+                        <h5 class="fw-light">현재 비밀번호 </h5>
+                        <h5 class="fw-light">수정 비밀번호 </h5>
+                        <h5 class="fw-light">수정 비밀번호 확인 </h5>
+                    </div>
+                    <div class="col-6 text-center">
+                        <input type="text" id="update-name" name="password" placeholder="수정 이름" style="display: block;">
+                        <input type="text" id="update-address" name="password" placeholder="수정 주소"
+                               style="display: block;">
+                        <input type="password" id="current-password" placeholder="현재 비밀번호" style="display: block;">
+                        <input type="password" id="update-password" name="password" placeholder="수정 비밀번호"
+                               style="display: block;">
+                        <input type="password" id="update-password-check" name="password" placeholder="수정 비밀번호 확인"
+                               style="display: block;">
+                    </div>
+                </div>
+
+            </div>
+            <div id="user-manage-btn-box" class="pt-3 text-center">
+                <a th:onclick="updateProfile()" class="btn btn-primary my-2 text-end">회원정보 수정</a>
+                <a th:onclick="withdrawMembership()" class="btn btn-danger my-2 text-end">회원 탈퇴</a>
+            </div>
+        </div>
+    </section>
+</main>
+<div th:replace="~{/includes/footer :: footer}"></div>
+<script>
+    $.ajax({
+        type: 'GET',
+        url: '/api/members/1',
+        contentType: 'application/json',
+        success: function (memberData) {
+            $("#update-name").attr("placeholder", memberData.data.name);
+            $("#update-address").attr("placeholder", memberData.data.currentAddress);
+        },
+        error: function (error) {
+            console.error('Ajax request failed:', error);
+        }
+    });
+    document.ready(function(){
+
+    })
+    function updateProfile(){
+        let dataToSend = {
+            password: '1234',
+            name: '홍길동 updated',
+            currentAddress: '새로운 주소'
+        };
+        $.ajax({
+            type: 'PUT',
+            url: '/api/members/1',
+            contentType: 'application/json',
+            data: JSON.stringify(dataToSend),
+            success: function (memberData) {
+                alert("!!");
+                $("#update-name").attr("placeholder", memberData.data.name);
+                $("#update-address").attr("placeholder", memberData.data.currentAddress);
+            },
+            error: function (error) {
+                console.error('Ajax request failed:', error);
+            }
+        });
+    }
+
+    function withdrawMembership(){
+        $.ajax({
+            type: 'DELETE',
+            url: '/api/members/3',
+            success: function (memberData) {
+                alert("정상적으로 탈퇴처리 되었습니다. 그동안 감사했습니다.");
+                location.href="/";
+            },
+            error: function (error) {
+                console.error('Ajax request failed:', error);
+            }
+        });
+    }
+
+
+
+
+</script>
+
+</body>
+</html>
+

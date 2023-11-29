@@ -39,6 +39,10 @@ public class FrontMapping {
         return "/products/cart_not_empty";
     }
 
+    @GetMapping("profile-edit")
+    public String profileEdit(){
+        return "/mypage/profile-edit";
+    }
 
 
 }
