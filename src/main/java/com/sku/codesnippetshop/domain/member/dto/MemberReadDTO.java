@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 public class MemberReadDTO {
 
     private String username;
-    private String password;
     private String name;
     private String grade;
     private UserRole role;

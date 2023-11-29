@@ -25,27 +25,30 @@
 <main>
     <section class="py-5 text-center container border-bottom">
 
-        <h3>안녕하세요, OOO 고객님</h3>
+        <h3>안녕하세요, <span id="customerName"></span> 고객님</h3>
         <div class="row pt-lg-5 pb-3 col-9 text-center mx-auto">
-            <div class="col-lg-6 col-md-8 mx-auto">
+            <div class="col-lg-10 col-md-8 mx-auto">
                 <div class="row">
                     <div class="col-4 text-start" id="user-property-box">
                         <h3 class="fw-light">이름  </h3>
-                        <h3 class="fw-light">생년월일  </h3>
-                        <h3 class="fw-light">연락처  </h3>
-                        <h3 class="fw-light">주소  </h3>
+                        <h3 class="fw-light">배달 주소  </h3>
+                        <h3 class="fw-light">가입일 </h3>
+                        <h3 class="fw-light">최근 프로필 수정일</h3>
+                        <h3 class="fw-light">회원등급 </h3>
+
                     </div>
                     <div class="col-8 text-center">
-                        <h3 class="fw-light">username</h3>
-                        <h3 class="fw-light">birth</h3>
-                        <h3 class="fw-light">phone number</h3>
-                        <h3 class="fw-light">address</h3>
+                        <h3 class="fw-light" id="name">name</h3>
+                        <h3 class="fw-light" id="currentAddress">currentAddress</h3>
+                        <h3 class="fw-light" id="regDt">regDt</h3>
+                        <h3 class="fw-light" id="modDt">modDt</h3>
+                        <h3 class="fw-light" id="grade">address</h3>
                     </div>
                 </div>
 
             </div>
             <div id="user-manage-btn-box" class="pt-3 text-end">
-                <a href="#" class="btn btn-primary my-2 text-end">회원정보 수정</a>
+                <a href="/profile-edit" class="btn btn-primary my-2 text-end">회원정보 수정</a>
                 <a href="#" class="btn btn-secondary my-2 text-end">배송지 관리</a>
             </div>
         </div>
@@ -114,11 +117,42 @@
                     </div>
                 </div>
 
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <div class="imgBox d-flex justify-content-center">
+                            <img src="/images/icon/shoppingBasket.png" class="d-block w-100" alt="">
+                        </div>
+                        <div class="card-body">
+                            장바구니
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 </main>
 
 <div th:replace="~{/includes/footer :: footer}"></div>
+<!-- 제이쿼리 cdn-->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $.ajax({
+        type: 'GET',
+        url: '/api/members/1',
+        contentType: 'application/json',
+        success: function(memberData) {
+            $("#customerName").text(memberData.data.name);
+            $("#name").text(memberData.data.name);
+            $("#currentAddress").text(memberData.data.currentAddress);
+            $("#regDt").text(memberData.data.regDt);
+            $("#modDt").text(memberData.data.modDt);
+            $("#grade").text(memberData.data.grade);
+        },
+        error: function(error) {
+            console.error('Ajax request failed:', error);
+        }
+    });
+</script>
 </body>
 </html>
