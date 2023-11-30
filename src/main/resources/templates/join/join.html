@@ -17,46 +17,8 @@
     <link rel="stylesheet" th:href="@{/css/header.css}">
 
 
-    <title>상품 상세</title>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script>
-        // 회원가입
-        $(document).ready(function() {
-            $('#button').click(function() {
-                var formData = {
-                    username: $('input[name=email]').val(),
-                    password: $('input[name=password]').val(),
-                    name: $('input[name=name]').val(),
-                    currentAddress: $('input[name=currentAddress]').val()
-                };
+    <title>회원 가입</title>
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/api/members',
-                    data: JSON.stringify(formData),
-                    contentType: 'application/json',
-                    success: function(response) {
-                        console.log(response);
-                    },
-                    error: function(error) {
-                        console.error('Ajax request failed:', error);
-                    }
-                });
-            });
-        });
-
-        // 비밀번호 확인
-        function validatePassword() {
-            var password = document.getElementById("password").value;
-            var confirmPassword = document.getElementById("confirm_password").value;
-
-            if (password !== confirmPassword) {
-                alert("비밀번호가 일치하지 않습니다.");
-                return false;
-            }
-            return true;
-        }
-    </script>
 </head>
 <body>
 <div th:replace="~{/includes/header :: header}"></div>
@@ -98,37 +60,43 @@
                                     <label for="email">이메일</label>
                                     <input type="text" id="email" name="email" value="" maxlength=""
                                            placeholder="이메일을 입력하세요.">
+                                    <span id="email_msg"></span>
                                 </div>
 
                                 <div class="required sixteen wide field">
                                     <label for="password">비밀번호</label>
                                     <input type="password" id="password" name="password" value=""
                                            autocomplete="new-password" placeholder="비밀번호를 입력하세요.">
+                                    <span id="password_msg"></span>
                                 </div>
 
                                 <div class="required sixteen wide field">
                                     <label for="confirm_password">비밀번호 확인</label>
                                     <input type="password" id="confirm_password" name="confirm_password" value=""
                                            autocomplete="new-password" placeholder="비밀번호 확인을 입력하세요.">
+                                    <span id="confirm_password_msg"></span>
                                 </div>
 
                                 <div class="required sixteen wide field" style="" data-element_name="first_name"
                                      data-form_slug="register-checkout">
                                     <label for="name">이름</label>
-                                    <input type="text" id="name" name="name" value="" maxlength="" placeholder="이름을 입력하세요.">
+                                    <input type="text" id="name" name="name" value="" maxlength=""
+                                           placeholder="이름을 입력하세요.">
+                                    <span id="name_msg"></span>
                                 </div>
 
 
                                 <div class="required msaddr_widget field" data-id="billing">
                                     <label for="currentAddress">주소를 입력하세요.</label>
                                     <div class="field">
-                                        <input type="text" id="currentAddress" name="currentAddress" placeholder="주소를 입력하세요." value="">
+                                        <input type="text" id="currentAddress" name="currentAddress"
+                                               placeholder="주소를 입력하세요." value="">
                                     </div>
                                 </div>
 
 
-                                <input id="button" type="submit" class="submit black sixteen wide ui button" name="button" value="회원가입">
-
+                                <input id="join-btn" type="button" class="submit black sixteen wide ui button"
+                                       name="button" value="회원가입">
 
 
                             </form>
@@ -145,5 +113,169 @@
 </div>
 
 <div th:replace="~{/includes/footer :: footer}"></div>
+<label>
+    <input id="test" type="text">
+</label>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    // 회원가입
+    $(document).ready(function () {
+        $('#email').focusout(function () {
+            // alert("이메일 input focusout");
+            // 아이디를 입력하지 않았거나, 패턴을 통과하지 못했다면 작업 중단
+            if (emailCheck() === false)
+                return false;
+            // 서버로 ajax 전송 아이디(이메일) 중복 체크
+            $.ajax({
+                url: "/api/members/email-check",
+                type: "POST",
+                contentType: "text/plain",
+                data: $("#email").val(),
+                success: function (response) {
+                    console.log(response);
+                    if (response.successful) {
+                        $("#email_msg").text("좋은 아이디네요!").attr("class", "success text-muted small");
+                    } else {
+                        $("#email_msg").text("이미 사용 중인 아이디 입니다.").attr("class", "fail text-muted small");
+                }
+                },
+                error: function () {
+                    console.log("서버 오류입니다.");
+                }
+            });
+        });
+        // 4. 비밀번호, 이름, 이메일, 생일은 입력이 잘못된 경우 오류 메시지만 출력하면 된다.
+        // passwordCheck() 이렇게 쓰지 말 것! 그럼 페이지 연 순간 함수 바로 시작됨!
+        $('#password').focusout(passwordCheck);
+        $('#confirm_password').focusout(confirm_passwordCheck);
+        $('#name').focusout(nameCheck);
+
+        // 5. 회원 가입 버튼을 클릭하면 usernameCheck()부터 birthdayCheck()까지 실행한다.
+        $('#join-btn').click(function () {
+            // &&, || 연산은 결과(참거짓)가 판별되면 연산을 중단한다. usenameCheck에서 실패한 경우 if문은 실행을 바로 중단한다.
+            if ((emailCheck() && passwordCheck() && confirm_passwordCheck() && nameCheck()) === false) {
+                alert("입력을 확인해주세요");
+                return false;
+            }
+
+            // 아이디 사용 가능한지 확인한 다음 사용 가능하면 회원 가입 처리
+            $.ajax("/member/id_check?username=" + $('#username').val())
+                .done(() => {
+                    join();
+                })
+                .fail(() => $('#username_msg').text("사용 중인 아이디입니다.").attr('class', 'fail text-muted small').focus());
+        })
+
+
+    });
+
+    //회원 가입
+    function join() {
+        let formData = {
+            username: $('input[name=email]').val(),
+            password: $('input[name=password]').val(),
+            name: $('input[name=name]').val(),
+            currentAddress: $('input[name=currentAddress]').val()
+        };
+        $.ajax({
+            type: 'POST',
+            url: '/api/members',
+            data: JSON.stringify(formData),
+            contentType: 'application/json',
+            success: function (response) {
+                location.href = "./join-welcome";
+            },
+            error: function (error) {
+                console.error('Ajax request failed:', error);
+            }
+        });
+    }
+
+
+    // 비밀번호 확인
+    function validatePassword() {
+        var password = document.getElementById("password").value;
+        var confirmPassword = document.getElementById("confirm_password").value;
+
+        if (password !== confirmPassword) {
+            alert("비밀번호가 일치하지 않습니다.");
+            return false;
+        }
+        return true;
+    }
+
+
+    const namePattern = /^[가-힣]{2,10}$/;
+    // ()는 독립된 조건, ?=는 앞부터 찾으라는 것(전방 탐색)
+    // .은 임의의 글자가 * 0글자 이상 -> 특수문자가 1 글자 이상
+    const passwordPattern = /^(?=.*[!@#$%^&*])^[A-Za-z0-9!@#$%^&*]{8,10}$/;
+    const emailPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+
+    function check(value, pattern, message, span) {
+        // 입력 안 함
+        if (value === "") {
+            span.text("필수 입력입니다.").attr('class', 'fail text-muted small');
+            value.focus();
+            return false;
+        }
+        // 패턴 체크
+        if (pattern.test(value) === false) {
+            span.text(message).attr('class', 'fail text-muted small');
+            value.focus();
+            console.log(value);
+            console.log(pattern.test(value));
+            return false;
+        }
+
+        span.text("사용 가능 합니다.").attr('class', 'success text-muted small');
+        return true;
+    }
+
+    // 3-5. 입력한 이메일 확인 함수
+    function emailCheck() {
+        let $email = $("#email");
+        let $email_msg = $("#email_msg");
+        $email_msg.text("");
+        return check($email.val(), emailPattern, "정확한 이메일을 입력하세요",  $("#email_msg"));
+    }
+
+    function passwordCheck() {
+        let $password = $("#password");
+        let $password_msg = $("#password_msg");
+        $password_msg.text="";
+        // alert("!");
+        return check($password.val(), passwordPattern, "비밀번호는 영숫자와 특수문자 8~10자입니다", $("#password_msg"));
+    }
+
+    function confirm_passwordCheck() {
+        let $confirm_password = $("#confirm_password");
+        let $confirm_password_msg = $("#confirm_password_msg");
+        let $password = $("#password");
+        $confirm_password_msg.text("");
+        // alert("!");
+        const confirm_password = $confirm_password.val();
+        if (confirm_password === "") {
+            $confirm_password_msg.text("필수 입력사항입니다.").attr("class", "fail text-muted small");
+            $confirm_password.focus();
+            return false;
+        }
+        if (confirm_password !== $password.val()) {
+            $confirm_password_msg.text("비밀번호가 일치하지 않습니다").attr("class", "fail text-muted small");
+            $confirm_password.focus();
+            return false;
+        }
+
+        $confirm_password_msg.text("확인되었습니다!").attr("class", "fail text-muted small");
+        return true;
+    }
+
+    function nameCheck() {
+        let $name = $("#name");
+        let $name_msg = $("#name_msg");
+        $name_msg.text("");
+        return check($name.val(), namePattern, "이름은 한글 2~10자입니다",  $("#name_msg"));
+    }
+</script>
 </body>
 </html>
