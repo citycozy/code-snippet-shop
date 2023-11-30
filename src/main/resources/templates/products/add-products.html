@@ -1,0 +1,124 @@
+<!Doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- 부트스트랩 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!--    부트스트랩-->
+    <!--    아이콘-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!--    아이콘-->
+    <!-- header css -->
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+
+    <!-- cart css -->
+    <link rel="stylesheet" th:href="@{/css/cart.css}">
+    <title>상품 상세</title>
+</head>
+<body>
+<div th:replace="~{/includes/header :: header}"></div>
+<main>
+    <section class="py-5 text-center container border-bottom">
+
+        <h3>상품 등록</h3>
+        <div class="row pt-lg-5 pb-3 col-9 text-center mx-auto">
+            <div class="col-lg-10 col-md-8 mx-auto">
+                <div class="row">
+                    <div class="col-6 text-center">
+                        <img alt="" class="fImg" width="150" height="150" src="https://via.placeholder.com/150x150"
+                             style="align-content:center; visibility: hidden;">
+                    </div>
+                    <div class="col-6 text-end" id="user-property-box">
+                        <form action="" id="form_file" method="POST" enctype="multipart/form-data">
+
+                            <div class="input-group input-group-lg" id="gameTitleWrapper">
+                                <span class="input-group-text" id="inputGroup-sizing-lg">상품 이름</span>
+                                <input type="text" class="form-control" aria-label="Sizing example input"
+                                       aria-describedby="inputGroup-sizing-lg" name="gameTitle" id="gameTitle">
+                            </div>
+
+                            <div class="input-group" id="gameDescriptionWrapper">
+                                <span class="input-group-text">브랜드 이름</span>
+                                <textarea class="form-control" aria-label="With textarea" name="brandName"
+                                          id="brandName"></textarea>
+                            </div>
+
+                            <div class="input-group" id="gameImgFileWrapper">
+                                <label class="input-group-text" for="gameImgFileWrapper">상품 이미지</label>
+                                <input type="file" class="form-control" name="file" onchange="loadImg(event)">
+                                <!-- <input type="file" class="form-control" id="inputGroupFile01" name="gameImg"> -->
+                            </div>
+
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+            <div id="user-manage-btn-box" class="pt-3 text-center">
+                <a th:onclick="addForm()" class="btn btn-primary my-2 text-end">폼 추가</a>
+            </div>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <input type="button" class="btn btn-primary btn-lg px-4 me-md-2" value="상품 등록"
+                       onclick="addProducts(form_file)">
+            </div>
+        </div>
+    </section>
+</main>
+
+
+<div th:replace="~{/includes/footer :: footer}"></div>
+<!-- 제이쿼리 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:inline="javascript">
+
+    function addForm(){
+        alert("미완");
+    }
+    function loadImg(event) {
+        const img_tag = document.querySelector('.fImg');
+        const file = event.currentTarget.files[0];
+        img_tag.src = URL.createObjectURL(file);
+        img_tag.style.visibility = 'visible';
+    }
+
+
+    //파일과 DTO를 함께 보내는 보물 같은 코드
+    async function addProducts(frm) {
+        let enrolledGameId;
+        let formData = new FormData(frm);
+        let productCreateDto = {
+            "name":    "test",
+            "brandId":  1,//$("#gameDescription").val(), focusout 하면 브랜드 이름 조회
+            "content": "test Description",
+            "quantity": 3};
+        formData.append(
+            "create", new Blob([JSON.stringify(productCreateDto)], { type: "application/json; charset=UTF-8" }),
+        );
+
+        const options = {
+            method: "post",
+            body: formData
+        }
+        try {
+            let response = await fetch(/*[[@{/api/products}]]*/ '', options).
+            then(response => response.json())
+                .then(response => response.data
+                );
+
+            // alert("상품이 등록되었습니다.");
+            // location.href ="/game/gameElementCreator?gameId="+enrolledGameId;
+        } catch (err) {
+            alert(err);
+        }
+    }
+
+</script>
+</body>
+</html>

@@ -23,11 +23,13 @@ public class ItemService {
     /* 제품 등록 서비스
     param : 등록 제품 info*/
     @Transactional
-    public void regItem(ItemCreateDto create) {
+    public Item regItem(ItemCreateDto create) {
         final Brand brand = brandRepository.findById(create.getBrandId()).orElseThrow(()->new NotFoundException(ResponseStatus.FAIL_NOT_FOUND));
 
         final Item item = Item.dtoToEntity(create, brand);
         itemRepository.save(item);
+
+        return item;
     }
 
     /* 제품 정보 읽기 서비스

@@ -49,6 +49,11 @@ public class FrontMapping {
         return "/join/join-welcome";
     }
 
+    @GetMapping("add-products")
+    public String addProducts(){
+        return "/products/add-products";
+    }
+
 
 
 }
