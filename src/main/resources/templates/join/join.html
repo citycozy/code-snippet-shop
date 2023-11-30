@@ -122,7 +122,7 @@
     // 회원가입
     $(document).ready(function () {
         $('#email').focusout(function () {
-            alert("이메일 input focusout");
+            // alert("이메일 input focusout");
             // 아이디를 입력하지 않았거나, 패턴을 통과하지 못했다면 작업 중단
             if (emailCheck() === false)
                 return false;
@@ -135,10 +135,10 @@
                 success: function (response) {
                     console.log(response);
                     if (response.successful) {
-                        $("#email_msg").text("좋은 아이디네요!").attr("class", "success");
+                        $("#email_msg").text("좋은 아이디네요!").attr("class", "success text-muted small");
                     } else {
-                        $("#email_msg").text("이미 사용 중인 아이디 입니다.").attr("class", "fail");
-                    }
+                        $("#email_msg").text("이미 사용 중인 아이디 입니다.").attr("class", "fail text-muted small");
+                }
                 },
                 error: function () {
                     console.log("서버 오류입니다.");
@@ -152,7 +152,7 @@
         $('#name').focusout(nameCheck);
 
         // 5. 회원 가입 버튼을 클릭하면 usernameCheck()부터 birthdayCheck()까지 실행한다.
-        $('#join').click(function () {
+        $('#join-btn').click(function () {
             // &&, || 연산은 결과(참거짓)가 판별되면 연산을 중단한다. usenameCheck에서 실패한 경우 if문은 실행을 바로 중단한다.
             if ((emailCheck() && passwordCheck() && confirm_passwordCheck() && nameCheck()) === false) {
                 alert("입력을 확인해주세요");
@@ -162,16 +162,16 @@
             // 아이디 사용 가능한지 확인한 다음 사용 가능하면 회원 가입 처리
             $.ajax("/member/id_check?username=" + $('#username').val())
                 .done(() => {
-                    $('#join_form').submit();
+                    join();
                 })
-                .fail(() => $('#username_msg').text("사용 중인 아이디입니다.").attr('class', fail).focus());
+                .fail(() => $('#username_msg').text("사용 중인 아이디입니다.").attr('class', 'fail text-muted small').focus());
         })
 
 
     });
 
     //회원 가입
-    $('#join-btn').click(function () {
+    function join() {
         let formData = {
             username: $('input[name=email]').val(),
             password: $('input[name=password]').val(),
@@ -190,7 +190,7 @@
                 console.error('Ajax request failed:', error);
             }
         });
-    });
+    }
 
 
     // 비밀번호 확인
@@ -215,16 +215,20 @@
     function check(value, pattern, message, span) {
         // 입력 안 함
         if (value === "") {
-            span.text("필수 입력입니다.").attr('class', 'fail');
+            span.text("필수 입력입니다.").attr('class', 'fail text-muted small');
+            value.focus();
             return false;
         }
         // 패턴 체크
         if (pattern.test(value) === false) {
-            span.text(message).attr('class', 'fail');
+            span.text(message).attr('class', 'fail text-muted small');
+            value.focus();
             console.log(value);
             console.log(pattern.test(value));
             return false;
         }
+
+        span.text("사용 가능 합니다.").attr('class', 'success text-muted small');
         return true;
     }
 
@@ -233,15 +237,15 @@
         let $email = $("#email");
         let $email_msg = $("#email_msg");
         $email_msg.text("");
-        return check($email.val(), emailPattern, "정확한 이메일을 입력하세요", $email_msg)
+        return check($email.val(), emailPattern, "정확한 이메일을 입력하세요",  $("#email_msg"));
     }
 
     function passwordCheck() {
         let $password = $("#password");
         let $password_msg = $("#password_msg");
-        $password_msg.innerText="";
-        alert("!");
-        return check($password.val(), passwordPattern, "비밀번호는 영숫자와 특수문자 8~10자입니다", $password_msg);
+        $password_msg.text="";
+        // alert("!");
+        return check($password.val(), passwordPattern, "비밀번호는 영숫자와 특수문자 8~10자입니다", $("#password_msg"));
     }
 
     function confirm_passwordCheck() {
@@ -249,16 +253,20 @@
         let $confirm_password_msg = $("#confirm_password_msg");
         let $password = $("#password");
         $confirm_password_msg.text("");
-        alert("!");
+        // alert("!");
         const confirm_password = $confirm_password.val();
         if (confirm_password === "") {
-            $confirm_password.text("필수 입력사항입니다.").attr("class", "fail");
+            $confirm_password_msg.text("필수 입력사항입니다.").attr("class", "fail text-muted small");
+            $confirm_password.focus();
             return false;
         }
         if (confirm_password !== $password.val()) {
-            $confirm_password_msg.text("비밀번호가 일치하지 않습니다").attr("class", "fail");
+            $confirm_password_msg.text("비밀번호가 일치하지 않습니다").attr("class", "fail text-muted small");
+            $confirm_password.focus();
             return false;
         }
+
+        $confirm_password_msg.text("확인되었습니다!").attr("class", "fail text-muted small");
         return true;
     }
 
@@ -266,7 +274,7 @@
         let $name = $("#name");
         let $name_msg = $("#name_msg");
         $name_msg.text("");
-        return check($name.val(), namePattern, "이름은 한글 2~10자입니다", $name_msg);
+        return check($name.val(), namePattern, "이름은 한글 2~10자입니다",  $("#name_msg"));
     }
 </script>
 </body>
