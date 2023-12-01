@@ -1,33 +1,39 @@
-package com.sku.codesnippetshop.entity;
+package com.sku.codesnippetshop.domain.file.domain;
 
 
 import com.sku.codesnippetshop.domain.brand.domain.Brand;
 import com.sku.codesnippetshop.domain.item.domain.Item;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
 @Getter
-public class File {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class FileData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
-    private Long fileId;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id", referencedColumnName = "brand_id")
-    private Brand brandId;
+    private Brand brand;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id", referencedColumnName = "item_id")
-    private Item itemId;
+    private Item item;
 
     @Column(name = "file_name")
-    @NotNull
     private String fileName;
+
+    @Column(name ="file_path")
+    private String filePath;
+    @Builder
+    private FileData(String fileName, String filePath, Item item, Brand brand) {
+        this.fileName = fileName;
+        this.filePath = filePath;
+        this.item = item;
+        this.brand = brand;
+    }
 }
