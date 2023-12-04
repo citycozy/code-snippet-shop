@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>팝업 창 예제</title>
+    <style>
+        /* 스타일링은 선택적입니다. */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<!-- 버튼을 클릭하면 팝업 창이 열리도록 설정 -->
+<button onclick="openPopup()">팝업 열기</button>
+
+<script>
+    // 팝업 열기 함수
+    function openPopup() {
+        // 새로운 창의 가로, 세로 크기
+        var width = 400;
+        var height = 300;
+
+        // 브라우저 화면의 중앙에 위치시키기 위한 left, top 계산
+        var left = (window.innerWidth - width) / 2;
+        var top = (window.innerHeight - height) / 2;
+
+        // window.open 메서드를 사용하여 새로운 창 열기
+        var popupWindow = window.open("", "Popup", "width=" + width + ",height=" + height + ",left=" + left + ",top=" + top);
+
+        // 팝업 창 내부에 표시할 HTML 내용
+        var popupContent = "<p>팝업 창 내용입니다.</p><button onclick='window.close()'>닫기</button>";
+
+        // 팝업 창에 HTML 내용 삽입
+        popupWindow.document.body.innerHTML = popupContent;
+    }
+</script>
+
+</body>
+</html>

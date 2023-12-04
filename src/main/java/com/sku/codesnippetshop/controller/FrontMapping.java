@@ -54,6 +54,23 @@ public class FrontMapping {
         return "/products/add-products";
     }
 
+    @GetMapping("scenario-management")
+    public String scenarioManagement(){
+        return "/admin/scenario-management";
+    }
 
+    @GetMapping("scenario-creation")
+    public String scenarioCreation(){
+        return "/admin/scenario-creation";
+    }
+    @GetMapping("key-management")
+    public String keyManagement (){
+        return "/admin/key-management";
+    }
+
+    @GetMapping("test")
+    public String test (){
+        return "/test/test";
+    }
 
 }
