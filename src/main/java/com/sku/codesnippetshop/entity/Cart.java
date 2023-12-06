@@ -5,22 +5,25 @@ import com.sku.codesnippetshop.domain.customer.item.domain.Item;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 @EntityListeners(AuditingEntityListener.class)
-public class InOut {
+public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "inout_id")
+    @Column(name = "cart_id")
     @NotNull
-    private Long inOutId;
+    private Long cartId;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
@@ -37,8 +40,13 @@ public class InOut {
     private int quantity;
 
     @NotNull
-    @Column(name = "create_date")
+    @Column(name = "created_date")
     @CreatedDate
-    private LocalDateTime createDate;
+    private LocalDateTime createdDate;
+
+    @NotNull
+    @Column(name = "modified_date")
+    @LastModifiedDate
+    private LocalDateTime modifiedDate;
 
 }
