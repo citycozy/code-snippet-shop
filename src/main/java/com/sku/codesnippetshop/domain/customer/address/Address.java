@@ -1,26 +1,28 @@
-package com.sku.codesnippetshop.entity;
+package com.sku.codesnippetshop.domain.customer.address;
 
 import com.sku.codesnippetshop.domain.customer.member.domain.Member;
-import com.sku.codesnippetshop.domain.customer.item.domain.Item;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 @EntityListeners(AuditingEntityListener.class)
-public class InOut {
+public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "inout_id")
+    @Column(name = "address_id")
     @NotNull
-    private Long inOutId;
+    private Long addressId;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
@@ -28,17 +30,16 @@ public class InOut {
     private Member memberId;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id", referencedColumnName = "item_id")
-    private Item itemId;
+    @Column(name = "address")
+    private String address;
 
     @NotNull
-    @Column(name = "quantity")
-    private int quantity;
-
-    @NotNull
-    @Column(name = "create_date")
+    @Column(name = "reg_dt")
     @CreatedDate
-    private LocalDateTime createDate;
+    private LocalDateTime regDt;
 
+    @NotNull
+    @Column(name = "mod_dt")
+    @LastModifiedDate
+    private LocalDateTime modDt;
 }
