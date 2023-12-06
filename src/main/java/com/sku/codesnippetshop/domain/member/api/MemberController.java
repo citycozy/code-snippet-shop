@@ -77,8 +77,9 @@ public class MemberController {
             return ResponseFormat.error(ResponseStatus.FAIL_BAD_REQUEST);
         }
     }
-
-        @PostMapping("/email-check")
+    
+    //이메일 체크
+    @PostMapping("/email-check")
     public ResponseFormat<Void> checkDuplicateEmail(@RequestBody String username) {
         try {
             System.out.println(username);
