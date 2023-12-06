@@ -96,7 +96,7 @@
                 </tbody>
             </table>
             <div class="d-grid gap-2">
-                <a class="btn btn-outline-success" type="button" onclick="highlightRow(this)" data-bs-toggle="modal" data-bs-target="#create-key-modal"><b>+Create New Key+</b></a>
+                <a id="create-key-btn" class="btn btn-outline-success" type="button" onclick="highlightRow(this)" data-bs-toggle="modal" data-bs-target="#create-key-modal"><b>+Create New Key+</b></a>
                 <a class="btn btn-outline-primary" type="button" href="\scenario-management"><b>+Go To Manage Scenario+</b></a>
                 <a class="btn btn-outline-warning" type="button" href="\scenario-creation"><b>+ Go To Create New Scenario+</b></a>
 
@@ -120,14 +120,14 @@
                         <table class="table table-dark table-striped table-hover">
                             <thead>
                             <tr>
-                                <td class="col-6 text-center">
+                                <td colspan="2" class="col-6 text-center">
                                     <b>키 로그 포맷</b>
                                 </td>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
-                                <td class="col-6 text-center">
+                                <td class="col-6 text-center" colspan="2">
                                     <label>
                                         <textarea class="custom-textarea" rows="2" cols="90"> { "cust_id" : "1" }
                                         </textarea>
@@ -151,7 +151,7 @@
                                 </td>
                             </tr>
                             <tr class="text-end">
-                                <td>
+                                <td colspan="2">
                                     <button class="btn btn-primary">Reset</button>
                                     <button class="btn btn-success">Update</button>
                                 </td>
@@ -184,7 +184,7 @@
                                 코드 테이블 관리
                             </th>
                             </thead>
-                            <tbody id="code-table-body">
+                            <tbody id="code-table-body-exist">
                             <tr class="mb-1">
                                 <td class="col-6 text-center">
                                     <b>실제 코드 값</b>
@@ -223,8 +223,8 @@
 
                     </div>
                     <div class="d-grid gap-2">
-                        <button id="add-code-form-btn" class="btn btn-outline-success" type="button"><b>+ 코드 추가 폼 +</b></button>
-                        <button id="add-code-btn" class="btn btn-outline-danger" type="button" hidden="hidden"><b>추가</b></button>
+                        <button id="add-code-form-btn-exist" class="btn btn-outline-success" type="button"><b>+ 코드 추가 폼 +</b></button>
+                        <button id="add-code-btn-exist" class="btn btn-outline-danger" type="button" hidden="hidden"><b>추가</b></button>
 
 <!--                        <button class="btn btn-outline-danger" type="button"><b>중지</b></button>-->
                     </div>
@@ -251,23 +251,14 @@
                             <thead>
                             <tr>
                                 <td class="col-6 text-center">
-                                    <b>로그 포맷</b>
+                                    <b>설명</b>
                                 </td>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
                                 <td class="col-6 text-center">
-                                    <label>
-                                        <textarea class="custom-textarea" rows="3" cols="90"> <pre>{ "topic" : "create", "thread-size" : 3, "status" : "use", "cust_id" : "C132", "age" : 23 }
-                                        </pre></textarea>
-                                    </label>
-                                </td>
-                            </tr>
-                            <tr class="text-end">
-                                <td>
-                                    <button class="btn btn-primary">Reset</button>
-                                    <button class="btn btn-success">Update</button>
+                                    해당 창은 키를 생성하는 창입니다.
                                 </td>
                             </tr>
                             </tbody>
@@ -278,14 +269,16 @@
                             <thead>
                             <tr>
                                 <td class="col-6 text-center">
-                                    <b>설명</b>
+                                    <b>키 설명</b>
                                 </td>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
                                 <td class="col-6 text-center">
-                                    해당 시나리오는 테스트 시나리오입니다. 여기 팝업 창에서는 미리 설정된 로그 포맷을 로드하며, 배포 전 수정 할 수 있습니다.
+                                    <label>
+                                        <textarea class="custom-textarea" rows="3" cols="90"></textarea>
+                                    </label>
                                 </td>
                             </tr>
                             </tbody>
@@ -295,41 +288,56 @@
                         <table class="table table-dark table-striped table-hover">
                             <tr>
                                 <td class="col-6 text-center">
-                                    <b>토픽 생성</b>
+                                    <b>키 이름</b>
                                 </td>
                                 <td class="col-6 text-center">
-                                    <input class="form-check-input" type="checkbox" value="">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="col-6 text-center">
-                                    <b>DB 적재</b>
-                                </td>
-                                <td class="col-6 text-center">
-                                    <input class="form-check-input" type="checkbox" value="">
+                                    <input class="form-control" type="text" placeholder="입력">
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-6 text-center">
-                                    <b>Hadoop 적재</b>
+                                    <b>키 타입</b>
                                 </td>
                                 <td class="col-6 text-center">
-                                    <input class="form-check-input" type="checkbox" value="">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="col-6 text-center">
-                                    <b>컨슈머 스레드 개수</b>
-                                </td>
-                                <td class="col-6 text-center">
-                                    <input class="form-control" type="number" placeholder="숫자 입력">
+                                    <input class="form-control" type="text" placeholder="입력">
                                 </td>
                             </tr>
                         </table>
                     </div>
+                    <div>
+                        <table class="table table-dark table-striped table-hover">
+                            <thead>
+                            <th colspan="2" class="text-center">
+                                코드 테이블 작성
+                            </th>
+                            </thead>
+                            <tbody id="code-table-body">
+                            <tr class="mb-1">
+                                <td class="col-6 text-center">
+                                    <b>실제 코드 값</b>
+                                </td>
+                                <td class="col-6 text-center">
+                                    <b>비주얼 값 </b>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="col-6 text-center">
+                                    <b>01</b>
+                                </td>
+                                <td class="col-6 text-center">
+                                    <input class="form-control" type="text" placeholder="입력">
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
                     <div class="d-grid gap-2">
-                        <button class="btn btn-outline-danger" type="button"><b>배포</b></button>
-                        <button class="btn btn-outline-danger" type="button"><b>중지</b></button>
+                        <button id="add-code-form-btn" class="btn btn-outline-success" type="button"><b>+ 코드 추가 폼 +</b></button>
+                        <button id="add-code-btn" class="btn btn-outline-danger" type="button" hidden="hidden"><b>생성</b></button>
+
+                        <!--                        <button class="btn btn-outline-danger" type="button"><b>중지</b></button>-->
                     </div>
                 </div>
             </div>
@@ -364,7 +372,7 @@
 
     // 모달 이벤트 리스너 추가
     var sidebarModal = new bootstrap.Modal(document.getElementById('sidebarModal'));
-
+    var createKeyModal = new bootstrap.Modal(document.getElementById('create-key-modal'));
     sidebarModal._element.addEventListener('hidden.bs.modal', function () {
         // 모달이 숨겨질 때 active 클래스를 가진 행에서 제거
         var activeRow = document.querySelector('tr.active');
@@ -377,6 +385,22 @@
                 checkbox.checked = false;
             }
         }
+    });
+
+    createKeyModal._element.addEventListener('hidden.bs.modal', function () {
+        // key create 모달이 숨겨질 때 active 클래스를 key craete 버튼에서 제거
+        $('#create-key-btn').removeClass('active');
+    });
+
+
+    $('#add-code-form-btn-exist').click(function(){
+
+        let inputForm = '<input class="form-control" type="text" placeholder="입력">';
+        let inputFormWithDeleteBtn = '<div class="row"><input class="form-control col" type="text" placeholder="입력" style="width: 280px;"><a class="btn btn-danger col-2 text-center" type="button" href="#"><b>X</b></a><div></div></div>';
+
+        $('#code-table-body-exist').append('<tr class="text-center"><td>'+inputForm+'</td><td>'+inputFormWithDeleteBtn+'</td></tr>');
+
+        $('#add-code-btn-exist').removeAttr("hidden");
     });
 
     $('#add-code-form-btn').click(function(){
