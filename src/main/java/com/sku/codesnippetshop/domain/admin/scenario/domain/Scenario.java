@@ -1,5 +1,12 @@
 package com.sku.codesnippetshop.domain.admin.scenario.domain;
 
+import com.sku.codesnippetshop.domain.admin.key.domain.Key;
+import com.sku.codesnippetshop.domain.admin.key.dto.KeyCreateDTO;
+import com.sku.codesnippetshop.domain.admin.key.dto.KeyReadDTO;
+import com.sku.codesnippetshop.domain.admin.key.dto.KeyUpdateDTO;
+import com.sku.codesnippetshop.domain.admin.scenario.dto.ScenarioCreateDTO;
+import com.sku.codesnippetshop.domain.admin.scenario.dto.ScenarioReadDTO;
+import com.sku.codesnippetshop.domain.admin.scenario.dto.ScenarioUpdateDTO;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -63,5 +70,39 @@ public class Scenario {
         this.hadoop_loaded = hadoop_loaded;
     }
 
+    public void updateScenario(ScenarioUpdateDTO update) {
+        this.name = update.getName();
+        this.description = update.getDescription();
+        this.topic_creation_enabled = update.getTopic_creation_enabled();
+        this.consumer_concurrency = update.getConsumer_concurrency();
+        this.db_loaded = update.getDb_loaded();
+        this.hadoop_loaded = update.getHadoop_loaded();
+    }
 
+    public static ScenarioReadDTO entityToDto(Scenario scenario){
+        return ScenarioReadDTO.builder()
+                .name(scenario.getName())
+                .description(scenario.getDescription())
+                .topic_creation_enabled(scenario.getTopic_creation_enabled())
+                .consumer_concurrency(scenario.getConsumer_concurrency())
+                .db_loaded(scenario.getDb_loaded())
+                .hadoop_loaded(scenario.getHadoop_loaded())
+                .logFormat(scenario.getLogFormat())
+                .scenarioId(scenario.getScenarioId())
+                .regDt(scenario.getRegDt())
+                .modDt(scenario.getModDt())
+                .build();
+    }
+
+    public static Scenario dtoToEntity(ScenarioCreateDTO create){
+        return Scenario.builder()
+                .name(create.getName())
+                .logFormat(create.getLogFormat())
+                .description(create.getDescription())
+                .topic_creation_enabled(create.getTopic_creation_enabled())
+                .consumer_concurrency(create.getConsumer_concurrency())
+                .db_loaded(create.getDb_loaded())
+                .hadoop_loaded(create.getHadoop_loaded())
+                .build();
+    }
 }
