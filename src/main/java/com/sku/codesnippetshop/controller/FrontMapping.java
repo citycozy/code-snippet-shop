@@ -24,19 +24,16 @@ public class FrontMapping {
         return "/mypage/mypage";
     }
 
-    @GetMapping("empty-cart")
-    public String cart(){
-        return "products/cart_empty";
-    }
+
 
     @GetMapping("detail")
     public String detail() {
         return "products/detail";
     }
 
-    @GetMapping("cart-2")
-    public String cart2(){
-        return "/products/cart_not_empty";
+    @GetMapping("cart")
+    public String cart(){
+        return "products/cart";
     }
 
     @GetMapping("profile-edit")

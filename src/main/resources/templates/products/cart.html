@@ -93,12 +93,6 @@
                                                     <div class="pafw-toggle-header open"
                                                          data-target="form.pafw-cart,.pafw-order-total-block">
                                                         <div class="title">주문 상품</div>
-                                                        <div class="pafw-toggle-summary">구스토 백팩
-                                                            <div class="order-total">총 결제 예정 금액 <span
-                                                                    class="woocommerce-Price-amount amount"><bdi>49,900<span
-                                                                    class="woocommerce-Price-currencySymbol">원</span></bdi></span>
-                                                            </div>
-                                                        </div>
                                                         <div class="button-toggle pafw-icon arrow"></div>
                                                     </div>
                                                     <form name="pafw-cart" class="pafw-checkout pafw-cart">
@@ -284,17 +278,6 @@
                                                                     </dd>
                                                                 </dl>
                                                             </li>
-                                                            <li class="cart_item product-sale">
-                                                                <dl>
-                                                                    <dt class="product-fee">할인</dt>
-                                                                    <dd>
-                                                                        <p class="price"><span
-                                                                                class="woocommerce-Price-amount amount"><bdi>0<span
-                                                                                class="woocommerce-Price-currencySymbol">원</span></bdi></span>
-                                                                        </p>
-                                                                    </dd>
-                                                                </dl>
-                                                            </li>
                                                             <li class="cart_item product-fee">
                                                                 <dl>
                                                                     <dt class="product-fee">배송비</dt>
@@ -362,6 +345,7 @@
         </div><!-- #primary -->
     </div><!-- .site-content-container -->
 </div>
+
 <div th:replace="~{/includes/footer :: footer}"></div>
 </body>
 </html>
