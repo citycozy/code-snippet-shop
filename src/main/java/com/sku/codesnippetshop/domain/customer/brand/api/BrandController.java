@@ -63,9 +63,9 @@ public class BrandController {
     /*브랜드 삭제 컨트롤러
     param : 삭제 브랜드 BrandId*/
     @DeleteMapping("/{brandId}")
-    public ResponseFormat<Void> deleteBoardByBoardId(@PathVariable(name = "brandId") Long boardId) {
+    public ResponseFormat<Void> deleteBoardByBoardId(@PathVariable(name = "brandId") Long brandId) {
         try {
-            brandService.deleteBrandByBrandId(boardId);
+            brandService.deleteBrandByBrandId(brandId);
             return ResponseFormat.success(com.sku.codesnippetshop.global.response.ResponseStatus.SUCCESS_NO_CONTENT);
         } catch (NotFoundException e) {
             return ResponseFormat.error(com.sku.codesnippetshop.global.response.ResponseStatus.FAIL_NOT_FOUND);
