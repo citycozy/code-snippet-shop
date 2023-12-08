@@ -3,9 +3,8 @@ package com.sku.codesnippetshop.domain.cart.domain;
 import com.sku.codesnippetshop.domain.cart.dto.CartCreateDto;
 import com.sku.codesnippetshop.domain.cart.dto.CartReadDto;
 import com.sku.codesnippetshop.domain.cart.dto.CartUpdateDTO;
-import com.sku.codesnippetshop.domain.member.domain.Member;
-import com.sku.codesnippetshop.domain.item.domain.Item;
-import com.sku.codesnippetshop.domain.order.dto.OrderUpdateDTO;
+import com.sku.codesnippetshop.domain.customer.item.domain.Item;
+import com.sku.codesnippetshop.domain.customer.member.domain.Member;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -16,7 +15,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
