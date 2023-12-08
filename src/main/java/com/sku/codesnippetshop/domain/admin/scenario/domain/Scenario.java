@@ -50,6 +50,9 @@ public class Scenario {
     @Column(name = "hadoop_loaded")
     private Boolean hadoop_loaded;
 
+    @Column(name = "status")
+    private String status;
+
     @Column(name = "reg_dt")
     @CreatedDate
     private LocalDateTime regDt;
@@ -59,15 +62,16 @@ public class Scenario {
     private LocalDateTime modDt;
 
     @Builder
-    public Scenario(Long scenarioId, String name, String logFormat, String description, Boolean topic_creation_enabled, Long consumer_concurrency, Boolean db_loaded, Boolean hadoop_loaded) {
+    public Scenario(Long scenarioId, String name, String logFormat, String description, String status) {
         this.scenarioId = scenarioId;
         this.name = name;
         this.logFormat = logFormat;
         this.description = description;
-        this.topic_creation_enabled = topic_creation_enabled;
-        this.consumer_concurrency = consumer_concurrency;
-        this.db_loaded = db_loaded;
-        this.hadoop_loaded = hadoop_loaded;
+        this.topic_creation_enabled = false;
+        this.consumer_concurrency = 0L;
+        this.db_loaded = false;
+        this.hadoop_loaded = false;
+        this.status = "STOP";
     }
 
     public void updateScenario(ScenarioUpdateDTO update) {
@@ -89,6 +93,7 @@ public class Scenario {
                 .hadoop_loaded(scenario.getHadoop_loaded())
                 .logFormat(scenario.getLogFormat())
                 .scenarioId(scenario.getScenarioId())
+                .status(scenario.getStatus())
                 .regDt(scenario.getRegDt())
                 .modDt(scenario.getModDt())
                 .build();
@@ -99,10 +104,6 @@ public class Scenario {
                 .name(create.getName())
                 .logFormat(create.getLogFormat())
                 .description(create.getDescription())
-                .topic_creation_enabled(create.getTopic_creation_enabled())
-                .consumer_concurrency(create.getConsumer_concurrency())
-                .db_loaded(create.getDb_loaded())
-                .hadoop_loaded(create.getHadoop_loaded())
                 .build();
     }
 }

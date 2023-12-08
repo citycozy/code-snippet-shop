@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @EntityListeners(AuditingEntityListener.class)
+@Table(name="filter_key")
 public class Key {
 
     @Id
@@ -25,7 +26,7 @@ public class Key {
     @Column(name = "key_id")
     private Long keyId;
 
-    @Column(name = "current_address", length = 100)
+    @Column(name = "name", length = 100)
     private String name;
 
 

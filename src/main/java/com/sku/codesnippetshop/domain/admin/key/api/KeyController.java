@@ -61,9 +61,9 @@ public class KeyController {
     /*키 삭제 컨트롤러
     param : 삭제 키 KeyId*/
     @DeleteMapping("/{keyId}")
-    public ResponseFormat<Void> deleteBoardByBoardId(@PathVariable(name = "keyId") Long boardId) {
+    public ResponseFormat<Void> deleteBoardByBoardId(@PathVariable(name = "keyId") Long keyId) {
         try {
-            keyService.deleteKeyByKeyId(boardId);
+            keyService.deleteKeyByKeyId(keyId);
             return ResponseFormat.success(com.sku.codesnippetshop.global.response.ResponseStatus.SUCCESS_NO_CONTENT);
         } catch (NotFoundException e) {
             return ResponseFormat.error(com.sku.codesnippetshop.global.response.ResponseStatus.FAIL_NOT_FOUND);

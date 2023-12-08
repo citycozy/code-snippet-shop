@@ -1,4 +1,4 @@
-package com.sku.codesnippetshop.domain.admin.scenario.dto;
+package com.sku.codesnippetshop.domain.admin.codeTable.dto;
 
 import lombok.*;
 
@@ -6,9 +6,8 @@ import lombok.*;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class ScenarioCreateDTO {
+public class CodeTableCreateDTO {
+    private Long keyId;
     private String name;
-    private String logFormat;
-    private String description;
-
+    private String code;
 }

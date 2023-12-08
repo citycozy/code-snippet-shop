@@ -78,19 +78,17 @@
                     <th scope="col">NAME</th>
                     <th scope="col">KEY-TYPE</th>
                     <th scope="col">DESCRIPTION</th>
-                    <th scope="col">CODE-TABLE</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="key-table-body">
                 <tr onclick="highlightRow(this)" data-bs-toggle="modal" data-bs-target="#sidebarModal">
                     <th scope="row">
                         <input class="form-check-input" type="checkbox" value="">
                     </th>
-                    <td>1</td>
+                    <td>0</td>
                     <td>키이름</td>
                     <td>숫자</td>
                     <td>설명입니다.</td>
-                    <td>select-search-data</td>
                 </tr>
                 <!-- 나머지 테이블 행들도 동일하게 작성 -->
                 </tbody>
@@ -138,7 +136,7 @@
                                 <td>
                                     키이름
                                 </td>
-                                <td>
+                                <td id ="nameModal">
                                     cust_id
                                 </td>
                             </tr>
@@ -146,7 +144,7 @@
                                 <td>
                                     키타입
                                 </td>
-                                <td>
+                                <td id="typeModal">
                                     number
                                 </td>
                             </tr>
@@ -170,13 +168,41 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td class="col-6 text-center">
+                                <td class="col-6 text-center" id="descriptionModal">
                                     해당 키는 테스트 키입니다. 여기 팝업 창에서는 미리 설정된 키 포맷을 로드하며 코드 테이블을 추가 할 수 있습니다.
                                 </td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
+                    <div>
+                        <table class="table table-dark table-striped table-hover">
+                            <thead>
+                            <th colspan="2" class="text-center">
+                                생성 수정 일시
+                            </th>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="col-6 text-center">
+                                    <b>키 생성 일시</b>
+                                </td>
+                                <td class="col-6 text-center">
+                                    <b id="regDtModal"></b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-6 text-center">
+                                    <b>키 수정 일시</b>
+                                </td>
+                                <td class="col-6 text-center">
+                                    <b id="modDtModal"></b>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
                     <div>
                         <table class="table table-dark table-striped table-hover">
                             <thead>
@@ -235,7 +261,7 @@
 </div>
 
 
-<!-- SideBar Modal -->
+<!-- key-create SideBar Modal -->
 <div class="modal fade" id="create-key-modal" tabindex="-1" aria-labelledby="sidebarModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-sidebar modal-lg">
         <div class="modal-content">
@@ -355,34 +381,51 @@
 
     function highlightRow(row) {
         // 기존에 활성화된 행에서 active 클래스 제거
-        var activeRow = document.querySelector('tr.active');
-        if (activeRow) {
-            activeRow.classList.remove('active');
+        var activeRow = $('tr.active');
+        if (activeRow.length) {
+            activeRow.removeClass('active');
         }
 
         // 클릭된 행에 active 클래스 추가
-        row.classList.add('active');
+        $(row).addClass('active');
+
+        let name = $(row).find('td:eq(1)').text();
+        let type = $(row).find('td:eq(2)').text();
+        let description = $(row).find('td:eq(3)').text();
+        // 추가 정보 가져오기
+        let regDt = $(row).find('td:eq(4)').text();
+        let modDt = $(row).find('td:eq(5)').text();
+        // 추가적인 컬럼들이 있다면 위와 같이 계속 추가
+
+        // 모달 내의 요소에 정보 설정
+        //$('#scenarioIdModal').text(scenarioId);
+        $('#nameModal').text(name);
+        $('#typeModal').text(type);
+        $('#descriptionModal').text(description);
+        // 추가 정보를 모달 내에 표시
+        $('#regDtModal').text(regDt);
+        $('#modDtModal').text(modDt);
+
 
         // 클릭된 행의 체크박스를 체크
-        var checkbox = row.querySelector('.form-check-input');
-        if (checkbox) {
-            checkbox.checked = true;
+        var checkbox = $(row).find('.form-check-input');
+        if (checkbox.length) {
+            checkbox.prop('checked', true);
         }
     }
 
     // 모달 이벤트 리스너 추가
-    var sidebarModal = new bootstrap.Modal(document.getElementById('sidebarModal'));
     var createKeyModal = new bootstrap.Modal(document.getElementById('create-key-modal'));
-    sidebarModal._element.addEventListener('hidden.bs.modal', function () {
+    $('#sidebarModal').on('hidden.bs.modal', function () {
         // 모달이 숨겨질 때 active 클래스를 가진 행에서 제거
-        var activeRow = document.querySelector('tr.active');
-        if (activeRow) {
-            activeRow.classList.remove('active');
+        var activeRow = $('tr.active');
+        if (activeRow.length) {
+            activeRow.removeClass('active');
 
             // 체크박스도 해제
-            var checkbox = activeRow.querySelector('.form-check-input');
-            if (checkbox) {
-                checkbox.checked = false;
+            var checkbox = activeRow.find('.form-check-input');
+            if (checkbox.length) {
+                checkbox.prop('checked', false);
             }
         }
     });
@@ -412,6 +455,40 @@
 
         $('#add-code-btn').removeAttr("hidden");
     });
+
+    $(document).ready(function () {
+        // 페이지 로딩하자마자 시나리오 리스트 불러오기
+        $.ajax({
+            type: "GET",
+            url: "/api/keys",
+            dataType: "json",
+            success: function (response) {
+                console.log("Success:", response);
+                console.log(response.data[0]);
+                for (var i = 0; i < response.data.length; i++) {
+                    var newRow = '<tr onclick="highlightRow(this)" data-bs-toggle="modal" data-bs-target="#sidebarModal">' +
+                        '<th scope="row">' +
+                        '<input class="form-check-input" type="checkbox" value="">' +
+                        '</th>' +
+                        '<td>' + response.data[i].keyId + '</td>' +
+                        '<td>' + response.data[i].name + '</td>' +
+                        '<td>' + response.data[i].type + '</td>' +
+                        '<td>' + response.data[i].description + '</td>' +
+                        '<td style="display: none;">' + response.data[i].regDt + '</td>' +
+                        '<td style="display: none;">' + response.data[i].modDt + '</td>' +
+                        '</tr>';
+
+                    $("#key-table-body").append(newRow);
+                }
+            },
+            error: function (error) {
+                console.error("Error:", error);
+                // 에러 처리
+            }
+        });
+    });
+
+
 </script>
 
 
