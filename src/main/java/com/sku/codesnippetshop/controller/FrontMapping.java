@@ -70,4 +70,9 @@ public class FrontMapping {
         return "/test/test";
     }
 
+    @GetMapping("test2")
+    public String test2 (){
+        return "/test/test2";
+    }
+
 }

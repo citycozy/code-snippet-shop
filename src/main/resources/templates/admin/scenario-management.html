@@ -76,7 +76,7 @@
                     <th scope="col">#</th>
                     <th scope="col">ID</th>
                     <th scope="col">NAME</th>
-                    <th scope="col">LogFormat</th>
+                    <th scope="col">LogFormatName</th>
                     <th scope="col">Description</th>
                     <th scope="col">Status</th>
                 </tr>
@@ -88,7 +88,7 @@
                     </th>
                     <td>0</td>
                     <td>테스트 행</td>
-                    <td>{"test": "테스트 행입니다"}</td>
+                    <td>로그포맷 이름</td>
                     <td>테스트 용 html text 행</td>
                     <td>배포안됨</td>
                 </tr>
@@ -325,13 +325,13 @@
                         '<th scope="row">' +
                         '<input class="form-check-input" type="checkbox" value="">' +
                         '</th>' +
-                        '<td>' + response.data[i].scenarioId + '</td>' +
-                        '<td>' + response.data[i].name + '</td>' +
-                        '<td>' + response.data[i].logFormat + '</td>' +
-                        '<td>' + response.data[i].description + '</td>' +
-                        '<td>' + response.data[i].status + '</td>' +
-                        '<td style="display: none;">' + response.data[i].regDt + '</td>' +
-                        '<td style="display: none;">' + response.data[i].modDt + '</td>' +
+                        '<td class="text-end">' + response.data[i].scenarioId + '</td>' +
+                        '<td class="text-start">' + response.data[i].name + '</td>' +
+                        '<td class="text-start">' + response.data[i].logFormat + '</td>' +
+                        '<td class="text-start">' + response.data[i].description + '</td>' +
+                        '<td class="text-start">' + response.data[i].status + '</td>' +
+                        '<td class="text-start" style="display: none;">' + response.data[i].regDt + '</td>' +
+                        '<td class="text-start"style="display: none;">' + response.data[i].modDt + '</td>' +
                         '<td style="display: none;">' + response.data[i].topic_creation_enabled + '</td>' +
                         '<td style="display: none;">' + response.data[i].db_loaded + '</td>' +
                         '<td style="display: none;">' + response.data[i].hadoop_loaded + '</td>' +

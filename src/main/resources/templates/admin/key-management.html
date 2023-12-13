@@ -472,12 +472,12 @@
                         '<th scope="row">' +
                         '<input class="form-check-input" type="checkbox" value="">' +
                         '</th>' +
-                        '<td>' + response.data[i].keyId + '</td>' +
-                        '<td>' + response.data[i].name + '</td>' +
-                        '<td>' + response.data[i].type + '</td>' +
-                        '<td>' + response.data[i].description + '</td>' +
-                        '<td style="display: none;">' + response.data[i].regDt + '</td>' +
-                        '<td style="display: none;">' + response.data[i].modDt + '</td>' +
+                        '<td class="text-end">' + response.data[i].keyId + '</td>' +
+                        '<td class="text-start">' + response.data[i].name + '</td>' +
+                        '<td class="text-start">' + response.data[i].type + '</td>' +
+                        '<td class="text-start">' + response.data[i].description + '</td>' +
+                        '<td class="text-start" style="display: none;">' + response.data[i].regDt + '</td>' +
+                        '<td class="text-start" style="display: none;">' + response.data[i].modDt + '</td>' +
                         '</tr>';
 
                     $("#key-table-body").append(newRow);
