@@ -107,9 +107,10 @@
 <div class="modal fade" id="sidebarModal" tabindex="-1" aria-labelledby="sidebarModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-sidebar modal-lg">
         <div class="modal-content">
-            <div class="modal-header d-flex justify-content-between">
-                <h5 class="modal-title mx-auto independent-block "><b> 키 관리</b></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-header d-flex justify-content-between row">
+                <h3 class="col-4"></h3>
+                <h5 class="modal-title mx-auto independent-block col-4"><b> 키 관리</b></h5>
+                <button type="button" class="btn-close col-4" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body">
@@ -265,9 +266,10 @@
 <div class="modal fade" id="create-key-modal" tabindex="-1" aria-labelledby="sidebarModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-sidebar modal-lg">
         <div class="modal-content">
-            <div class="modal-header d-flex justify-content-between">
-                <h5 class="modal-title mx-auto independent-block "><b> 키 생성</b></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-header d-flex justify-content-between row">
+                <h3 class="col-4"></h3>
+                <h5 class="modal-title mx-auto independent-block col-4"><b> 키 생성</b></h5>
+                <button type="button" class="btn-close col-4" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body">
@@ -470,12 +472,12 @@
                         '<th scope="row">' +
                         '<input class="form-check-input" type="checkbox" value="">' +
                         '</th>' +
-                        '<td>' + response.data[i].keyId + '</td>' +
-                        '<td>' + response.data[i].name + '</td>' +
-                        '<td>' + response.data[i].type + '</td>' +
-                        '<td>' + response.data[i].description + '</td>' +
-                        '<td style="display: none;">' + response.data[i].regDt + '</td>' +
-                        '<td style="display: none;">' + response.data[i].modDt + '</td>' +
+                        '<td class="text-end">' + response.data[i].keyId + '</td>' +
+                        '<td class="text-start">' + response.data[i].name + '</td>' +
+                        '<td class="text-start">' + response.data[i].type + '</td>' +
+                        '<td class="text-start">' + response.data[i].description + '</td>' +
+                        '<td class="text-start" style="display: none;">' + response.data[i].regDt + '</td>' +
+                        '<td class="text-start" style="display: none;">' + response.data[i].modDt + '</td>' +
                         '</tr>';
 
                     $("#key-table-body").append(newRow);

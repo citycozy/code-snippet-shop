@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Filtering Information</title>
+  <!-- 부트스트랩 -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <!-- 부트스트랩 JavaScript -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+          integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+          crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="container mt-5">
+  <form id="filterForm">
+    <!-- Filter form fields -->
+    <div class="form-row">
+      <div class="col-md-3 mb-3">
+        <label for="field">Field</label>
+        <input type="text" class="form-control" id="field" name="field" required>
+      </div>
+      <div class="col-md-3 mb-3">
+        <label for="operator">Operator</label>
+        <select class="form-control" id="operator" name="operator" required>
+          <option value="">&lt; (미만)</option>
+          <option value="greater-than">&gt; (초과)</option>
+          <option value="less-than-or-equal">&le; (이하)</option>
+          <option value="greater-than-or-equal">&ge; (이상)</option>
+          <option value="equal">= (같음)</option>
+          <option value="not-equal">!= (다름)</option>
+        </select>
+      </div>
+      <div class="col-md-3 mb-3">
+        <label for="value">Value</label>
+        <input type="text" class="form-control" id="value" name="value" required>
+      </div>
+      <div class="col-md-3 mb-3">
+        <label for="filterType">Filter Type</label>
+        <select class="form-control" id="filterType" name="filterType" required>
+          <option value="number">Number</option>
+          <option value="string">String</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Add filter button -->
+    <button type="button" class="btn btn-primary" onclick="addFilter()">Add Filter</button>
+    <button type="button" class="btn btn-danger" onclick="resetForm()">Reset Form</button>
+  </form>
+
+  <!-- Display added filters with buttons for each -->
+  <div id="filterDisplay" class="mt-4"></div>
+
+  <!-- Display filter tree -->
+  <div id="filterTree" class="mt-4">
+    <h5>Filter Tree:</h5>
+    <pre id="filterTreeContent"></pre>
+  </div>
+</div>
+
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  var filterTree = [];
+
+  function addFilter() {
+    var field = $('#field').val();
+    var operator = $('#operator').val();
+    var value = $('#value').val();
+    var filterType = $('#filterType').val();
+
+    // Create filter object
+    var filter = {
+      field: field,
+      operator: operator,
+      value: value,
+      filterType: filterType,
+      children: [] // 자식 필터를 저장하는 배열
+    };
+
+    // Add filter to filter tree
+    filterTree.push(filter);
+
+    // Render the filter tree
+    renderFilterTree();
+
+    // Display the filter
+    displayFilter(filter);
+
+    // Reset the form
+    resetForm();
+  }
+
+  function displayFilter(filter) {
+    // Create a div element to display the filter
+    var filterDiv = $('<div>').addClass('alert alert-info alert-dismissible fade show').attr('role', 'alert');
+
+    // Display filter information
+    filterDiv.html('<strong>' + filter.field + '</strong> ' + filter.operator + ' <span class="badge badge-secondary">' +
+            filter.value + '</span> (' + filter.filterType + ')');
+
+    // Add logical operator buttons
+    filterDiv.append(
+            '<button type="button" class="btn btn-success btn-sm" onclick="addLogicalOperator(\'and\', ' + filterTree.indexOf(filter) + ')">AND</button> ' +
+            '<button type="button" class="btn btn-warning btn-sm" onclick="addLogicalOperator(\'or\', ' + filterTree.indexOf(filter) + ')">OR</button> '
+    );
+
+    // Add close button
+    filterDiv.append('<button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="deleteFilter(this)">' +
+            '<span aria-hidden="true">&times;</span></button>');
+
+    // Append the filter div to the display div
+    $('#filterDisplay').append(filterDiv);
+  }
+
+  function addLogicalOperator(logicalOperator, index) {
+    // Create logical operator filter object
+    var logicalOperatorFilter = {
+      field: logicalOperator,
+      children: [] // 자식 필터를 저장하는 배열
+    };
+
+    // Add logical operator filter to the selected filter's children
+    filterTree[index].children.push(logicalOperatorFilter);
+
+    // Render the filter tree
+    renderFilterTree();
+  }
+
+  function deleteFilter(button) {
+    // Find the index of the parent div and remove the filter from the tree
+    var index = $('#filterDisplay').children('div').index($(button).parent());
+    filterTree.splice(index, 1);
+    $('#filterTreeContent').text(JSON.stringify(filterTree, null, 2));
+
+    // Remove the filter display
+    $(button).parent().remove();
+
+    // 갱신된 필터 트리를 다시 렌더링
+    renderFilterTree();
+  }
+
+  function resetForm() {
+    // Reset the form fields
+    $('#field').val('');
+    $('#operator').val('');
+    $('#value').val('');
+    $('#filterType').val('number');
+  }
+
+  function renderFilterTree() {
+    // 갱신된 필터 트리를 다시 렌더링
+    $('#filterTreeContent').text(JSON.stringify(filterTree, null, 2));
+  }
+
+  /*]]>*/
+</script>
+
+</body>
+</html>
