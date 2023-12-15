@@ -11,6 +11,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @EntityListeners(AuditingEntityListener.class)
+@Table(name = "filter_key_map")
 public class FilterKeyMap {
 
     @Id
@@ -21,7 +22,7 @@ public class FilterKeyMap {
     @Id
     @ManyToOne
     @JoinColumn(name = "filter_id", referencedColumnName = "filter_id")
-    private Key filterId;
+    private Filter filterId;
 
     @Column(name = "operator")
     private String operator;

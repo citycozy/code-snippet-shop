@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @EntityListeners(AuditingEntityListener.class)
+@Table(name = "code_table")
 public class CodeTable {
 
     @Id

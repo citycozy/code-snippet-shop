@@ -18,6 +18,4 @@ public class ScenarioReadDTO {
     private Boolean db_loaded;
     private Boolean hadoop_loaded;
     private String status;
-    private LocalDateTime regDt;
-    private LocalDateTime modDt;
 }

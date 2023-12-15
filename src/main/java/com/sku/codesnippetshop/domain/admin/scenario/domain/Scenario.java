@@ -31,6 +31,7 @@ public class Scenario {
     @JoinColumn(name = "filter_id", referencedColumnName = "filter_id")
     private Filter filterId;
 
+
     @Column(name = "name", length = 100)
     private String name;
 
