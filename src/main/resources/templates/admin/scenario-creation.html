@@ -59,89 +59,73 @@
         </div>
     </div>
 
-    <div class="form-row">
-        <div class="form-group col-md-3">
-            <label for="keys">키 </label>
-            <select id="keys" name="keys" class="form-control">
-                <option value="region">지역</option>
-                <option value="age">나이</option>
-                <option value="customer-id">고객번호</option>
-                <option value="product-name">상품이름</option>
-                <option value="price">가격</option>
-            </select>
-        </div>
 
-        <div class="form-group col-md-3">
-            <label for="comparison-operator">부등호 선택 </label>
-            <select id="comparison-operator" name="comparison-operator" class="form-control">
-                <option value="">&lt; (미만)</option>
-                <option value="greater-than">&gt; (초과)</option>
-                <option value="less-than-or-equal">&le; (이하)</option>
-                <option value="greater-than-or-equal">&ge; (이상)</option>
-                <option value="equal">= (같음)</option>
-                <option value="not-equal">!= (다름)</option>
-            </select>
-        </div>
+    <div class="container mt-5">
+        <form id="filterForm">
+            <!-- Filter form fields -->
+            <div class="form-row">
+                <div class="col-md-3 mb-3">
+                    <label for="key"><b>키</b></label>
+                    <select class="form-control" id="key" name="key" required>
+                        <option value="cust_id">고객번호</option>
+                        <option value="cust_age">고객나이</option>
+                        <option value="loc">고객주소</option>
 
-        <div class="form-group col-md-3">
-            <label for="fruits">필터링 정보 </label>
-            <select id="fruits" name="fruits" class="form-control">
-                <option value="apple">Apple</option>
-                <option value="banana">Banana</option>
-                <option value="orange">Orange</option>
-                <option value="grape">Grape</option>
-            </select>
-        </div>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="operator"><b>연산자</b></label>
+                    <select class="form-control" id="operator" name="operator" required>
+                        <option value="<">&lt; (미만)</option>
+                        <option value=">">&gt; (초과)</option>
+                        <option value="<=">&le; (이하)</option>
+                        <option value=">=">&ge; (이상)</option>
+                        <option value="=">= (같음)</option>
+                        <option value="!=">!= (다름)</option>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="value"><b>값</b></label>
+                    <input type="text" class="form-control" id="value" name="value" required>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="filterType"><b>값 타입</b></label>
+                    <select class="form-control" id="filterType" name="filterType" required>
+                        <option value="number">숫자</option>
+                        <option value="string">문자</option>
+                    </select>
+                </div>
+            </div>
 
-        <div class="form-group col-md-3">
-            <label for="filter-input">입력</label>
-            <input id="filter-input" class="form-control" type="text" placeholder="입력">
+            <!-- Add filter button -->
+            <button type="button" class="btn btn-primary" onclick="addFilter()">필터 추가</button>
+            <button type="button" class="btn btn-danger" onclick="resetForm()">리셋 폼</button>
+            <button type="button" class="btn btn-success" onclick="addLogicalOperator('AND')">AND</button>
+            <button type="button" class="btn btn-warning" onclick="addLogicalOperator('OR')">OR</button>
+        </form>
+
+        <!-- Display added filters with buttons for each -->
+        <div id="filterDisplay" class="mt-4"></div>
+        <div class="row">
+            <!-- Display filter tree -->
+            <div class="col-6">
+                <h5><b>필터 Json 트리</b></h5>
+                <div id="filterTree" class="mt-4">
+                    <pre id="filterTreeContent" class="text-start" style="border : 1px solid black"></pre>
+                </div>
+            </div>
+            <div class="col-6">
+                <h5><b>필터 트리</b></h5>
+                <div id="filterTreeButtons" class="mt-4" style="border : 1px solid black">
+
+                </div>
+            </div>
         </div>
     </div>
-
-    <div id="operator-select-div" class="form-group">
-        <label for="logical-operator">연산자 선택</label>
-        <select id="logical-operator" name="logical-operator" class="form-control">
-            <option value="and">AND</option>
-            <option value="or">OR</option>
-        </select>
-    </div>
-
-
-    <div class="row pb-3">
-        <div class="col">
-            <!-- 플러스 버튼 모달 토글 버튼 -->
-            <button id="add-filter-btn" type="button" class="btn btn-primary" >
-                필터 추가
-            </button>
-        </div>
-    </div>
-
 
     <!-- 테이블 부분 -->
     <div class="row justify-content-center">
         <div class="col-12">
-            <table class="table">
-                <thead class="table-dark">
-                <tr>
-                    <th scope="col">KEY-NAME</th>
-                    <th scope="col">OPTION</th>
-                    <th scope="col">VALUE | INPUT</th>
-                    <th scope="col">#</th>
-                </tr>
-                </thead>
-                <tbody id="filter-table-body">
-                <tr onclick="highlightRow(this)" data-bs-toggle="modal" data-bs-target="#sidebarModal">
-                    <td>나이</td>
-                    <td><(미만)</td>
-                    <td>20</td>
-                    <th scope="row">
-                        <button class="btn btn-danger deleteBtn">삭제</button>
-                    </th>
-                </tr>
-                <!-- 나머지 테이블 행들도 동일하게 작성 -->
-                </tbody>
-            </table>
             <div class="row pb-3">
                 <div class="col">
                     <!-- 플러스 버튼 모달 토글 버튼 -->
@@ -193,5 +177,225 @@
         }
     });
 </script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var filterTree = [];
+
+    function addFilter() {
+        var key = $('#key').val();
+        var operator = $('#operator').val();
+        var value = $('#value').val();
+        var filterType = $('#filterType').val();
+
+        // Create filter object
+        var filter = {
+            key: key,
+            operator: operator,
+            value: value,
+            filterType: filterType
+        };
+
+        if (filterTree.length === 0 || (filterTree.length > 0 && filterTree[filterTree.length - 1].hasOwnProperty('logicalOperator'))) {
+            // Add filter to filter tree
+            addToFilterTree(filter);
+
+            // Render the filter tree
+            renderFilterTree();
+
+            // Display the filter
+            // displayFilter(filter);
+            // displayFilter(filterTree);
+            renderFilterButtons();
+
+            // Reset the form
+            resetForm();
+        }else{
+            alert("AND/OR 콤보가 필요합니다");
+        }
+
+    }
+
+    function addLogicalOperator(logicalOperator) {
+        // Create logical operator object
+        var logicalOperatorObj = {
+            logicalOperator: logicalOperator
+        };
+
+        if(!filterTree[filterTree.length - 1].hasOwnProperty('logicalOperator')){
+            // Add logical operator to filter tree
+            addToFilterTree(logicalOperatorObj);
+
+            // Render the filter tree
+            renderFilterTree();
+
+            // Display the logical operator
+            displayLogicalOperator(logicalOperator);
+        }else{
+            alert("필터를 먼저 추가해주세요.");
+        }
+
+    }
+
+    function addToFilterTree(filter) {
+        filterTree.push(filter);
+    }
+
+    function displayLogicalOperator(logicalOperator) {
+        // Add button for logical operator to the tree buttons
+        var logicalOperatorButton = $('<button>').addClass('btn btn-info m-2').text(logicalOperator);
+        logicalOperatorButton.click(function () {
+            editLogicalOperator(logicalOperator);
+        });
+
+        // Add delete button for logical operator
+        var deleteButton = $('<button>').addClass('btn btn-danger m-2').text('삭제');
+        deleteButton.click(function () {
+            deleteLogicalOperator(logicalOperatorButton);
+        });
+
+        // Create a container div for each logical operator and its buttons in the filter tree
+        var logicalOperatorContainer = $('<div>').addClass('d-flex flex-row align-items-center');
+        logicalOperatorContainer.append(logicalOperatorButton, deleteButton);
+
+        // Append the container div to the filter tree buttons
+        $('#filterTreeButtons').append(logicalOperatorContainer);
+    }
+
+    function editLogicalOperator(logicalOperator) {
+        // Logical operator buttons are not editable
+    }
+
+    function deleteLogicalOperator(logicalOperatorButton) {
+        // Find the index of the parent div and remove the logical operator from the tree
+        var index = $('#filterTreeButtons').children('div').index(logicalOperatorButton.parent());
+        filterTree.splice(index, 2);
+        // $(this).parent().remove();
+        $('#filterTreeContent').text(JSON.stringify(filterTree, null, 2));
+
+        // Remove the logical operator buttons
+        logicalOperatorButton.parent().remove();
+
+        // 갱신된 필터 트리를 다시 렌더링
+        renderFilterTree();
+        renderFilterButtons();
+    }
+
+    function editFilter(filter) {
+        var key = prompt('Enter a new key:', filter.key);
+        if (key !== null) {
+            filter.key = key;
+            renderFilterTree();
+            renderFilterButtons();
+        }
+    }
+
+
+
+    function deleteFilter(index) {
+
+        filterTree.splice(index, 1);
+        $('#filterTreeContent').text(JSON.stringify(filterTree, null, 2));
+        // Remove the filter display
+
+        // Remove the property buttons
+        $('#filterTreeButtons button').eq(index).parent().remove();
+        // $('#filterTreeButtons').children().eq(index).remove();
+        $('#filterDisplay').children().eq(index).remove();
+        alert(index);
+
+        // 갱신된 필터 트리를 다시 렌더링
+        renderFilterTree();
+        renderFilterButtons();
+    }
+
+
+
+    function resetForm() {
+        // Reset the form fields
+        $('#key').val('');
+        $('#operator').val('');
+        $('#value').val('');
+        $('#filterType').val('number');
+    }
+
+    function renderFilterTree() {
+        // 갱신된 필터 트리를 다시 렌더링
+        $('#filterTreeContent').text(JSON.stringify(filterTree, null, 2));
+    }
+
+    function renderFilterButtons() {
+        // Remove all buttons
+        $('#filterTreeButtons').empty();
+        $('#filterDisplay').empty();
+        // Add buttons for each filter property
+        filterTree.forEach(function (item, index) {
+            if (item.hasOwnProperty('key')) {
+                var filterButton = $('<button>').addClass('btn btn-secondary m-2').text(item.key + ' ' + item.operator + ' ' + item.value);
+                filterButton.click(function () {
+                    editFilter(item);
+                });
+
+                // Add delete button for filter
+                var deleteButton = $('<button>').addClass('btn btn-danger m-2').text('삭제');
+                deleteButton.click(function () {
+                    deleteFilter(index);
+                });
+
+                // Add add subfilter button for filter
+                var addSubfilterButton = $('<button>').addClass('btn btn-success m-2').text('하위 필터 추가');
+                addSubfilterButton.click(function () {
+                    alert('Add Subfilter clicked for: ' + item.key );
+                });
+
+                // Create a container div for each filter and its buttons in the filter tree
+                var filterContainer = $('<div>').addClass('d-flex flex-row align-items-center');
+                filterContainer.append(filterButton, deleteButton, addSubfilterButton);
+
+                $('#filterTreeButtons').append(filterContainer);
+
+                //display
+                // Create a div element to display the filter
+                var filterDiv = $('<div>').addClass('alert alert-info alert-dismissible fade show').attr('role', 'alert');
+
+                // Display filter information
+                filterDiv.html('<strong>' + item.key + '</strong> ' + item.operator + ' <span class="badge badge-secondary">' +
+                    item.value + '</span> (' + item.filterType + ')');
+
+                // Add close button
+                filterDiv.append('<button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="deleteFilter('+index+')">' +
+                    '<span aria-hidden="true">&times;</span></button>');
+
+                // Append the filter div to the display div
+                $('#filterDisplay').append(filterDiv);
+                //display
+            } else if (item.hasOwnProperty('logicalOperator')) {
+
+                // Add button for logical operator to the tree buttons
+                var logicalOperatorButton = $('<button>').addClass('btn btn-info m-2').text(item.logicalOperator);
+                logicalOperatorButton.click(function () {
+                    editLogicalOperator(item.logicalOperator);
+                });
+
+
+                // Add delete button for logical operator
+                var deleteButton = $('<button>').addClass('btn btn-danger m-2').text('삭제');
+                deleteButton.click(function () {
+                    deleteLogicalOperator(logicalOperatorButton);
+                });
+
+                // Create a container div for each logical operator and its buttons in the filter tree
+                var logicalOperatorContainer = $('<div>').addClass('d-flex flex-row align-items-center');
+                logicalOperatorContainer.append(logicalOperatorButton, deleteButton);
+
+                $('#filterTreeButtons').append(logicalOperatorContainer);
+            }
+        });
+    }
+
+
+
+    /*]]>*/
+</script>
+
 </body>
 </html>
