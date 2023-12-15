@@ -40,13 +40,6 @@ public class CodeTable {
     @Column(name = "code", length = 100)
     private String code;
 
-    @Column(name = "reg_dt")
-    @CreatedDate
-    private LocalDateTime regDt;
-
-    @Column(name = "mod_dt")
-    @LastModifiedDate
-    private LocalDateTime modDt;
 
     @Builder
     private CodeTable(Key key, String name, String code) {
@@ -66,8 +59,6 @@ public class CodeTable {
                 .keyId(codeTable.getKey().getKeyId())
                 .name(codeTable.getName())
                 .code(codeTable.getCode())
-                .regDt(codeTable.getRegDt())
-                .modDt(codeTable.getModDt())
                 .build();
     }
 
