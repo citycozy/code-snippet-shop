@@ -1,9 +1,7 @@
 package com.sku.codesnippetshop.domain.admin.scenario.domain;
 
-import com.sku.codesnippetshop.domain.admin.key.domain.Key;
-import com.sku.codesnippetshop.domain.admin.key.dto.KeyCreateDTO;
-import com.sku.codesnippetshop.domain.admin.key.dto.KeyReadDTO;
-import com.sku.codesnippetshop.domain.admin.key.dto.KeyUpdateDTO;
+import com.sku.codesnippetshop.domain.admin.filter.domain.Filter;
+import com.sku.codesnippetshop.domain.admin.logFormat.domain.LogFormat;
 import com.sku.codesnippetshop.domain.admin.scenario.dto.ScenarioCreateDTO;
 import com.sku.codesnippetshop.domain.admin.scenario.dto.ScenarioReadDTO;
 import com.sku.codesnippetshop.domain.admin.scenario.dto.ScenarioUpdateDTO;
@@ -12,11 +10,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -29,11 +23,17 @@ public class Scenario {
     @Column(name = "scenario_id")
     private Long scenarioId;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "log_format_id", referencedColumnName = "log_format_id")
+    private LogFormat logFormatId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "filter_id", referencedColumnName = "filter_id")
+    private Filter filterId;
+
+
     @Column(name = "name", length = 100)
     private String name;
-
-    @Column(name = "log_format", length = 100)
-    private String logFormat;
 
     @Column(name = "description", length = 100)
     private String description;
@@ -50,28 +50,15 @@ public class Scenario {
     @Column(name = "hadoop_loaded")
     private Boolean hadoop_loaded;
 
-    @Column(name = "status")
-    private String status;
-
-    @Column(name = "reg_dt")
-    @CreatedDate
-    private LocalDateTime regDt;
-
-    @Column(name = "mod_dt")
-    @LastModifiedDate
-    private LocalDateTime modDt;
-
     @Builder
-    public Scenario(Long scenarioId, String name, String logFormat, String description, String status) {
+    public Scenario(Long scenarioId, String name, String description) {
         this.scenarioId = scenarioId;
         this.name = name;
-        this.logFormat = logFormat;
         this.description = description;
         this.topic_creation_enabled = false;
         this.consumer_concurrency = 0L;
         this.db_loaded = false;
         this.hadoop_loaded = false;
-        this.status = "STOP";
     }
 
     public void updateScenario(ScenarioUpdateDTO update) {
@@ -91,18 +78,13 @@ public class Scenario {
                 .consumer_concurrency(scenario.getConsumer_concurrency())
                 .db_loaded(scenario.getDb_loaded())
                 .hadoop_loaded(scenario.getHadoop_loaded())
-                .logFormat(scenario.getLogFormat())
                 .scenarioId(scenario.getScenarioId())
-                .status(scenario.getStatus())
-                .regDt(scenario.getRegDt())
-                .modDt(scenario.getModDt())
                 .build();
     }
 
     public static Scenario dtoToEntity(ScenarioCreateDTO create){
         return Scenario.builder()
                 .name(create.getName())
-                .logFormat(create.getLogFormat())
                 .description(create.getDescription())
                 .build();
     }

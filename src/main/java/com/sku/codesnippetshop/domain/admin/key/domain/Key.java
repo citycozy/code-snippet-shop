@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @EntityListeners(AuditingEntityListener.class)
-@Table(name="filter_key")
 public class Key {
 
     @Id
@@ -36,24 +35,12 @@ public class Key {
     @Column(name = "description", length = 100)
     private String description;
 
-    @Column(name = "reg_dt")
-    @CreatedDate
-    private LocalDateTime regDt;
-
-    @Column(name = "mod_dt")
-    @LastModifiedDate
-    private LocalDateTime modDt;
-
     @Builder
     private Key(String name, String type, String description) {
         this.name = name;
         this.type = type;
         this.description = description;
     }
-
-
-    
-
 
     public void updateKey(KeyUpdateDTO update) {
         this.name = update.getName();
@@ -67,8 +54,6 @@ public class Key {
                 .name(key.getName())
                 .type(key.getType())
                 .description(key.getDescription())
-                .regDt(key.getRegDt())
-                .modDt(key.getModDt())
                 .build();
     }
 
