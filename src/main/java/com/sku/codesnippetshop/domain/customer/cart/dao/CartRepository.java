@@ -1,6 +1,6 @@
-package com.sku.codesnippetshop.domain.cart.dao;
+package com.sku.codesnippetshop.domain.customer.cart.dao;
 
-import com.sku.codesnippetshop.domain.cart.domain.Cart;
+import com.sku.codesnippetshop.domain.customer.cart.domain.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

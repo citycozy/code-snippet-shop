@@ -1,4 +1,4 @@
-package com.sku.codesnippetshop.domain.cart.dto;
+package com.sku.codesnippetshop.domain.customer.cart.dto;
 
 import lombok.*;
 

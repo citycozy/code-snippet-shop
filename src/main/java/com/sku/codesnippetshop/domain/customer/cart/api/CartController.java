@@ -1,10 +1,9 @@
-package com.sku.codesnippetshop.domain.cart.api;
+package com.sku.codesnippetshop.domain.customer.cart.api;
 
-import com.sku.codesnippetshop.domain.cart.dao.CartRepository;
-import com.sku.codesnippetshop.domain.cart.dto.CartCreateDto;
-import com.sku.codesnippetshop.domain.cart.dto.CartReadDto;
-import com.sku.codesnippetshop.domain.cart.dto.CartUpdateDTO;
-import com.sku.codesnippetshop.domain.cart.service.CartService;
+import com.sku.codesnippetshop.domain.customer.cart.dto.CartCreateDto;
+import com.sku.codesnippetshop.domain.customer.cart.dto.CartReadDto;
+import com.sku.codesnippetshop.domain.customer.cart.dto.CartUpdateDTO;
+import com.sku.codesnippetshop.domain.customer.cart.service.CartService;
 import com.sku.codesnippetshop.global.error.NotFoundException;
 import com.sku.codesnippetshop.global.response.ResponseFormat;
 import com.sku.codesnippetshop.global.response.ResponseStatus;

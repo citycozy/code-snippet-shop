@@ -1,8 +1,8 @@
-package com.sku.codesnippetshop.domain.cart.domain;
+package com.sku.codesnippetshop.domain.customer.cart.domain;
 
-import com.sku.codesnippetshop.domain.cart.dto.CartCreateDto;
-import com.sku.codesnippetshop.domain.cart.dto.CartReadDto;
-import com.sku.codesnippetshop.domain.cart.dto.CartUpdateDTO;
+import com.sku.codesnippetshop.domain.customer.cart.dto.CartCreateDto;
+import com.sku.codesnippetshop.domain.customer.cart.dto.CartReadDto;
+import com.sku.codesnippetshop.domain.customer.cart.dto.CartUpdateDTO;
 import com.sku.codesnippetshop.domain.customer.item.domain.Item;
 import com.sku.codesnippetshop.domain.customer.member.domain.Member;
 import jakarta.persistence.*;
