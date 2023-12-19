@@ -75,4 +75,9 @@ public class FrontMapping {
         return "/test/test2";
     }
 
+    @GetMapping("log-format-management")
+    public String logFormatManagement (){
+        return "/admin/log-format-management";
+    }
+
 }
