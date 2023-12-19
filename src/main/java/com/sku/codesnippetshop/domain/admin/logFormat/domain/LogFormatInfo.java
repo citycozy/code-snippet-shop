@@ -14,6 +14,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class LogFormatInfo {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "log_format_info_id")
+    private Long logFormatInfoId;
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "log_format_id", referencedColumnName = "log_format_id")
     private LogFormat logFormat;
