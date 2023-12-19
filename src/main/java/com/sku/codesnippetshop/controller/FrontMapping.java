@@ -80,4 +80,10 @@ public class FrontMapping {
         return "/admin/log-format-management";
     }
 
+    @GetMapping("insight-board")
+    public String insightBoard (){
+        return "/admin/insight-board";
+    }
+
+
 }

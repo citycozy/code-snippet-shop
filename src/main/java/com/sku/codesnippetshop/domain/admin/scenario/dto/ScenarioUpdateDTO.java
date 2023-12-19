@@ -13,5 +13,6 @@ public class ScenarioUpdateDTO {
     private Long consumer_concurrency;
     private Boolean db_loaded;
     private Boolean hadoop_loaded;
+    private Boolean status;
 
 }

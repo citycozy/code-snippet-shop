@@ -5,15 +5,23 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
+    <!-- jQuery 로드 -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <!-- 부트스트랩 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
     <!--    부트스트랩-->
+    <!-- popperjs -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@2.10.2/dist/umd/popper.min.js"></script>
     <!--    아이콘-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <!--    아이콘-->
+
+    <!-- Select2 스타일 및 스크립트 로드 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <!-- header css -->
     <link rel="stylesheet" th:href="@{/css/header.css}">
 
@@ -34,48 +42,74 @@
                 height: 200px; /* 높이 200px로 설정 */
             }
         }
+        /* Select2 스타일 */
+        .select2-container--default .select2-selection--single {
+            border: 3px solid black;
+        }
     </style>
 
+<!--    진행상황 스타일-->
+    <style>
+        .progress {
+            appearance: none;
+        }
+        .progress::-webkit-progress-bar {
+            background:#f0f0f0;
+            border-radius:10px;
+            box-shadow: inset 3px 3px 10px #ccc;
+        }
+        .progress::-webkit-progress-value {
+            border-radius:10px;
+            background: #1D976C;
+            background: -webkit-linear-gradient(to right, #ffffff, #202020);
+            background: linear-gradient(to right, #ffffff, #202020);
+
+        }
+    </style>
     <title>시나리오 생성</title>
 
 </head>
 <body>
 
 <div th:replace="~{/includes/header :: header}"></div>
-<div class="container text-center mt-5">
+<div id = "filter-container" hidden class="container text-center mt-5">
 
-    <!-- 검색 입력 부분 -->
-    <div class="row search-container mb-3">
-        <div class="col-12 d-flex py-1">
-            <input id="searchData" class="form-control me-2" type="search" placeholder="키를 검색하세요"
-                   aria-label="Search">
-            <button id="searchBtn" class="btn btn-outline-primary" type="button">
-                <svg style="display:inline-block" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                     fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                    <path
-                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                </svg>
-            </button>
-        </div>
-    </div>
 
 
     <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h2 class="text-center mb-3">로그 포맷 지정 -> 필터 생성 -> 시나리오 생성</h2>
+                <progress class="progress mb-3" value="66" min="0" max="100" style="width: 100%;"></progress>
+            </div>
+        </div>
         <form id="filterForm">
             <!-- Filter form fields -->
-            <div class="form-row">
-                <div class="col-md-3 mb-3">
+            <div class="row">
+                <div class="col mb-3">
                     <label for="key"><b>키</b></label>
-                    <select class="form-control" id="key" name="key" required>
+                </div>
+                <div class="col mb-3">
+                    <label for="operator"><b>연산자</b></label>
+                </div>
+                <div class="col mb-3">
+                    <label for="value"><b>값</b></label>
+                </div>
+                <div class="col mb-3">
+                    <label for="filterType"><b>값 타입</b></label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col mb-3">
+                    <select class="js-example-basic-single selectBox" data-placeholder="키 선택" name="key"  style="width : 100%;" id="key" required>
                         <option value="cust_id">고객번호</option>
                         <option value="cust_age">고객나이</option>
                         <option value="loc">고객주소</option>
-
                     </select>
                 </div>
-                <div class="col-md-3 mb-3">
-                    <label for="operator"><b>연산자</b></label>
-                    <select class="form-control" id="operator" name="operator" required>
+                <div class="col mb-3">
+                    <select class="form-control" data-placeholder="연산자 선택" id="operator" name="operator" required style="
+            border: 3px solid black;">
                         <option value="<">&lt; (미만)</option>
                         <option value=">">&gt; (초과)</option>
                         <option value="<=">&le; (이하)</option>
@@ -84,18 +118,20 @@
                         <option value="!=">!= (다름)</option>
                     </select>
                 </div>
-                <div class="col-md-3 mb-3">
-                    <label for="value"><b>값</b></label>
-                    <input type="text" class="form-control" id="value" name="value" required>
+                <div class="col mb-3">
+                    <input type="text" class="form-control" id="value" name="value" placeholder="값을 입력하세요" style="
+            border: 3px solid black;" required>
                 </div>
-                <div class="col-md-3 mb-3">
-                    <label for="filterType"><b>값 타입</b></label>
-                    <select class="form-control" id="filterType" name="filterType" required>
+                <div class="col mb-3">
+
+                    <select class="form-control"  data-placeholder="데이터 타입 선택" id="filterType" name="filterType" required style="
+            border: 3px solid black;">
                         <option value="number">숫자</option>
                         <option value="string">문자</option>
                     </select>
                 </div>
             </div>
+
 
             <!-- Add filter button -->
             <button type="button" class="btn btn-primary" onclick="addFilter()">필터 추가</button>
@@ -129,11 +165,11 @@
             <div class="row pb-3">
                 <div class="col">
                     <!-- 플러스 버튼 모달 토글 버튼 -->
-                    <button type="button" class="btn btn-danger">
-                        시나리오 생성
-                    </button>
+                    <button class="set-button btn btn-danger" id="refreshButton"> 이전으로 </button>
+                    <button class="btn btn-danger" id="scenario-create-btn" > 시나리오 생성 </button>
                 </div>
             </div>
+
             <div class="d-grid gap-2">
                 <a class="btn btn-outline-primary" type="button" href="\scenario-management"><b>시나리오 관리</b></a>
                 <a class="btn btn-outline-primary" type="button" href="\key-management"><b>키 관리</b></a>
@@ -142,12 +178,307 @@
         </div>
     </div>
 
+</div >
+
+<div id="log-format-container" class="container text-center mt-5" >
+    <div class="container mt-5">
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h2 class="text-center mb-3">로그 포맷 지정 -> 필터 생성 -> 시나리오 생성</h2>
+                <progress class="progress mb-3" value="33" min="0" max="100" style="width: 100%;"></progress>
+            </div>
+        </div>
+        <!-- 검색 입력 부분 -->
+        <div class="row search-container mb-3">
+            <div class="col-12 d-flex py-1">
+                <input id="searchData" class="form-control me-2" type="search" placeholder="로그 포맷을 검색하세요"
+                       aria-label="Search">
+                <button id="searchBtn" class="btn btn-outline-primary" type="button">
+                    <svg style="display:inline-block" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                         fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path
+                                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <!-- 테이블 부분 -->
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <table class="table">
+                    <thead class="table-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">ID</th>
+                        <th scope="col">NAME</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">log-Format</th>
+                    </tr>
+                    </thead>
+                    <tbody id="scenario-table-body">
+                    <tr onclick="highlightRow(this)" data-bs-toggle="modal" data-bs-target="#sidebarModal">
+                        <th scope="row">
+                            <input class="form-check-input" name="log-fomat-group" type="radio" value="">
+                        </th>
+                        <td>0</td>
+                        <td>로그포맷 이름</td>
+                        <td>테스트 용 html text 행</td>
+                        <td>배포안됨</td>
+                    </tr>
+                    <tr onclick="highlightRow(this)" class="log-format-row" data-bs-toggle="modal" data-bs-target="#sidebarModal">
+                        <th scope="row">
+                            <input class="form-check-input" name="log-fomat-group" type="radio" value="">
+                        </th>
+                        <td>1</td>
+                        <td>로그포맷 이름</td>
+                        <td>테스트 용 html text 행</td>
+                        <td>배포안됨</td>
+                    </tr>
+                    <!-- 나머지 테이블 행들도 동일하게 작성 -->
+                    </tbody>
+                </table>
+                <div class="row pb-3">
+                    <div class="col">
+                        <!-- 플러스 버튼 모달 토글 버튼 -->
+                        <button id="set-log-format" class="set-button  btn btn-danger" disabled > 확인 </button>
+                    </div>
+                </div>
+                <div class="d-grid gap-2">
+                    <a class="btn btn-outline-primary" type="button" href="\scenario-management"><b>시나리오 관리</b></a>
+                    <a class="btn btn-outline-primary" type="button" href="\key-management"><b>키 관리</b></a>
+                    <a class="btn btn-outline-primary" type="button" href="\log-format-management"><b>로그 포맷 관리</b></a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
+
+
+
+<!-- SideBar Modal -->
+<div class="modal fade" id="sidebarModal" tabindex="-1" aria-labelledby="sidebarModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-sidebar modal-lg">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-between row">
+                <h3 class="col-4"></h3>
+                <h5 class="modal-title mx-auto independent-block col-4"><b> 키 관리</b></h5>
+                <button type="button" class="btn-close col-4" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="modal-body">
+                    <div>
+                        <table class="table table-dark table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <td colspan="2" class="col-6 text-center">
+                                    <b>키 로그 포맷</b>
+                                </td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="col-6 text-center" colspan="2">
+                                    <label>
+                                        <textarea class="custom-textarea" rows="2" cols="90"> { "cust_id" : "1" }
+                                        </textarea>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr class="text-end">
+                                <td>
+                                    키이름
+                                </td>
+                                <td id ="nameModal">
+                                    cust_id
+                                </td>
+                            </tr>
+                            <tr class="text-end">
+                                <td>
+                                    키타입
+                                </td>
+                                <td id="typeModal">
+                                    number
+                                </td>
+                            </tr>
+                            <tr class="text-end">
+                                <td colspan="2">
+                                    <button class="btn btn-primary">Reset</button>
+                                    <button class="btn btn-success">Update</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <table class="table table-dark table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <td class="col-6 text-center">
+                                    <b>키 설명</b>
+                                </td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="col-6 text-center" id="descriptionModal">
+                                    해당 키는 테스트 키입니다. 여기 팝업 창에서는 미리 설정된 키 포맷을 로드하며 코드 테이블을 추가 할 수 있습니다.
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <table class="table table-dark table-striped table-hover">
+                            <thead>
+                            <th colspan="2" class="text-center">
+                                생성 수정 일시
+                            </th>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="col-6 text-center">
+                                    <b>키 생성 일시</b>
+                                </td>
+                                <td class="col-6 text-center">
+                                    <b id="regDtModal"></b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-6 text-center">
+                                    <b>키 수정 일시</b>
+                                </td>
+                                <td class="col-6 text-center">
+                                    <b id="modDtModal"></b>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div>
+                        <table class="table table-dark table-striped table-hover">
+                            <thead>
+                            <th colspan="2" class="text-center">
+                                코드 테이블 관리
+                            </th>
+                            </thead>
+                            <tbody id="code-table-body-exist">
+                            <tr class="mb-1">
+                                <td class="col-6 text-center">
+                                    <b>실제 코드 값</b>
+                                </td>
+                                <td class="col-6 text-center">
+                                    <b>비주얼 값 </b>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="col-6 text-center">
+                                    <b>01</b>
+                                </td>
+                                <td class="col-6 text-center">
+                                    <b>서울 특별시</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-6 text-center">
+                                    <b>02</b>
+                                </td>
+                                <td class="col-6 text-center">
+                                    <b>부산 광역시</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-6 text-center">
+                                    <b>03</b>
+                                </td>
+                                <td class="col-6 text-center">
+                                    <b>대전 광역시</b>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button id="add-code-form-btn-exist" class="btn btn-outline-success" type="button"><b>+ 코드 추가 폼 +</b></button>
+                        <button id="add-code-btn-exist" class="btn btn-outline-danger" type="button" hidden="hidden"><b>추가</b></button>
+
+                        <!--                        <button class="btn btn-outline-danger" type="button"><b>중지</b></button>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 버튼을 클릭하면 모달 창이 나타납니다. -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+    Open Modal
+</button>
+<!-- 모달 창 -->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center">
+<!--            <div class="modal-header">-->
+<!--                <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>-->
+<!--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--            </div>-->
+
+            <div class="modal-body">
+                <img class="mb-3" src="https://cdn.icon-icons.com/icons2/1515/PNG/512/warning_105171.png" style="width:50px;"alt="">
+                <h4 style="color:red;"><b>AND/OR 을 먼저 선택해주세요.</b></h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div th:replace="~{/includes/footer :: footer}"></div>
-<!-- 제이쿼리 추가 -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 <script>
+    // Select2 라이브러리를 초기화합니다.
+    $(document).ready(function () {
+        $('#key').select2();
+    });
+</script>
+
+<script>
+
+    // radio 버튼 중 하나가 선택되어야 버튼을 활성화
+    function doesLogFormatSelected() {
+        $('#set-log-format').prop('disabled', !$('input[type="radio"]:checked').length);
+    };
+
+
+    $('.log-format-row').hover(function(){
+        console.log("호버");
+    })
+    $('.set-button').click(function(){
+
+        let filterContainer = $("#filter-container");
+        let logFormatContainer = $("#log-format-container");
+
+        if (filterContainer.is(":hidden")) {
+            filterContainer.removeAttr("hidden");
+        } else {
+            filterContainer.attr("hidden", true);
+        }
+
+        if (logFormatContainer.is(":hidden")) {
+            logFormatContainer.removeAttr("hidden");
+        } else {
+            logFormatContainer.attr("hidden", true);
+        }
+    });
+
+
+
+
     // 행 추가 버튼 클릭 시 실행되는 함수
     $('#add-filter-btn').on('click', function () {
         // 새로운 행을 생성
@@ -183,6 +514,7 @@
     var filterTree = [];
 
     function addFilter() {
+
         var key = $('#key').val();
         var operator = $('#operator').val();
         var value = $('#value').val();
@@ -211,7 +543,8 @@
             // Reset the form
             resetForm();
         }else{
-            alert("AND/OR 콤보가 필요합니다");
+            //AND나 OR이 필요합니다.
+            $('#myModal').modal('show');
         }
 
     }
@@ -316,7 +649,7 @@
         $('#key').val('');
         $('#operator').val('');
         $('#value').val('');
-        $('#filterType').val('number');
+        $('#type').val('number');
     }
 
     function renderFilterTree() {
@@ -359,12 +692,13 @@
                 var filterDiv = $('<div>').addClass('alert alert-info alert-dismissible fade show').attr('role', 'alert');
 
                 // Display filter information
-                filterDiv.html('<strong>' + item.key + '</strong> ' + item.operator + ' <span class="badge badge-secondary">' +
-                    item.value + '</span> (' + item.filterType + ')');
+                filterDiv.html('<strong>' + item.key + '</strong> ' + item.operator + ' <strong>' +
+                    item.value + '</strong> (' + item.filterType + ')');
 
                 // Add close button
-                filterDiv.append('<button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="deleteFilter('+index+')">' +
+                filterDiv.append('<button type="button" class="close btn" data-dismiss="alert" aria-label="Close" onclick="deleteFilter('+index+')">' +
                     '<span aria-hidden="true">&times;</span></button>');
+
 
                 // Append the filter div to the display div
                 $('#filterDisplay').append(filterDiv);
@@ -397,6 +731,52 @@
 
     /*]]>*/
 </script>
+
+<script>
+    // 새로고침 버튼 클릭 시 페이지 새로고침
+    $('#refreshButton').click(function () {
+        location.reload(true); // true는 캐시를 무시하고 새로고침
+    })
+    function highlightRow(row) {
+
+        console.log("모달 나오게");
+        // 기존에 활성화된 행에서 active 클래스 제거
+        var activeRow = $('tr.active');
+        if (activeRow.length) {
+            activeRow.removeClass('active');
+        }
+
+        // 클릭된 행에 active 클래스 추가
+        $(row).addClass('active');
+
+        let name = $(row).find('td:eq(1)').text();
+        let type = $(row).find('td:eq(2)').text();
+        let description = $(row).find('td:eq(3)').text();
+        // 추가 정보 가져오기
+        let regDt = $(row).find('td:eq(4)').text();
+        let modDt = $(row).find('td:eq(5)').text();
+        // 추가적인 컬럼들이 있다면 위와 같이 계속 추가
+
+        // 모달 내의 요소에 정보 설정
+        //$('#scenarioIdModal').text(scenarioId);
+        $('#nameModal').text(name);
+        $('#typeModal').text(type);
+        $('#descriptionModal').text(description);
+        // 추가 정보를 모달 내에 표시
+        $('#regDtModal').text(regDt);
+        $('#modDtModal').text(modDt);
+
+
+        // 클릭된 행의 체크박스를 체크
+        var checkbox = $(row).find('.form-check-input');
+        if (checkbox.length) {
+            checkbox.prop('checked', true);
+        }
+        //로그 포맷 selected 확인
+        doesLogFormatSelected();
+    }
+</script>
+
 
 </body>
 </html>
