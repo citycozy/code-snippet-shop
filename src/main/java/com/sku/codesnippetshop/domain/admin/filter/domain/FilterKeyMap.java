@@ -15,11 +15,15 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class FilterKeyMap {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "filter_key_map_id")
+    private Long FilterKeyMapId;
+
+
     @ManyToOne
     @JoinColumn(name = "key_id", referencedColumnName = "key_id")
     private Key keyId;
 
-    @Id
     @ManyToOne
     @JoinColumn(name = "filter_id", referencedColumnName = "filter_id")
     private Filter filterId;
