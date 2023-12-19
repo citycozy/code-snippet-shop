@@ -45,7 +45,7 @@
             }
         }
     </style>
-    <title>키 관리</title>
+    <title>로그 포맷 관리</title>
 
 </head>
 <body>
@@ -76,7 +76,6 @@
                     <th scope="col">#</th>
                     <th scope="col">ID</th>
                     <th scope="col">NAME</th>
-                    <th scope="col">KEY-TYPE</th>
                     <th scope="col">DESCRIPTION</th>
                 </tr>
                 </thead>
@@ -86,16 +85,15 @@
                         <input class="form-check-input" type="checkbox" value="">
                     </th>
                     <td>0</td>
-                    <td>키이름</td>
-                    <td>숫자</td>
-                    <td>설명입니다.</td>
+                    <td>로그 포맷 이름</td>
+                    <td>설명</td>
                 </tr>
                 <!-- 나머지 테이블 행들도 동일하게 작성 -->
                 </tbody>
             </table>
             <div class="d-grid gap-2">
                 <a id="create-key-btn" class="btn btn-outline-success" type="button" onclick="highlightRow(this)" data-bs-toggle="modal" data-bs-target="#create-key-modal"><b>키 생성</b></a>
-                <a class="btn btn-outline-primary" type="button" href="\log-format-management"><b>로그 포맷 관리</b></a>
+                <a class="btn btn-outline-primary" type="button" href="\key-management"><b>키 관리</b></a>
                 <a class="btn btn-outline-primary" type="button" href="\scenario-management"><b>시나리오 관리</b></a>
                 <a class="btn btn-outline-warning" type="button" href="\scenario-creation"><b>시나리오 생성</b></a>
 
@@ -255,7 +253,7 @@
                         <button id="add-code-form-btn-exist" class="btn btn-outline-success" type="button"><b>+ 코드 추가 폼 +</b></button>
                         <button id="add-code-btn-exist" class="btn btn-outline-danger" type="button" hidden="hidden"><b>추가</b></button>
 
-<!--                        <button class="btn btn-outline-danger" type="button"><b>중지</b></button>-->
+                        <!--                        <button class="btn btn-outline-danger" type="button"><b>중지</b></button>-->
                     </div>
                 </div>
             </div>
@@ -476,7 +474,7 @@
                         '</th>' +
                         '<td class="text-end">' + response.data[i].keyId + '</td>' +
                         '<td class="text-start">' + response.data[i].name + '</td>' +
-                        '<td class="text-start">' + response.data[i].type + '</td>' +
+                        '<td class="text-start" style="display:none;">' + response.data[i].type + '</td>' +
                         '<td class="text-start">' + response.data[i].description + '</td>' +
                         '<td class="text-start" style="display: none;">' + response.data[i].regDt + '</td>' +
                         '<td class="text-start" style="display: none;">' + response.data[i].modDt + '</td>' +
