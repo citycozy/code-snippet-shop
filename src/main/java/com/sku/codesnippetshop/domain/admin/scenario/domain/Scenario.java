@@ -50,6 +50,10 @@ public class Scenario {
     @Column(name = "hadoop_loaded")
     private Boolean hadoop_loaded;
 
+    @Column(name = "status")
+    private Boolean status;
+
+
     @Builder
     public Scenario(Long scenarioId, String name, String description) {
         this.scenarioId = scenarioId;
@@ -59,6 +63,7 @@ public class Scenario {
         this.consumer_concurrency = 0L;
         this.db_loaded = false;
         this.hadoop_loaded = false;
+        this.status = false;
     }
 
     public void updateScenario(ScenarioUpdateDTO update) {
@@ -68,6 +73,7 @@ public class Scenario {
         this.consumer_concurrency = update.getConsumer_concurrency();
         this.db_loaded = update.getDb_loaded();
         this.hadoop_loaded = update.getHadoop_loaded();
+        this.status = update.getStatus();
     }
 
     public static ScenarioReadDTO entityToDto(Scenario scenario){
@@ -79,6 +85,7 @@ public class Scenario {
                 .db_loaded(scenario.getDb_loaded())
                 .hadoop_loaded(scenario.getHadoop_loaded())
                 .scenarioId(scenario.getScenarioId())
+                .status(scenario.getStatus())
                 .build();
     }
 

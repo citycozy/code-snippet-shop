@@ -17,5 +17,5 @@ public class ScenarioReadDTO {
     private Long consumer_concurrency;
     private Boolean db_loaded;
     private Boolean hadoop_loaded;
-    private String status;
+    private Boolean status;
 }
