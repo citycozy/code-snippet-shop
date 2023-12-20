@@ -37,8 +37,9 @@ public class FluentdService {
         RestTemplate restTemplate = new RestTemplate();
 
         // 외부 URL 설정(Fluentd 주소)
-        String externalUrl = "http://localhost:9880/http.msg";  // 실제 Fluentd 서버의 주소로 변경
-
+//        String externalUrl = "http://localhost:9880/http.msg";  // Fluentd 서버의 주소로 보내도록 설정
+        String externalUrl = "http://localhost:81";  // nginx 서버의 주소로 변경
+        
         // POST 요청 및 응답 처리
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(externalUrl, requestEntity, String.class);
     }

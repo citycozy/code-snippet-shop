@@ -4,9 +4,21 @@
     <meta charset="UTF-8">
     <title>Send JSON Data</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- Matomo Tag Manager -->
+    <script>
+        var _mtm = window._mtm = window._mtm || [];
+        _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
+        (function() {
+            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+            g.async=true; g.src='http://localhost:81/TagManager/container_vIILnK7G.js'; s.parentNode.insertBefore(g,s);
+        })();
+
+    </script>
 </head>
 <body>
-
+<div>
+    <p>test용 p 태그입니다. 클릭 바랍니다.</p>
+</div>
 <!-- JSON 데이터를 입력하는 폼 -->
 <form id="jsonDataForm">
     <label for="jsonData">JSON Data:</label>
@@ -33,7 +45,11 @@
             }
         });
     }
+    $('p').click(function(){
+        console.log("click");
+    });
     /*]]>*/
+
 </script>
 
 </body>
