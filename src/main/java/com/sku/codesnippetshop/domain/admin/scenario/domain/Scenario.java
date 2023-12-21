@@ -1,5 +1,6 @@
 package com.sku.codesnippetshop.domain.admin.scenario.domain;
 
+import com.sku.codesnippetshop.domain.admin.BaseEntity;
 import com.sku.codesnippetshop.domain.admin.filter.domain.Filter;
 import com.sku.codesnippetshop.domain.admin.logFormat.domain.LogFormat;
 import com.sku.codesnippetshop.domain.admin.scenario.dto.ScenarioCreateDTO;
@@ -16,12 +17,12 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @EntityListeners(AuditingEntityListener.class)
-public class Scenario {
+@AttributeOverride(
+        name = "id",
+        column =  @Column(name = "scenario_id")
+)
+public class Scenario extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "scenario_id")
-    private Long scenarioId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "log_format_id", referencedColumnName = "log_format_id")
@@ -56,7 +57,7 @@ public class Scenario {
 
     @Builder
     public Scenario(Long scenarioId, String name, String description) {
-        this.scenarioId = scenarioId;
+        this.id = scenarioId;
         this.name = name;
         this.description = description;
         this.topic_creation_enabled = false;
@@ -84,7 +85,7 @@ public class Scenario {
                 .consumer_concurrency(scenario.getConsumer_concurrency())
                 .db_loaded(scenario.getDb_loaded())
                 .hadoop_loaded(scenario.getHadoop_loaded())
-                .scenarioId(scenario.getScenarioId())
+                .scenarioId(scenario.getId())
                 .status(scenario.getStatus())
                 .build();
     }

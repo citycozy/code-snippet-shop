@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface CodeTableRepository extends JpaRepository<CodeTable, Long> {
 
-    List<CodeTable> findByKey_KeyId(Long keyId);
+    List<CodeTable> findByKey_Id(Long keyId);
 }

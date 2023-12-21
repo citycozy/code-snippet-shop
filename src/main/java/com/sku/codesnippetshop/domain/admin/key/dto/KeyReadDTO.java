@@ -13,4 +13,6 @@ public class KeyReadDTO {
     private String name;
     private String type;
     private String description;
+    private LocalDateTime regDt;
+    private LocalDateTime modDt;
 }

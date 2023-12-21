@@ -22,10 +22,11 @@ public class KeyController {
     /*키 생성 컨트롤러
   param : 생성 키 info */
     @PostMapping
-    public ResponseFormat<Void> createBoard(@RequestBody KeyCreateDTO create) {
+    public ResponseFormat<Long> createBoard(@RequestBody KeyCreateDTO create) {
         try {
-            keyService.createKey(create);
-            return ResponseFormat.success(ResponseStatus.SUCCESS_CREATE);
+            Long keyId = keyService.createKey(create);
+
+            return ResponseFormat.successWithData(ResponseStatus.SUCCESS_CREATE, keyId);
         } catch (RuntimeException e) {
             return ResponseFormat.error(ResponseStatus.FAIL_BAD_REQUEST);
         }

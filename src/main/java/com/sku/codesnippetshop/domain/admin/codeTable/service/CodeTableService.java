@@ -34,7 +34,7 @@ public class CodeTableService {
     /*특정 키의 코드 테이블 전부 읽기 서비스
     param : X */
     public List<CodeTableReadDTO> getCodeTablesByKeyId(Long keyId){
-        final List<CodeTable> codeTableList = codeTableRepository.findByKey_KeyId(keyId );
+        final List<CodeTable> codeTableList = codeTableRepository.findByKey_Id(keyId );
 
         return codeTableList.stream()
                 .map(CodeTable::entityToDto)
