@@ -94,7 +94,7 @@
                 </tbody>
             </table>
             <div class="d-grid gap-2">
-                <a id="create-key-btn" class="btn btn-outline-success" type="button" onclick="highlightRow(this)" data-bs-toggle="modal" data-bs-target="#create-key-modal"><b>키 생성</b></a>
+                <a id="create-key-btn" class="btn btn-outline-success" type="button" data-bs-toggle="modal" data-bs-target="#create-key-modal"><b>키 생성</b></a>
                 <a class="btn btn-outline-primary" type="button" href="\log-format-management"><b>로그 포맷 관리</b></a>
                 <a class="btn btn-outline-primary" type="button" href="\scenario-management"><b>시나리오 관리</b></a>
                 <a class="btn btn-outline-warning" type="button" href="\scenario-creation"><b>시나리오 생성</b></a>
@@ -122,25 +122,17 @@
                             <thead>
                             <tr>
                                 <td colspan="2" class="col-6 text-center">
-                                    <b>키 로그 포맷</b>
+                                    <b>키 정보</b>
                                 </td>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td class="col-6 text-center" colspan="2">
-                                    <label>
-                                        <textarea class="custom-textarea" rows="2" cols="90"> { "cust_id" : "1" }
-                                        </textarea>
-                                    </label>
-                                </td>
-                            </tr>
                             <tr class="text-end">
                                 <td>
                                     키이름
                                 </td>
                                 <td id ="nameModal">
-                                    cust_id
+                                    <input class="form-control" type="text" placeholder="입력">
                                 </td>
                             </tr>
                             <tr class="text-end">
@@ -148,36 +140,28 @@
                                     키타입
                                 </td>
                                 <td id="typeModal">
-                                    number
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-6 text-end">
+                                    <b>키 설명</b>
+                                </td>
+                                <td class="col-6 text-center">
+                                    <input class="form-control" id="descriptionModal" type="text" placeholder="입력">
                                 </td>
                             </tr>
                             <tr class="text-end">
                                 <td colspan="2">
-                                    <button class="btn btn-primary">Reset</button>
-                                    <button class="btn btn-success">Update</button>
+                                    <button id="key-update-reset-btn" class="btn btn-primary">Reset</button>
+                                    <button id="key-update-btn" class="btn btn-success">Update</button>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
+
                     </div>
-                    <div>
-                        <table class="table table-dark table-striped table-hover">
-                            <thead>
-                            <tr>
-                                <td class="col-6 text-center">
-                                    <b>키 설명</b>
-                                </td>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td class="col-6 text-center" id="descriptionModal">
-                                    해당 키는 테스트 키입니다. 여기 팝업 창에서는 미리 설정된 키 포맷을 로드하며 코드 테이블을 추가 할 수 있습니다.
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+
                     <div>
                         <table class="table table-dark table-striped table-hover">
                             <thead>
@@ -220,31 +204,6 @@
                                 </td>
                                 <td class="col-6 text-center">
                                     <b>비주얼 값 </b>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td class="col-6 text-center">
-                                    <b>01</b>
-                                </td>
-                                <td class="col-6 text-center">
-                                    <b>서울 특별시</b>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="col-6 text-center">
-                                    <b>02</b>
-                                </td>
-                                <td class="col-6 text-center">
-                                    <b>부산 광역시</b>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="col-6 text-center">
-                                    <b>03</b>
-                                </td>
-                                <td class="col-6 text-center">
-                                    <b>대전 광역시</b>
                                 </td>
                             </tr>
                             </tbody>
@@ -307,7 +266,7 @@
                             <tr>
                                 <td class="col-6 text-center">
                                     <label>
-                                        <textarea class="custom-textarea" rows="3" cols="90"></textarea>
+                                        <textarea id="key-create-description" class="custom-textarea" rows="3" cols="90"></textarea>
                                     </label>
                                 </td>
                             </tr>
@@ -321,15 +280,18 @@
                                     <b>키 이름</b>
                                 </td>
                                 <td class="col-6 text-center">
-                                    <input class="form-control" type="text" placeholder="입력">
+                                    <input id="key-create-name" class="form-control" type="text" placeholder="입력">
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-6 text-center">
-                                    <b>키 타입</b>
+                                    <label for="key-create-type">키 타입</label>
                                 </td>
                                 <td class="col-6 text-center">
-                                    <input class="form-control" type="text" placeholder="입력">
+                                    <select class="form-control" data-placeholder="데이터 타입 선택" id="key-create-type" name="filterType" required style="border: 3px solid black;">
+                                        <option value="number">숫자</option>
+                                        <option value="string">문자</option>
+                                    </select>
                                 </td>
                             </tr>
                         </table>
@@ -340,8 +302,6 @@
                             <th colspan="2" class="text-center">
                                 코드 테이블 작성
                             </th>
-                            </thead>
-                            <tbody id="code-table-body">
                             <tr class="mb-1">
                                 <td class="col-6 text-center">
                                     <b>실제 코드 값</b>
@@ -350,26 +310,44 @@
                                     <b>비주얼 값 </b>
                                 </td>
                             </tr>
+                            </thead>
+                            <tbody id="code-table-body">
 
-                            <tr>
-                                <td class="col-6 text-center">
-                                    <b>01</b>
-                                </td>
-                                <td class="col-6 text-center">
-                                    <input class="form-control" type="text" placeholder="입력">
-                                </td>
-                            </tr>
+
                             </tbody>
                         </table>
 
                     </div>
                     <div class="d-grid gap-2">
                         <button id="add-code-form-btn" class="btn btn-outline-success" type="button"><b>+ 코드 추가 폼 +</b></button>
-                        <button id="add-code-btn" class="btn btn-outline-danger" type="button" hidden="hidden"><b>생성</b></button>
+                        <button id="add-key-btn" class="btn btn-outline-danger" type="button" hidden="hidden"><b>생성</b></button>
 
                         <!--                        <button class="btn btn-outline-danger" type="button"><b>중지</b></button>-->
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="create-success-modal" tabindex="-1" aria-labelledby="sidebarModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center">
+            <div class="modal-body">
+                <img src="https://cdn.icon-icons.com/icons2/1515/PNG/512/success_105075.png" alt="이미지 설명" class="mb-3"  style="width:50px;">
+                <h4 style="color:green;"><b>키 생성 성공</b></h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="update-success-modal" tabindex="-1" aria-labelledby="sidebarModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center">
+            <div class="modal-body">
+                <img src="https://cdn.icon-icons.com/icons2/1515/PNG/512/success_105075.png" alt="이미지 설명" class="mb-3"  style="width:50px;">
+                <h4 style="color:green;"><b>키 수정 성공</b></h4>
             </div>
         </div>
     </div>
@@ -383,6 +361,10 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
 
+    $("#key-update-reset-btn").click(function(){
+        $("#exist-key-name-input").val("");
+        $('#filterType').val("");
+    })
     function highlightRow(row) {
         // 기존에 활성화된 행에서 active 클래스 제거
         var activeRow = $('tr.active');
@@ -392,7 +374,7 @@
 
         // 클릭된 행에 active 클래스 추가
         $(row).addClass('active');
-
+        let id = $(row).find('td:eq(0)').text();
         let name = $(row).find('td:eq(1)').text();
         let type = $(row).find('td:eq(2)').text();
         let description = $(row).find('td:eq(3)').text();
@@ -403,9 +385,17 @@
 
         // 모달 내의 요소에 정보 설정
         //$('#scenarioIdModal').text(scenarioId);
-        $('#nameModal').text(name);
-        $('#typeModal').text(type);
-        $('#descriptionModal').text(description);
+        $('#nameModal').html('<input id="exist-key-name-input" class="form-control" type="text" placeholder="' + name + '">');
+        // '#typeModal' 요소에 select 태그를 추가하고 원하는 option을 선택합니다
+        $('#typeModal').html('<select class="form-control" data-placeholder="데이터 타입 선택" id="filterType" name="filterType" required style="border: 3px solid black;">' +
+            '<option value="number">숫자</option>' +
+            '<option value="string">문자</option>' +
+            '</select>');
+        $('#key-update-btn').val(id);
+        // 원하는 option을 선택합니다
+        $('#filterType').val(type);
+
+        $('#descriptionModal').val(description);
         // 추가 정보를 모달 내에 표시
         $('#regDtModal').text(regDt);
         $('#modDtModal').text(modDt);
@@ -416,6 +406,43 @@
         if (checkbox.length) {
             checkbox.prop('checked', true);
         }
+        // 키 아이디로 로그포맷 조회
+        $.ajax({
+            type: "GET",
+            url: "/api/code-tables/" + id,
+            dataType: "json",
+            success: function (response) {
+                console.log("Success:", response);
+                console.log(response.data[0]);
+                $("#code-table-body-exist").empty();
+                for (var i = 0; i < response.data.length; i++) {
+                    var newRow = '<tr class="mb-1">' +
+                        '<td class="col-6 text-center">' +
+                        '<input class="form-control" type="text" placeholder="'+response.data[i].code+'" value="'+response.data[i].code+'">' +
+                        '</td>' +
+                        '<td>' +'<div class="row">'+
+                        '<input class="form-control" type="text" style="width:280px;" placeholder="'+response.data[i].name+'" value="'+response.data[i].name+'">' +
+                        '<a class="btn btn-danger col-2 text-center code-form-delete-btn" type="button" href="#"><b>X</b></a>'+'</div>'+
+                        '</td>' +
+                        '<td class="text-start" style="display: none;">' + response.data[i].codeTableId + '</td>' +
+                        '<td class="text-start" style="display: none;">' + response.data[i].keyId + '</td>' +
+                        '<td class="text-start" style="display: none;">' + response.data[i].regDt + '</td>' +
+                        '<td class="text-start" style="display: none;">' + response.data[i].modDt + '</td>' +
+                        '</tr>';
+
+
+                    $("#code-table-body-exist").append(newRow);
+                    $('.code-form-delete-btn').click(function(){
+                        $(this).parent().parent().parent().remove();
+                    })
+                }
+            },
+            error: function (error) {
+                console.error("Error:", error);
+                // 에러 처리
+            }
+        });
+
     }
 
     // 모달 이벤트 리스너 추가
@@ -443,21 +470,121 @@
     $('#add-code-form-btn-exist').click(function(){
 
         let inputForm = '<input class="form-control" type="text" placeholder="입력">';
-        let inputFormWithDeleteBtn = '<div class="row"><input class="form-control col" type="text" placeholder="입력" style="width: 280px;"><a class="btn btn-danger col-2 text-center" type="button" href="#"><b>X</b></a><div></div></div>';
+        let inputFormWithDeleteBtn = '<div class="row"><input class="form-control col" type="text" placeholder="입력" style="width: 280px;"><a class="btn btn-danger col-2 text-center code-form-delete-btn" type="button" href="#"><b>X</b></a><div></div></div>';
 
         $('#code-table-body-exist').append('<tr class="text-center"><td>'+inputForm+'</td><td>'+inputFormWithDeleteBtn+'</td></tr>');
-
+        $('.code-form-delete-btn').click(function(){
+            $(this).parent().parent().parent().remove();
+        })
         $('#add-code-btn-exist').removeAttr("hidden");
     });
+
+
+    $('#key-update-btn').click(function(){
+        var updateKey = {
+            "name": $('#exist-key-name-input').val(),
+            "type": $('#filterType').val(),
+            "description": $('#descriptionModal').val()
+        };
+        console.log(updateKey);
+        $.ajax({
+            type: "PUT",
+            url: "/api/keys/"+$(this).val(),
+            contentType: "application/json", // JSON 형식으로 전송한다는 것을 명시
+            data: JSON.stringify(updateKey), // JSON 데이터를 문자열로 변환하여 전송
+            dataType: "json",
+            success: function () {
+                $('#update-success-modal').modal('show');
+                setTimeout(function() {
+                    // 원하는 작업을 수행
+                    location.reload();
+                }, 1500);
+            },
+            error: function (error) {
+                console.error("Error:", error);
+                // 에러 처리
+            }
+        });
+    })
+
+    $('.code-form-delete-btn').click(function(){
+        $(this).parent().parent().parent().remove();
+    })
+    //키 생성 및 코드 테이블 생성
+    $('#add-key-btn').click(function() {
+
+        var newKey = {
+            "name": $('#key-create-name').val(),
+            "type": $('#key-create-type').val(),
+            "description": $('#key-create-description').val()
+        };
+        let keyId;
+        $.ajax({
+            type: "POST",
+            url: "/api/keys",
+            contentType: "application/json", // JSON 형식으로 전송한다는 것을 명시
+            data: JSON.stringify(newKey), // JSON 데이터를 문자열로 변환하여 전송
+            dataType: "json",
+            success: function (response) {
+                keyId = response.data;
+                let codeTableList = [];
+                $('#code-table-body tr').each(function(index, element) {
+                    // 현재 반복되고 있는 <tr>에서 input 값을 가져오기
+                    var codeValue = $(element).find('td:eq(0) input').val();
+                    var visualValue = $(element).find('td:eq(1) input').val();
+                    var newCodeTable = {
+                        "keyId" : keyId,
+                        "code": codeValue,
+                        "name": visualValue
+                    };
+                    codeTableList.push(newCodeTable);
+
+                });
+                console.log(codeTableList);
+
+                $.ajax({
+                    type: "POST",
+                    url: "/api/code-tables",
+                    contentType: "application/json", // JSON 형식으로 전송한다는 것을 명시
+                    data: JSON.stringify(codeTableList), // JSON 데이터를 문자열로 변환하여 전송
+                    dataType: "json",
+                    success: function () {
+                        $('#create-success-modal').modal('show');
+                        setTimeout(function() {
+                            // 원하는 작업을 수행
+                            location.reload();
+                        }, 1500);
+                    },
+                    error: function (error) {
+                        console.error("Error:", error);
+                        // 에러 처리
+                    }
+                });
+
+
+            },
+            error: function (error) {
+                console.error("Error:", error);
+                // 에러 처리
+            }
+        });
+
+
+
+
+    })
+
 
     $('#add-code-form-btn').click(function(){
 
         let inputForm = '<input class="form-control" type="text" placeholder="입력">';
-        let inputFormWithDeleteBtn = '<div class="row"><input class="form-control col" type="text" placeholder="입력" style="width: 280px;"><a class="btn btn-danger col-2 text-center" type="button" href="#"><b>X</b></a><div></div></div>';
+        let inputFormWithDeleteBtn = '<div class="row"><input class="form-control col" type="text" placeholder="입력" style="width: 280px;"><a class="btn btn-danger col-2 text-center code-form-delete-btn" type="button" href="#"><b>X</b></a><div></div></div>';
 
         $('#code-table-body').append('<tr class="text-center"><td>'+inputForm+'</td><td>'+inputFormWithDeleteBtn+'</td></tr>');
-
-        $('#add-code-btn').removeAttr("hidden");
+        $('.code-form-delete-btn').click(function(){
+            $(this).parent().parent().parent().remove();
+        })
+        $('#add-key-btn').removeAttr("hidden");
     });
 
     $(document).ready(function () {

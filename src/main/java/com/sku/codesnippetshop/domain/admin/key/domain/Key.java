@@ -1,5 +1,6 @@
 package com.sku.codesnippetshop.domain.admin.key.domain;
 
+import com.sku.codesnippetshop.domain.admin.BaseEntity;
 import com.sku.codesnippetshop.domain.admin.key.dto.KeyCreateDTO;
 import com.sku.codesnippetshop.domain.admin.key.dto.KeyReadDTO;
 import com.sku.codesnippetshop.domain.admin.key.dto.KeyUpdateDTO;
@@ -18,12 +19,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @EntityListeners(AuditingEntityListener.class)
-public class Key {
+@AttributeOverride(
+        name = "id",
+        column = @Column(name = "key_id")
+)
+public class Key extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "key_id")
-    private Long keyId;
 
     @Column(name = "name", length = 100)
     private String name;
@@ -50,10 +51,12 @@ public class Key {
 
     public static KeyReadDTO entityToDto(Key key){
         return KeyReadDTO.builder()
-                .keyId(key.getKeyId())
+                .keyId(key.getId())
                 .name(key.getName())
                 .type(key.getType())
                 .description(key.getDescription())
+                .regDt(key.getRegDt())
+                .modDt(key.getModDt())
                 .build();
     }
 

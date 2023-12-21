@@ -1,4 +1,4 @@
-package com.sku.codesnippetshop.domain.admin.key.dto;
+package com.sku.codesnippetshop.domain.admin.logFormat.dto;
 
 import lombok.*;
 
@@ -8,11 +8,13 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class KeyReadDTO {
-    private Long keyId;
+public class LogFormatReadDTO {
+
+    private Long logFormatId;
     private String name;
-    private String type;
     private String description;
     private LocalDateTime regDt;
     private LocalDateTime modDt;
+
+
 }

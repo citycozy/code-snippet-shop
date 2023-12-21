@@ -24,9 +24,10 @@ public class KeyService {
     /*키 생성 서비스
    param : 생성 키 info*/
     @Transactional
-    public void createKey(KeyCreateDTO create){
+    public Long createKey(KeyCreateDTO create){
         final Key key = Key.dtoToEntity(create);
         keyRepository.save(key);
+        return key.getId();
     }
 
     /*키 전부읽기 서비스

@@ -1,6 +1,7 @@
 package com.sku.codesnippetshop.domain.admin.logFormat.domain;
 
 
+import com.sku.codesnippetshop.domain.admin.BaseEntity;
 import com.sku.codesnippetshop.domain.admin.key.domain.Key;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -13,13 +14,13 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "log_format_key_map")
-public class LogFormatKeyMap {
+@AttributeOverride(
+        name = "id",
+        column =  @Column(name = "log_format_key_map_id")
+)
 
+public class LogFormatKeyMap extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "log_format_key_map_id")
-    private Long logFormatKeyMapId;
 
 
     @ManyToOne

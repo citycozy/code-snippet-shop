@@ -1,5 +1,6 @@
 package com.sku.codesnippetshop.domain.admin.logFormat.domain;
 
+import com.sku.codesnippetshop.domain.admin.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -11,13 +12,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "log_format_info")
-public class LogFormatInfo {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "log_format_info_id")
-    private Long logFormatInfoId;
-
+@AttributeOverride(
+        name = "id",
+        column = @Column(name = "log_format_info_id")
+)
+public class LogFormatInfo extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "log_format_id", referencedColumnName = "log_format_id")

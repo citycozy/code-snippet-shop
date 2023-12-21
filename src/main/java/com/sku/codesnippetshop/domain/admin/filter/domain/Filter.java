@@ -1,5 +1,6 @@
 package com.sku.codesnippetshop.domain.admin.filter.domain;
 
+import com.sku.codesnippetshop.domain.admin.BaseEntity;
 import com.sku.codesnippetshop.domain.admin.filter.dto.FilterCreateDto;
 import com.sku.codesnippetshop.domain.admin.filter.dto.FilterReadDto;
 import com.sku.codesnippetshop.domain.admin.filter.dto.FilterUpdateDTO;
@@ -14,12 +15,12 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @EntityListeners(AuditingEntityListener.class)
-public class Filter {
+@AttributeOverride(
+        name = "id",
+        column =  @Column(name = "filter_id")
+)
+public class Filter extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "filter_id")
-    private Long filterId;
 
     @Column(name = "name", length = 100)
     private String name;

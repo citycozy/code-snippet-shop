@@ -1,5 +1,6 @@
 package com.sku.codesnippetshop.domain.admin.filter.domain;
 
+import com.sku.codesnippetshop.domain.admin.BaseEntity;
 import com.sku.codesnippetshop.domain.admin.key.domain.Key;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -12,13 +13,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "filter_key_map")
-public class FilterKeyMap {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "filter_key_map_id")
-    private Long FilterKeyMapId;
-
+@AttributeOverride(
+        name = "id",
+        column = @Column(name = "filter_key_map_id")
+)
+public class FilterKeyMap extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "key_id", referencedColumnName = "key_id")
