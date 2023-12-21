@@ -340,21 +340,15 @@
 
 
 <div class="modal fade" id="create-success-modal" tabindex="-1" aria-labelledby="sidebarModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-sidebar modal-lg">
-        <div class="modal-content">
-
-            <div class="modal-body text-center">
-                <img src="https://cdn.icon-icons.com/icons2/1515/PNG/512/success_105075.png" alt="이미지 설명" class="img-fluid">
-            </div>
-
-            <div class="modal-header d-flex justify-content-between row">
-
-                <h5 class="modal-title col-10 text-center">키 생성 성공</h5>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center">
+            <div class="modal-body">
+                <img src="https://cdn.icon-icons.com/icons2/1515/PNG/512/success_105075.png" alt="이미지 설명" class="mb-3"  style="width:50px;">
+                <h4 style="color:green;"><b>키 생성 성공</b></h4>
             </div>
         </div>
     </div>
 </div>
-
 
 
 
@@ -512,14 +506,12 @@
                     contentType: "application/json", // JSON 형식으로 전송한다는 것을 명시
                     data: JSON.stringify(codeTableList), // JSON 데이터를 문자열로 변환하여 전송
                     dataType: "json",
-                    success: function (response) {
-                        alert("성공");
-
+                    success: function () {
                         $('#create-success-modal').modal('show');
                         setTimeout(function() {
                             // 원하는 작업을 수행
                             location.reload();
-                        }, 2000);
+                        }, 1500);
                     },
                     error: function (error) {
                         console.error("Error:", error);
