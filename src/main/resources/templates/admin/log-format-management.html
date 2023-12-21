@@ -140,8 +140,8 @@
                                 <td class="col-6">
                                     로그 포맷 이름
                                 </td>
-                                <td id ="nameModal" class="col-6">
-                                    <input class="form-control" type="text" placeholder="입력">
+                                <td class="col-6">
+                                    <input id ="nameModal" class="form-control" type="text" placeholder="입력">
                                 </td>
                             </tr>
                             <tr>
@@ -387,8 +387,9 @@
 
 
     $("#key-update-reset-btn").click(function(){
-        $("#exist-key-name-input").val("");
-        $('#filterType').val("");
+        $("#nameModal").val("");
+        $('#descriptionModal').val("");
+        $('#key-create-description').val("");
     })
     function highlightRow(row) {
         // 기존에 활성화된 행에서 active 클래스 제거
@@ -401,16 +402,16 @@
         $(row).addClass('active');
         let id = $(row).find('td:eq(0)').text();
         let name = $(row).find('td:eq(1)').text();
-        let type = $(row).find('td:eq(2)').text();
-        let description = $(row).find('td:eq(3)').text();
+        let description = $(row).find('td:eq(2)').text();
         // 추가 정보 가져오기
-        let regDt = $(row).find('td:eq(4)').text();
-        let modDt = $(row).find('td:eq(5)').text();
+        let regDt = $(row).find('td:eq(3)').text();
+        let modDt = $(row).find('td:eq(4)').text();
         // 추가적인 컬럼들이 있다면 위와 같이 계속 추가
-
+        console.log(name);
         // 모달 내의 요소에 정보 설정
         //$('#scenarioIdModal').text(scenarioId);
-        $('#nameModal').html('<input id="exist-key-name-input" class="form-control" type="text" placeholder="' + name + '">');
+        $('#nameModal').val(name);
+        $('#nameModal').attr('placeholder',name);
         // '#typeModal' 요소에 select 태그를 추가하고 원하는 option을 선택합니다
         $('#typeModal').html('<select class="form-control" data-placeholder="데이터 타입 선택" id="filterType" name="filterType" required style="border: 3px solid black;">' +
             '<option value="number">숫자</option>' +
@@ -420,9 +421,9 @@
         $('#key-update-btn').val(id);
         $('#log-format-delete-btn').val(id);
         // 원하는 option을 선택합니다
-        $('#filterType').val(type);
 
         $('#descriptionModal').val(description);
+        $('#descriptionModal').attr('placeholder',description);
         // 추가 정보를 모달 내에 표시
         $('#regDtModal').text(regDt);
         $('#modDtModal').text(modDt);
@@ -509,17 +510,16 @@
 
 
     $('#key-update-btn').click(function(){
-        var updateKey = {
-            "name": $('#exist-key-name-input').val(),
-            "type": $('#filterType').val(),
+        var updateLogFormat = {
+            "name": $('#nameModal').val(),
             "description": $('#descriptionModal').val()
         };
-        console.log(updateKey);
+        console.log(updateLogFormat);
         $.ajax({
             type: "PUT",
-            url: "/api/keys/"+$(this).val(),
+            url: "/api/log-formats/"+$(this).val(),
             contentType: "application/json", // JSON 형식으로 전송한다는 것을 명시
-            data: JSON.stringify(updateKey), // JSON 데이터를 문자열로 변환하여 전송
+            data: JSON.stringify(updateLogFormat), // JSON 데이터를 문자열로 변환하여 전송
             dataType: "json",
             success: function () {
                 $('#update-success-modal').modal('show');

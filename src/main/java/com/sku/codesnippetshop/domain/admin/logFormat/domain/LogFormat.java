@@ -1,8 +1,16 @@
 package com.sku.codesnippetshop.domain.admin.logFormat.domain;
 
 import com.sku.codesnippetshop.domain.admin.BaseEntity;
+import com.sku.codesnippetshop.domain.admin.key.domain.Key;
+import com.sku.codesnippetshop.domain.admin.key.dto.KeyCreateDTO;
+import com.sku.codesnippetshop.domain.admin.key.dto.KeyReadDTO;
+import com.sku.codesnippetshop.domain.admin.key.dto.KeyUpdateDTO;
+import com.sku.codesnippetshop.domain.admin.logFormat.dto.LogFormatCreateDTO;
+import com.sku.codesnippetshop.domain.admin.logFormat.dto.LogFormatReadDTO;
+import com.sku.codesnippetshop.domain.admin.logFormat.dto.LogFormatUpdateDTO;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -24,6 +32,33 @@ public class LogFormat extends BaseEntity {
 
     @Column(name = "description", length = 100)
     private String description;
+
+    @Builder
+    private LogFormat(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+    public void updateLogFormat(LogFormatUpdateDTO update) {
+        this.name = update.getName();
+        this.description = update.getDescription();
+    } // 살펴보기
+
+    public static LogFormatReadDTO entityToDto(LogFormat logFormat){
+        return LogFormatReadDTO.builder()
+                .logFormatId(logFormat.getId())
+                .name(logFormat.getName())
+                .description(logFormat.getDescription())
+                .regDt(logFormat.getRegDt())
+                .modDt(logFormat.getModDt())
+                .build();
+    }
+
+    public static LogFormat dtoToEntity(LogFormatCreateDTO create){
+        return LogFormat.builder()
+                .name(create.getName())
+                .description(create.getDescription())
+                .build();
+    }
 
 
 }
