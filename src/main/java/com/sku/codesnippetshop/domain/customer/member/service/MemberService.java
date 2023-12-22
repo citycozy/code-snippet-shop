@@ -8,10 +8,11 @@ import com.sku.codesnippetshop.domain.customer.member.dto.MemberUpdateDTO;
 import com.sku.codesnippetshop.global.error.DuplicatedException;
 import com.sku.codesnippetshop.global.error.NotFoundException;
 import com.sku.codesnippetshop.global.response.ResponseStatus;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -63,6 +64,18 @@ public class MemberService {
     public void isEmailAlreadyExists(String email) throws DuplicatedException {
         if (memberRepository.existsByUsername(email))
             throw new DuplicatedException(ResponseStatus.FAIL_EMAIL_DUPLICATED);
+    }
+
+    public void login(String email, String password, HttpSession session) throws AuthenticationException {
+        Member member = memberRepository.findByUsername(email);
+
+        if (member.getPassword().equals(password)) {
+            session.setAttribute("isLoggedIn", member);
+            System.out.println("로그인 성공");
+        } else {
+            System.out.println("로그인 실패");
+        }
+
     }
 
 }

@@ -27,70 +27,75 @@
 <main class="form-signin w-100 m-auto">
     <div class="container text-center d-flex justify-content-center">
         <div id="mshop_form_11446" class="ui mfs_form " style=" ">
-        <form class="ui form" data-id="11446" data-slug="login-style-b" data-error_popup="no" data-type=""
-              onsubmit="return false">
-            <img src="/images/Main-Logo.png" width="400px" alt="">
+            <form class="ui form" data-id="11446" data-slug="login-style-b" data-error_popup="no" data-type=""
+                  onsubmit="submitForm()">
+                <img src="/images/Main-Logo.png" width="400px" alt="">
 
-            <div class="form-floating">
-                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                <label for="floatingInput">이메일</label>
-            </div>
-            <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                <label for="floatingPassword">비밀번호</label>
-            </div>
-
-            <div class="checkbox mb-3">
-                <label>
-                    <input type="checkbox" value="remember-me"> 임시
-                </label>
-            </div>
-            <p class="mb-3 text-muted"><a>비밀번호 찾기</a>   |   <a>비회원 주문 조회</a></p>
-            <div class="d-flex mb-3">
-                <button class="flex-fill btn btn-lg btn btn-light me-2 border-dark" type="submit">회원 가입</button>
-                <button class="flex-fill btn btn-lg btn btn-light border-dark" type="submit">로그인</button>
-            </div>
-
-
-
-
-            <div id="social-login-box" class="d-flex justify-content-center flex-wrap">
-                <div class="field mb-3" style="flex: 0 0 50%;">
-                    <div class="two fields cmsign-social-fields">
-                        <div class="sixteen wide field">
-                            <div style=""><a href="#" class="kakao">
-                                <img src="https://test-old.codemshop.com/wp-content/plugins/mshop-mcommerce-premium-s2/lib/mshop-members-s2/assets/images/social/logo/Kakao.png" width="18"> 카카오 로그인
-                            </a></div>
-                        </div>
-                        <div class="sixteen wide field">
-                            <div style=""><a href="#" class="naver">
-                                <img src="https://test-old.codemshop.com/wp-content/plugins/mshop-mcommerce-premium-s2/lib/mshop-members-s2/assets/images/social/logo/Naver.png" width="18"> 네이버 로그인
-                            </a></div>
-                        </div>
-                    </div>
+                <div class="form-floating">
+                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                    <label for="floatingInput">이메일</label>
                 </div>
-                <div class="field mb-3" style="flex: 0 0 50%;">
-                    <div class="two fields cmsign-social-fields">
-                        <div class="sixteen wide field">
-                            <div style=""><a href="#" class="facebook">
-                                <img src="https://test-old.codemshop.com/wp-content/plugins/mshop-mcommerce-premium-s2/lib/mshop-members-s2/assets/images/social/logo/Facebook-white.png" width="22"> 페이스북 로그인
-                            </a></div>
-                        </div>
-                        <div class="sixteen wide field">
-                            <div style=""><a href="#" class="google">
-                                <img src="https://test-old.codemshop.com/wp-content/plugins/mshop-mcommerce-premium-s2/lib/mshop-members-s2/assets/images/social/logo/Google.png" width="18"> 구글 로그인
-                            </a></div>
-                        </div>
-                    </div>
+                <div class="form-floating">
+                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                    <label for="floatingPassword">비밀번호</label>
                 </div>
-            </div>
 
-        </form>
+                <div class="checkbox mb-3">
+                    <label>
+                        <input type="checkbox" value="remember-me"> 임시
+                    </label>
+                </div>
+                <p class="mb-3 text-muted"><a>비밀번호 찾기</a>   |   <a>비회원 주문 조회</a></p>
+                <div class="d-flex mb-3">
+                    <button class="flex-fill btn btn-lg btn btn-light me-2 border-dark" type="button" onclick="register()">회원 가입</button>
+                    <button class="flex-fill btn btn-lg btn btn-light border-dark" type="button" onclick="submitForm()">로그인</button>
+                </div>
+            </form>
         </div>
 
     </div>
 
 </main>
 <div th:replace="~{/includes/footer :: footer}"></div>
+
+<script>
+    function submitForm() {
+        var email = document.getElementById("floatingInput").value;
+        var password = document.getElementById("floatingPassword").value;
+
+        var loginData = {
+            username: email,
+            password: password
+        };
+
+        // AJAX로 서버에 로그인 요청 보내기
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/api/members/login", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    // 로그인 성공 처리
+                    console.log("로그인 성공");
+                    window.location.href = "/";  // 로그인 성공 시 페이지 이동
+
+                } else {
+                    // 로그인 실패 처리
+                    console.error("로그인 실패");
+                    window.location.href = "/login";  // 로그인 성공 시 페이지 이동
+
+                }
+            }
+        };
+
+        xhr.send(JSON.stringify(loginData));
+    }
+
+    function register() {
+        // 회원 가입 버튼 클릭 시 처리
+        window.location.href = "/join"
+    }
+</script>
 </body>
 </html>
