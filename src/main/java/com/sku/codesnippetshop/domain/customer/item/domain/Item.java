@@ -39,9 +39,12 @@ public class Item {
     @Column(name = "content")
     private String content;
 
+    @Column(name = "price")
+    private String price;
 
     @Column(name = "rating")
     private BigDecimal rating;
+
 
 
     @Column(name = "review_count")
@@ -62,19 +65,23 @@ public class Item {
     private int quantity;
 
     @Builder
-    private Item(String name, String content, int quantity, Brand brand) {
+    private Item(String name, String content, int quantity, String price ,Brand brand) {
         this.name = name;
         this.content = content;
         this.rating = BigDecimal.ZERO;
         this.reviewCount = 0;
         this.quantity = quantity;
         this.brand = brand;
+        this.price = price;
     }
+
 
     public void updateItem(ItemUpdateDto update) {
         this.name = update.getName();
         this.content = update.getContent();
         this.quantity = update.getQuantity();
+        this.price = update.getPrice();
+
     }
 
     public static ItemReadDto entityToDTO(Item item) {
@@ -87,6 +94,7 @@ public class Item {
                 .regDt(item.getRegDt())
                 .modDt(item.getModDt())
                 .quantity(item.getQuantity())
+                .price(item.getPrice())
                 .build();
     }
     public static Item dtoToEntity(ItemCreateDto reg, Brand brand) {
@@ -95,6 +103,8 @@ public class Item {
                 .content(reg.getContent())
                 .quantity(reg.getQuantity())
                 .brand(brand)
+                .price(reg.getPrice())
                 .build();
     }
+
 }

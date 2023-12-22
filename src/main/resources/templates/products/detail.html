@@ -21,6 +21,43 @@
     <!-- main-tag css -->
     <link rel="stylesheet" th:href="@{/css/main-tag.css}">
     <title>상품 상세</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const itemId = urlParams.get('itemId');
+
+            // 서버 엔드포인트 URL
+            const apiUrl = `http://localhost:8080/api/files/${itemId}`;
+
+            // 이미지 엘리먼트 가져오기
+            const imgElement = document.getElementById('dynamicImage');
+
+            // AJAX 요청 보내기
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', apiUrl, true);
+
+            // 요청 완료 후의 처리
+            xhr.onload = function () {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    // 성공적으로 파일 경로를 받아왔을 때 이미지 엘리먼트에 설정
+                    const imagePath = xhr.responseText;
+                    imgElement.src = `http://localhost:8080${imagePath}`;
+                } else {
+                    // 오류 발생 시 처리
+                    console.error('Error:', xhr.statusText);
+                }
+            };
+
+            // 네트워크 오류 처리
+            xhr.onerror = function () {
+                console.error('Network error');
+            };
+
+            // 요청 보내기
+            xhr.send();
+        });
+    </script>
+
 </head>
 <body>
 <div th:replace="~{/includes/header :: header}"></div>
@@ -31,16 +68,9 @@
         <div class="row row-cols-6 row-cols-sm-2 row-cols-md-2 g-6">
             <div class="col-6 d-flex flex-column align-items-center" id="product-section">
                 <div id="imgBox" class="">
-                    <img src="/images/products/1.jpg" class="d-block img-fluid" alt="">
-                </div>
-
-                <div id="box-btn-detail" class="product-btn-div border-bottom text-center p-3 d-flex">
-                    <button type="button" id="btnDetail" class="btn btn-light col-5 btn-lg">제품 상세</button>
-                    <button type="button" id="btnReview" class="btn btn-dark col-5 btn-lg">후기</button>
+                    <img id="dynamicImage" class="d-block img-fluid" alt=""/>
                 </div>
             </div>
-
-
 
             <div class="col-6" id="item-information">
                 <div id="product-name-div" class="p-3"><h1 id="product-name"><b>상품 이름</b></h1></div>

@@ -19,4 +19,6 @@ public class ItemReadDto {
     private LocalDateTime regDt;
     private LocalDateTime modDt;
     private int quantity;
+    private String price;
 }
+

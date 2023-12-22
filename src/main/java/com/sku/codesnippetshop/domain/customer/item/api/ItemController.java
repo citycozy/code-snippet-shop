@@ -31,10 +31,6 @@ public class ItemController {
             Item item = itemService.regItem(create);
             fileService.uploadFileToFileSystem(file, null , item);
 
-
-//            Long fileId = fileService.uploadFileToFileSystem(file);
-//            Long enrolledGameId = gameService.createGame(create, fileId);
-//            return ResponseFormat.successWithData(ResponseStatus.SUCCESS_CREATE, enrolledGameId);
             return ResponseFormat.success(ResponseStatus.SUCCESS_CREATE);
         } catch (RuntimeException e) {
             return ResponseFormat.error(ResponseStatus.FAIL_BAD_REQUEST);
@@ -42,6 +38,7 @@ public class ItemController {
             throw new RuntimeException(e);
         }
     }
+
 
     /* 제품 정보 조회 컨트롤러
     param : 조회 제품 itemId*/

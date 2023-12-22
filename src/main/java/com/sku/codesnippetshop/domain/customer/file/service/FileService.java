@@ -4,6 +4,9 @@ import com.sku.codesnippetshop.domain.customer.brand.domain.Brand;
 import com.sku.codesnippetshop.domain.customer.file.dao.FileRepository;
 import com.sku.codesnippetshop.domain.customer.file.domain.FileData;
 import com.sku.codesnippetshop.domain.customer.item.domain.Item;
+import com.sku.codesnippetshop.global.error.NotFoundException;
+import com.sku.codesnippetshop.global.response.ResponseStatus;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -56,4 +59,17 @@ public class FileService {
 
     }
 
+    public String getFilePathByItemId(Long itemId) {
+        FileData fileData = fileRepository.findByItem_ItemId(itemId);
+
+        return fileData != null ? fileData.getFilePath() : null;
+    }
+
+    @Transactional
+    public void deleteItemByItemId(Long itemId) {
+        final FileData file = fileRepository
+                .findByItem_ItemId(itemId);
+
+        fileRepository.delete(file);
+    }
 }
