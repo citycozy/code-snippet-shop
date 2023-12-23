@@ -19,11 +19,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 )
 public class FilterKeyMap extends BaseEntity {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "key_id", referencedColumnName = "key_id")
     private Key keyId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "filter_id", referencedColumnName = "filter_id")
     private Filter filterId;
 

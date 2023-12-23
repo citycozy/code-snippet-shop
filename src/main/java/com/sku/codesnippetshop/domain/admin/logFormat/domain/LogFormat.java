@@ -1,13 +1,9 @@
 package com.sku.codesnippetshop.domain.admin.logFormat.domain;
 
 import com.sku.codesnippetshop.domain.admin.BaseEntity;
-import com.sku.codesnippetshop.domain.admin.key.domain.Key;
-import com.sku.codesnippetshop.domain.admin.key.dto.KeyCreateDTO;
-import com.sku.codesnippetshop.domain.admin.key.dto.KeyReadDTO;
-import com.sku.codesnippetshop.domain.admin.key.dto.KeyUpdateDTO;
-import com.sku.codesnippetshop.domain.admin.logFormat.dto.LogFormatCreateDTO;
-import com.sku.codesnippetshop.domain.admin.logFormat.dto.LogFormatReadDTO;
-import com.sku.codesnippetshop.domain.admin.logFormat.dto.LogFormatUpdateDTO;
+import com.sku.codesnippetshop.domain.admin.logFormat.dto.LogFormat.LogFormatCreateDTO;
+import com.sku.codesnippetshop.domain.admin.logFormat.dto.LogFormat.LogFormatReadDTO;
+import com.sku.codesnippetshop.domain.admin.logFormat.dto.LogFormat.LogFormatUpdateDTO;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
