@@ -4,16 +4,31 @@
     <meta charset="UTF-8">
     <title>Send JSON Data</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- Matomo -->
+    <script>
+        var _paq = window._paq = window._paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function() {
+            var u="//52.79.253.22/";
+            _paq.push(['setTrackerUrl', u+'matomo.php']);
+            _paq.push(['setSiteId', '3']);
+            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+            g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+        })();
+    </script>
+    <!-- End Matomo Code -->
     <!-- Matomo Tag Manager -->
     <script>
         var _mtm = window._mtm = window._mtm || [];
         _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
         (function() {
             var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-            g.async=true; g.src='http://localhost:81/TagManager/container_vIILnK7G.js'; s.parentNode.insertBefore(g,s);
+            g.async=true; g.src='http://52.79.253.22:81/tagManager/container_yWRMwnT9.js'; s.parentNode.insertBefore(g,s);
         })();
-
     </script>
+    <!-- End Matomo Tag Manager -->
 </head>
 <body>
 <div>

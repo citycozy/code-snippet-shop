@@ -1,8 +1,8 @@
 package com.sku.codesnippetshop.domain.admin.logFormat.api;
 
-import com.sku.codesnippetshop.domain.admin.logFormat.dto.LogFormatCreateDTO;
-import com.sku.codesnippetshop.domain.admin.logFormat.dto.LogFormatReadDTO;
-import com.sku.codesnippetshop.domain.admin.logFormat.dto.LogFormatUpdateDTO;
+import com.sku.codesnippetshop.domain.admin.logFormat.dto.LogFormat.LogFormatCreateDTO;
+import com.sku.codesnippetshop.domain.admin.logFormat.dto.LogFormat.LogFormatReadDTO;
+import com.sku.codesnippetshop.domain.admin.logFormat.dto.LogFormat.LogFormatUpdateDTO;
 import com.sku.codesnippetshop.domain.admin.logFormat.service.LogFormatService;
 import com.sku.codesnippetshop.global.error.NotFoundException;
 import com.sku.codesnippetshop.global.response.ResponseFormat;

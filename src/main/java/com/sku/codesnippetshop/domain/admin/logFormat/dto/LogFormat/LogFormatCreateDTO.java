@@ -1,4 +1,4 @@
-package com.sku.codesnippetshop.domain.admin.logFormat.dto;
+package com.sku.codesnippetshop.domain.admin.logFormat.dto.LogFormat;
 
 import lombok.*;
 
@@ -6,10 +6,10 @@ import lombok.*;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class LogFormatUpdateDTO {
-
+public class LogFormatCreateDTO {
 
     private String name;
     private String description;
+
 
 }

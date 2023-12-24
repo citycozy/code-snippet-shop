@@ -52,18 +52,9 @@
 
 <div th:replace="~{/includes/header :: header}"></div>
 <div class="container text-center">
-    <!-- 검색 입력 부분 -->
-    <div class="row search-container mb-3">
-        <div class="col-12 d-flex py-1">
-            <input id="searchData" class="form-control me-2" type="search" placeholder="키를 검색하세요"
-                   aria-label="Search">
-            <button id="searchBtn" class="btn btn-outline-primary" type="button">
-                <svg style="display:inline-block" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                     fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                    <path
-                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                </svg>
-            </button>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="text-center mb-3">키 관리 페이지</h2>
         </div>
     </div>
 
@@ -81,15 +72,7 @@
                 </tr>
                 </thead>
                 <tbody id="key-table-body">
-                <tr onclick="highlightRow(this)" data-bs-toggle="modal" data-bs-target="#sidebarModal">
-                    <th scope="row">
-                        <input class="form-check-input" type="checkbox" value="">
-                    </th>
-                    <td>0</td>
-                    <td>키이름</td>
-                    <td>숫자</td>
-                    <td>설명입니다.</td>
-                </tr>
+
                 <!-- 나머지 테이블 행들도 동일하게 작성 -->
                 </tbody>
             </table>

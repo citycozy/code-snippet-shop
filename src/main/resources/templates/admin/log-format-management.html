@@ -64,18 +64,9 @@
 
 <div th:replace="~{/includes/header :: header}"></div>
 <div class="container text-center">
-    <!-- 검색 입력 부분 -->
-    <div class="row search-container mb-3">
-        <div class="col-12 d-flex py-1">
-            <input id="searchData" class="form-control me-2" type="search" placeholder="로그 포맷을 검색하세요"
-                   aria-label="Search">
-            <button id="searchBtn" class="btn btn-outline-primary" type="button">
-                <svg style="display:inline-block" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                     fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                    <path
-                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                </svg>
-            </button>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="text-center mb-3">로그 포맷 관리 페이지</h2>
         </div>
     </div>
 
@@ -92,14 +83,7 @@
                 </tr>
                 </thead>
                 <tbody id="log-format-table-body">
-                <tr onclick="highlightRow(this)" data-bs-toggle="modal" data-bs-target="#sidebarModal">
-                    <th scope="row">
-                        <input class="form-check-input" type="checkbox" value="">
-                    </th>
-                    <td>0</td>
-                    <td>로그 포맷 이름</td>
-                    <td>설명입니다.</td>
-                </tr>
+
                 <!-- 나머지 테이블 행들도 동일하게 작성 -->
                 </tbody>
             </table>
@@ -301,7 +285,7 @@
                                 </td>
                             </tr>
                             </thead>
-                            <tbody id="code-table-body">
+                            <tbody id="log-format-key-table-body">
 
 
                             </tbody>
@@ -309,7 +293,7 @@
 
                     </div>
                     <div class="d-grid gap-2">
-                        <button id="add-code-form-btn" class="btn btn-outline-success" type="button"><b>+ 키 폼 추가 +</b></button>
+                        <button id="add-key-form-btn" class="btn btn-outline-success" type="button"><b>+ 키 폼 추가 +</b></button>
                         <button id="add-log-format-btn" class="btn btn-outline-danger" type="button" hidden="hidden"><b>로그 포맷 생성</b></button>
 
                         <!--                        <button class="btn btn-outline-danger" type="button"><b>중지</b></button>-->
@@ -364,8 +348,8 @@
 <script>
     $("#log-format-delete-btn").click(function(){
         $.ajax({
-            type: "delete",
-            url: "/api/log-format/"+$(this).val(),
+            type: "DELETE",
+            url: "/api/log-formats/"+$(this).val(),
             success: function () {
                 $('#delete-success-modal').modal('show');
                 setTimeout(function() {
@@ -447,11 +431,11 @@
                 for (var i = 0; i < response.data.length; i++) {
                     var newRow = '<tr class="mb-1">' +
                         '<td class="col-6 text-center">' +
-                        '<input class="form-control" type="text" placeholder="'+response.data[i].code+'" value="'+response.data[i].code+'">' +
+                        '<b>키 코드 : '+ response.data[i].name+'</b>'+
                         '</td>' +
                         '<td>' +'<div class="row">'+
-                        '<input class="form-control" type="text" style="width:280px;" placeholder="'+response.data[i].name+'" value="'+response.data[i].name+'">' +
-                        '<a class="btn btn-danger col-2 text-center code-form-delete-btn" type="button" href="#"><b>X</b></a>'+'</div>'+
+                        '<b>키 설명 : ' + response.data[i].description+'</b>'+
+                        '</div>'+
                         '</td>' +
                         '<td class="text-start" style="display: none;">' + response.data[i].codeTableId + '</td>' +
                         '<td class="text-start" style="display: none;">' + response.data[i].keyId + '</td>' +
@@ -517,7 +501,7 @@
         console.log(updateLogFormat);
         $.ajax({
             type: "PUT",
-            url: "/api/log-formats/"+$(this).val(),
+            url: "/api/log-formats  /"+$(this).val(),
             contentType: "application/json", // JSON 형식으로 전송한다는 것을 명시
             data: JSON.stringify(updateLogFormat), // JSON 데이터를 문자열로 변환하여 전송
             dataType: "json",
@@ -545,19 +529,24 @@
             "name": $('#key-create-name').val(),
             "description": $('#key-create-description').val()
         };
+
+        console.log(newlogFormat);
         let logFormatId;
         $.ajax({
             type: "POST",
-            url: "/api/log-format",
+            url: "/api/log-formats",
             contentType: "application/json", // JSON 형식으로 전송한다는 것을 명시
             data: JSON.stringify(newlogFormat), // JSON 데이터를 문자열로 변환하여 전송
             dataType: "json",
             success: function (response) {
                 logFormatId = response.data;
                 let logFormatKeyMapList = [];
-                $('#log-format-table-body tr').each(function(index, element) {
+                $('#log-format-key-table-body tr').each(function(index, element) {
                     // 현재 반복되고 있는 <tr>에서 input 값을 가져오기
-                    var keyId = $(element).find('td:eq(1) input').val();
+
+
+                    let keyId = $(element).find('td:eq(1) div select').val()
+
                     console.log(keyId);
                     var newLogFormatKeyMap = {
                         "logFormatId" : logFormatId,
@@ -637,7 +626,7 @@
     });
 
 
-    $('#add-code-form-btn').click(function(){
+    $('#add-key-form-btn').click(function(){
 
         let keyChoice = '<b>키 선택</b>';
         // let inputFormWithDeleteBtn = '<div class="row"><select class="js-example-basic-single selectBox" data-placeholder="키 선택" name="key"  style="width : 50%;" id="key-select" required>' +
@@ -658,13 +647,13 @@
 
 
 
-        $('#code-table-body').append('<tr class="text-center"><td>'+keyChoice+'</td><td>'+keySelect+'</td></tr>');
+        $('#log-format-key-table-body').append('<tr class="text-center"><td>'+keyChoice+'</td><td>'+keySelect+'</td></tr>');
         //$('#key-select').select2();
 
         $('.code-form-delete-btn').click(function(){
             $(this).parent().parent().parent().remove();
         })
-        $('#add-key-btn').removeAttr("hidden");
+        $('#add-log-format-btn').removeAttr("hidden");
     });
 
     $(document).ready(function () {
