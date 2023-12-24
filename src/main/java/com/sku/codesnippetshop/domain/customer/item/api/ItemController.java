@@ -4,17 +4,21 @@ import com.sku.codesnippetshop.domain.customer.file.service.FileService;
 import com.sku.codesnippetshop.domain.customer.item.domain.Item;
 import com.sku.codesnippetshop.domain.customer.item.dto.ItemReadDto;
 import com.sku.codesnippetshop.domain.customer.item.dto.ItemCreateDto;
+import com.sku.codesnippetshop.domain.customer.item.dto.ItemReadIndexDto;
 import com.sku.codesnippetshop.domain.customer.item.dto.ItemUpdateDto;
 import com.sku.codesnippetshop.domain.customer.item.service.ItemService;
 import com.sku.codesnippetshop.global.error.NotFoundException;
 import com.sku.codesnippetshop.global.response.ResponseFormat;
 import com.sku.codesnippetshop.global.response.ResponseStatus;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
@@ -50,6 +54,20 @@ public class ItemController {
             return ResponseFormat.error(ResponseStatus.FAIL_NOT_FOUND);
         } catch (RuntimeException e) {
             return ResponseFormat.error(ResponseStatus.FAIL_BAD_REQUEST);
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<ResponseFormat<List<ItemReadIndexDto>>> getAllItem() {
+        try {
+            List<ItemReadIndexDto> items = itemService.getAllItem();
+            return ResponseEntity.ok(ResponseFormat.successWithData(ResponseStatus.SUCCESS_OK, items));
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(ResponseFormat.error(com.sku.codesnippetshop.global.response.ResponseStatus.FAIL_NOT_FOUND));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(ResponseFormat.error(com.sku.codesnippetshop.global.response.ResponseStatus.FAIL_BAD_REQUEST));
         }
     }
 

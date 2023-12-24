@@ -8,6 +8,8 @@ import com.sku.codesnippetshop.global.error.NotFoundException;
 import com.sku.codesnippetshop.global.response.ResponseStatus;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,17 +22,32 @@ public class FileService {
 
     private final FileRepository fileRepository;
 
-    // 파일 경로 지정, 윈도우인 경우, '\' 이스케이프 2개 필요!
-//    private final String FOLDER_PATH = "C:\\kchDev\\worldcup_img\\";
+//    public void uploadFileToFileSystem(MultipartFile file, Brand brand, Item item) throws IOException {
+//
+//
+//        String FOLDER_PATH = System.getProperty("user.dir"); // System.getProperty("user.dir") 를 통해 현재 디렉토리 접근
+//        FOLDER_PATH = FOLDER_PATH.concat("\\src\\main\\resources\\static\\images\\products\\");
+//        String filePath = FOLDER_PATH + file.getOriginalFilename();
+//        FileData fileData = fileRepository.save(
+//                FileData.builder()
+//                        .fileName(file.getOriginalFilename())
+//                        .filePath(filePath)
+//                        .item(item)
+//                        .brand(brand)
+//                        .build()
+//        );
+//        // 파일 경로
+//        file.transferTo(new File(filePath));
+//
+//    }
 
     public void uploadFileToFileSystem(MultipartFile file, Brand brand, Item item) throws IOException {
+        String FOLDER_PATH = "static/images/products/"; // 클래스패스 상의 경로를 사용합니다.
+        String fileName = file.getOriginalFilename();
+        String filePath = FOLDER_PATH + fileName;
 
-        //절대경로
-//        String FOLDER_PATH = "C:\\Users\\북205_20\\Desktop\\월드컵\\IdealWorldCupPage-main\\IdealWordlCupPage\\src\\main\\resources\\static\\file\\";
-        //상대경로
-        String FOLDER_PATH = System.getProperty("user.dir"); // System.getProperty("user.dir") 를 통해 현재 디렉토리 접근
-        FOLDER_PATH = FOLDER_PATH.concat("\\src\\main\\resources\\static\\images\\products\\");
-        String filePath = FOLDER_PATH + file.getOriginalFilename();
+        Resource resource = new ClassPathResource(filePath);
+
         FileData fileData = fileRepository.save(
                 FileData.builder()
                         .fileName(file.getOriginalFilename())
@@ -40,25 +57,9 @@ public class FileService {
                         .build()
         );
         // 파일 경로
-        file.transferTo(new File(filePath));
+        file.transferTo(new File(resource.getURI()));
 
     }
-
-//    public byte[] downloadFileFromFileSystem(String fileName) throws IOException {
-//        FileData fileData = fileRepository.findByFileName(fileName)
-//                .orElseThrow(RuntimeException::new);
-//
-//        String filePath = fileData.getFilePath();
-//
-//
-//        return Files.readAllBytes(new File(filePath).toPath());
-//    }
-
-    public void updateItemId(Long ItemId){
-
-
-    }
-
     public String getFilePathByItemId(Long itemId) {
         FileData fileData = fileRepository.findByItem_ItemId(itemId);
 

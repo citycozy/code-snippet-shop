@@ -3,6 +3,7 @@ package com.sku.codesnippetshop.domain.customer.item.domain;
 import com.sku.codesnippetshop.domain.customer.brand.domain.Brand;
 import com.sku.codesnippetshop.domain.customer.item.dto.ItemCreateDto;
 import com.sku.codesnippetshop.domain.customer.item.dto.ItemReadDto;
+import com.sku.codesnippetshop.domain.customer.item.dto.ItemReadIndexDto;
 import com.sku.codesnippetshop.domain.customer.item.dto.ItemUpdateDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -94,6 +95,15 @@ public class Item {
                 .regDt(item.getRegDt())
                 .modDt(item.getModDt())
                 .quantity(item.getQuantity())
+                .price(item.getPrice())
+                .build();
+    }
+
+    public static ItemReadIndexDto entityToDTO2(Item item) {
+        return ItemReadIndexDto.builder()
+                .itemId(item.getItemId())
+                .name(item.getName())
+                .content(item.getContent())
                 .price(item.getPrice())
                 .build();
     }
