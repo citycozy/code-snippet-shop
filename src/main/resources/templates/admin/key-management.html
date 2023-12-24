@@ -76,7 +76,7 @@
                 <!-- 나머지 테이블 행들도 동일하게 작성 -->
                 </tbody>
             </table>
-            <div class="d-grid gap-2">
+            <div class="text-end">
                 <a id="create-key-btn" class="btn btn-outline-success" type="button" data-bs-toggle="modal" data-bs-target="#create-key-modal"><b>키 생성</b></a>
                 <a class="btn btn-outline-primary" type="button" href="\log-format-management"><b>로그 포맷 관리</b></a>
                 <a class="btn btn-outline-primary" type="button" href="\scenario-management"><b>시나리오 관리</b></a>
@@ -94,14 +94,14 @@
         <div class="modal-content">
             <div class="modal-header d-flex justify-content-between row">
                 <h3 class="col-4"></h3>
-                <h5 class="modal-title mx-auto independent-block col-4"><b> 키 관리</b></h5>
-                <button type="button" class="btn-close col-4" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title mx-auto independent-block col-4 text-center"><b> 키 관리</b></h5>
+                <div class="text-end col-4"><button type="button" class="btn-close col-4" data-bs-dismiss="modal" aria-label="Close"></button></div>
             </div>
 
             <div class="modal-body">
                 <div class="modal-body">
-                    <div>
-                        <table class="table table-dark table-striped table-hover">
+                    <div class="mb-1">
+                        <table class="table table-dark table-striped table-hover mb-0">
                             <thead>
                             <tr>
                                 <td colspan="2" class="col-6 text-center">
@@ -110,39 +110,37 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="text-end">
+                            <tr class="text-center">
                                 <td>
-                                    키이름
+                                    <b>키이름</b>
                                 </td>
                                 <td id ="nameModal">
                                     <input class="form-control" type="text" placeholder="입력">
                                 </td>
                             </tr>
-                            <tr class="text-end">
+                            <tr class="text-center">
                                 <td>
-                                    키타입
+                                    <b>키타입</b>
                                 </td>
                                 <td id="typeModal">
 
                                 </td>
                             </tr>
-                            <tr>
-                                <td class="col-6 text-end">
+                            <tr class="text-center">
+                                <td class="col-6 text-center">
                                     <b>키 설명</b>
                                 </td>
                                 <td class="col-6 text-center">
                                     <input class="form-control" id="descriptionModal" type="text" placeholder="입력">
                                 </td>
                             </tr>
-                            <tr class="text-end">
-                                <td colspan="2">
-                                    <button id="key-update-reset-btn" class="btn btn-primary">Reset</button>
-                                    <button id="key-update-btn" class="btn btn-success">Update</button>
-                                </td>
-                            </tr>
+
                             </tbody>
                         </table>
-
+                        <div class="text-end mt-1">
+                            <button id="key-update-reset-btn" class="btn btn-outline-primary">리셋</button>
+                            <button id="key-update-btn" class="btn btn-success">수정</button>
+                        </div>
                     </div>
 
                     <div>
@@ -195,7 +193,7 @@
                     </div>
                     <div class="d-grid gap-2">
                         <button id="add-code-form-btn-exist" class="btn btn-outline-success" type="button"><b>+ 코드 추가 폼 +</b></button>
-                        <button id="add-code-btn-exist" class="btn btn-outline-danger" type="button" hidden="hidden"><b>추가</b></button>
+                        <button id="add-code-btn-exist" class="btn btn-danger" type="button" hidden="hidden"><b>추가</b></button>
 
 <!--                        <button class="btn btn-outline-danger" type="button"><b>중지</b></button>-->
                     </div>
@@ -212,8 +210,8 @@
         <div class="modal-content">
             <div class="modal-header d-flex justify-content-between row">
                 <h3 class="col-4"></h3>
-                <h5 class="modal-title mx-auto independent-block col-4"><b> 키 생성</b></h5>
-                <button type="button" class="btn-close col-4" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title mx-auto independent-block col-4 text-center"><b> 키 생성</b></h5>
+                <div class="text-end col-4"><button type="button" class="btn-close col-4" data-bs-dismiss="modal" aria-label="Close"></button></div>
             </div>
 
             <div class="modal-body">
@@ -271,7 +269,7 @@
                                     <label for="key-create-type">키 타입</label>
                                 </td>
                                 <td class="col-6 text-center">
-                                    <select class="form-control" data-placeholder="데이터 타입 선택" id="key-create-type" name="filterType" required style="border: 3px solid black;">
+                                    <select class="form-select" data-placeholder="데이터 타입 선택" id="key-create-type" name="filterType" required >
                                         <option value="number">숫자</option>
                                         <option value="string">문자</option>
                                     </select>
@@ -303,7 +301,7 @@
                     </div>
                     <div class="d-grid gap-2">
                         <button id="add-code-form-btn" class="btn btn-outline-success" type="button"><b>+ 코드 추가 폼 +</b></button>
-                        <button id="add-key-btn" class="btn btn-outline-danger" type="button" hidden="hidden"><b>생성</b></button>
+                        <button id="add-key-btn" class="btn btn-danger" type="button" hidden="hidden"><b>생성</b></button>
 
                         <!--                        <button class="btn btn-outline-danger" type="button"><b>중지</b></button>-->
                     </div>
@@ -347,6 +345,7 @@
     $("#key-update-reset-btn").click(function(){
         $("#exist-key-name-input").val("");
         $('#filterType').val("");
+        $('#descriptionModal').val("");
     })
     function highlightRow(row) {
         // 기존에 활성화된 행에서 active 클래스 제거
@@ -370,7 +369,7 @@
         //$('#scenarioIdModal').text(scenarioId);
         $('#nameModal').html('<input id="exist-key-name-input" class="form-control" type="text" placeholder="' + name + '">');
         // '#typeModal' 요소에 select 태그를 추가하고 원하는 option을 선택합니다
-        $('#typeModal').html('<select class="form-control" data-placeholder="데이터 타입 선택" id="filterType" name="filterType" required style="border: 3px solid black;">' +
+        $('#typeModal').html('<select class="form-select" data-placeholder="데이터 타입 선택" id="filterType" name="filterType" required >' +
             '<option value="number">숫자</option>' +
             '<option value="string">문자</option>' +
             '</select>');
@@ -404,7 +403,7 @@
                         '<input class="form-control" type="text" placeholder="'+response.data[i].code+'" value="'+response.data[i].code+'">' +
                         '</td>' +
                         '<td>' +'<div class="row">'+
-                        '<input class="form-control" type="text" style="width:280px;" placeholder="'+response.data[i].name+'" value="'+response.data[i].name+'">' +
+                        '<input class="form-control" type="text" style="width:300px;" placeholder="'+response.data[i].name+'" value="'+response.data[i].name+'">' +
                         '<a class="btn btn-danger col-2 text-center code-form-delete-btn" type="button" href="#"><b>X</b></a>'+'</div>'+
                         '</td>' +
                         '<td class="text-start" style="display: none;">' + response.data[i].codeTableId + '</td>' +
@@ -447,13 +446,15 @@
     createKeyModal._element.addEventListener('hidden.bs.modal', function () {
         // key create 모달이 숨겨질 때 active 클래스를 key craete 버튼에서 제거
         $('#create-key-btn').removeClass('active');
+        $('#code-table-body').empty();
+        $('#add-key-btn').attr("hidden", true);
     });
 
 
     $('#add-code-form-btn-exist').click(function(){
 
         let inputForm = '<input class="form-control" type="text" placeholder="입력">';
-        let inputFormWithDeleteBtn = '<div class="row"><input class="form-control col" type="text" placeholder="입력" style="width: 280px;"><a class="btn btn-danger col-2 text-center code-form-delete-btn" type="button" href="#"><b>X</b></a><div></div></div>';
+        let inputFormWithDeleteBtn = '<div class="row"><input class="form-control" type="text" placeholder="입력" style="width: 300px;"><a class="btn btn-danger col-2 text-center code-form-delete-btn" type="button" href="#"><b>X</b></a><div></div></div>';
 
         $('#code-table-body-exist').append('<tr class="text-center"><td>'+inputForm+'</td><td>'+inputFormWithDeleteBtn+'</td></tr>');
         $('.code-form-delete-btn').click(function(){
@@ -561,7 +562,7 @@
     $('#add-code-form-btn').click(function(){
 
         let inputForm = '<input class="form-control" type="text" placeholder="입력">';
-        let inputFormWithDeleteBtn = '<div class="row"><input class="form-control col" type="text" placeholder="입력" style="width: 280px;"><a class="btn btn-danger col-2 text-center code-form-delete-btn" type="button" href="#"><b>X</b></a><div></div></div>';
+        let inputFormWithDeleteBtn = '<div class="row"><input class="form-control" type="text" placeholder="입력" style="width: 300px;"><a class="btn btn-danger col-2 text-center code-form-delete-btn" type="button" href="#"><b>X</b></a><div></div></div>';
 
         $('#code-table-body').append('<tr class="text-center"><td>'+inputForm+'</td><td>'+inputFormWithDeleteBtn+'</td></tr>');
         $('.code-form-delete-btn').click(function(){
@@ -584,12 +585,12 @@
                         '<th scope="row">' +
                         '<input class="form-check-input" type="checkbox" value="">' +
                         '</th>' +
-                        '<td class="text-end">' + response.data[i].keyId + '</td>' +
+                        '<td class="text-center">' + response.data[i].keyId + '</td>' +
                         '<td class="text-start">' + response.data[i].name + '</td>' +
-                        '<td class="text-start">' + response.data[i].type + '</td>' +
+                        '<td class="text-center">' + response.data[i].type + '</td>' +
                         '<td class="text-start">' + response.data[i].description + '</td>' +
-                        '<td class="text-start" style="display: none;">' + response.data[i].regDt + '</td>' +
-                        '<td class="text-start" style="display: none;">' + response.data[i].modDt + '</td>' +
+                        '<td class="text-start" style="display: none;">' + response.data[i].regDt.replace('T', ' ').substring(0, 16) + '</td>' +
+                        '<td class="text-start" style="display: none;">' + response.data[i].modDt.replace('T', ' ').substring(0, 16) + '</td>' +
                         '</tr>';
 
                     $("#key-table-body").append(newRow);

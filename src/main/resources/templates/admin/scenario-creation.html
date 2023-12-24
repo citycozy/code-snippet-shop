@@ -108,7 +108,7 @@
                     </select>
                 </div>
                 <div class="col mb-3">
-                    <select class="form-control" data-placeholder="연산자 선택" id="operator" name="operator" required style="
+                    <select class="form-select" data-placeholder="연산자 선택" id="operator" name="operator" required style="
             border: 3px solid black;">
                         <option value="<">&lt; (미만)</option>
                         <option value=">">&gt; (초과)</option>
@@ -124,7 +124,7 @@
                 </div>
                 <div class="col mb-3">
 
-                    <select class="form-control"  data-placeholder="데이터 타입 선택" id="filterType" name="filterType" required style="
+                    <select class="form-select"  data-placeholder="데이터 타입 선택" id="filterType" name="filterType" required style="
             border: 3px solid black;">
                         <option value="number">숫자</option>
                         <option value="string">문자</option>
@@ -132,12 +132,13 @@
                 </div>
             </div>
 
-
-            <!-- Add filter button -->
-            <button type="button" class="btn btn-primary" onclick="addFilter()">필터 추가</button>
-            <button type="button" class="btn btn-danger" onclick="resetForm()">리셋 폼</button>
-            <button type="button" class="btn btn-success" onclick="addLogicalOperator('AND')">AND</button>
-            <button type="button" class="btn btn-warning" onclick="addLogicalOperator('OR')">OR</button>
+            <div class="text-end">
+                <!-- Add filter button -->
+                <button type="button" class="btn btn-primary" onclick="addFilter()">필터 추가</button>
+                <button type="button" class="btn btn-danger" onclick="resetForm()">리셋 폼</button>
+                <button type="button" class="btn btn-success" onclick="addLogicalOperator('AND')">AND</button>
+                <button type="button" class="btn btn-warning" onclick="addLogicalOperator('OR')">OR</button>
+            </div>
         </form>
 
         <!-- Display added filters with buttons for each -->
@@ -163,14 +164,14 @@
     <div class="row justify-content-center">
         <div class="col-12">
             <div class="row pb-3">
-                <div class="col">
+                <div class="col text-end">
                     <!-- 플러스 버튼 모달 토글 버튼 -->
-                    <button class="set-button btn btn-danger" id="refreshButton"> 이전으로 </button>
+                    <button class="set-button btn btn-outline-danger" id="refreshButton"> 이전으로 </button>
                     <button class="btn btn-danger" id="scenario-create-btn" > 시나리오 생성 </button>
                 </div>
             </div>
 
-            <div class="d-grid gap-2">
+            <div class="text-end">
                 <a class="btn btn-outline-primary" type="button" href="\scenario-management"><b>시나리오 관리</b></a>
                 <a class="btn btn-outline-primary" type="button" href="\key-management"><b>키 관리</b></a>
                 <a class="btn btn-outline-primary" type="button" href="\log-format-management"><b>로그 포맷 관리</b></a>
@@ -210,11 +211,11 @@
                 </table>
                 <div class="row pb-3">
                     <div class="col">
-                        <!-- 플러스 버튼 모달 토글 버튼 -->
-                        <button id="set-log-format" class="set-button  btn btn-danger" disabled > 확인 </button>
+<!--                        &lt;!&ndash; 플러스 버튼 모달 토글 버튼 &ndash;&gt;-->
+<!--                        <button id="set-log-format" class="set-button  btn btn-danger" disabled > 확인 </button>-->
                     </div>
                 </div>
-                <div class="d-grid gap-2">
+                <div class="text-end">
                     <a class="btn btn-outline-primary" type="button" href="\scenario-management"><b>시나리오 관리</b></a>
                     <a class="btn btn-outline-primary" type="button" href="\key-management"><b>키 관리</b></a>
                     <a class="btn btn-outline-primary" type="button" href="\log-format-management"><b>로그 포맷 관리</b></a>
@@ -232,8 +233,8 @@
         <div class="modal-content">
             <div class="modal-header d-flex justify-content-between row">
                 <h3 class="col-4"></h3>
-                <h5 class="modal-title mx-auto independent-block col-4"><b> 로그 포맷 관리</b></h5>
-                <button type="button" class="btn-close col-4" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title mx-auto independent-block col-4 text-center"><b> 로그 포맷 상세</b></h5>
+                <div class="text-end col-4"><button type="button" class="btn-close col-4" data-bs-dismiss="modal" aria-label="Close"></button></div>
             </div>
 
             <div class="modal-body">
@@ -249,11 +250,11 @@
                             </thead>
                             <tbody>
                             <tr class="text-end">
-                                <td class="col-6">
+                                <td class="col-6 text-center">
                                     <b>로그 포맷 이름</b>
                                 </td>
-                                <td class="col-6">
-                                    <p class="text-start" id="nameModal"></p>
+                                <td class="col-6 text-center">
+                                    <b class="text-start" id="nameModal"></b>
 
                                 </td>
                             </tr>
@@ -266,12 +267,6 @@
                             <tr>
                                 <td colspan="2">
                                     <p class="text-start" id="descriptionModal"></p>
-                                </td>
-                            </tr>
-                            <tr class="text-end">
-                                <td colspan="2">
-                                    <button id="key-update-reset-btn" class="btn btn-primary">Reset</button>
-                                    <button id="key-update-btn" class="btn btn-success">Update</button>
                                 </td>
                             </tr>
                             </tbody>
@@ -328,7 +323,7 @@
 
                     </div>
                     <div class="d-grid gap-2">
-                        <button id="log-format-delete-btn" class="btn btn-outline-danger" type="button" data-bs-dismiss="modal" aria-label="Close"><b>확인</b></button>
+                        <button id="set-log-format" class="set-button  btn btn-danger" data-bs-dismiss="modal" aria-label="Close"> 확인 </button>
                     </div>
                 </div>
             </div>
@@ -363,7 +358,50 @@
         $('#key').select2();
     });
 </script>
+<script>
+    //시나리오 생성 클릭
+    $('#scenario-create-btn').click(function(){
 
+
+        let activeRow = $('tr.active');
+        let logFormatId = activeRow.find('td:eq(0)').text();
+
+        let newScenario = {
+            "name": "이름",
+            "description":"설명",
+            "logFormatId" : logFormatId,
+            "filterId" : 1
+        };
+        console.log(logFormatId);
+        $.ajax({
+            type: "POST",
+            url: "/api/scenarios",
+            contentType: "application/json", // JSON 형식으로 전송한다는 것을 명시
+            data: JSON.stringify(newScenario), // JSON 데이터를 문자열로 변환하여 전송
+            dataType: "json",
+            success: function (response) {
+                console.log("Success:", response);
+
+
+                // $('.progress').val(100);
+                // setTimeout(function() {
+                //     // 원하는 작업을 수행
+                //     location.href= "/scenario-management";
+                // }, 1500);
+            },
+            error: function (error) {
+                console.error("Error:", error);
+                // 에러 처리
+            }
+        });
+        // $('.progress').val(100);
+        // setTimeout(function() {
+        //     // 원하는 작업을 수행
+        //     location.href= "/scenario-management";
+        // }, 1500);
+
+    })
+</script>
 
 <script>
     $(document).ready(function () {
@@ -380,11 +418,11 @@
                         '<th scope="row">' +
                         '<input class="form-check-input" name="log-fomat-group" type="radio" value="">'+
                         '</th>' +
-                        '<td class="text-end">' + response.data[i].logFormatId + '</td>' +
+                        '<td class="text-center">' + response.data[i].logFormatId + '</td>' +
                         '<td class="text-start">' + response.data[i].name + '</td>' +
                         '<td class="text-start">' + response.data[i].description + '</td>' +
-                        '<td class="text-start" style="display: none;">' + response.data[i].regDt + '</td>' +
-                        '<td class="text-start" style="display: none;">' + response.data[i].modDt + '</td>' +
+                        '<td class="text-start" style="display: none;">' + response.data[i].regDt.replace('T', ' ').substring(0, 16) + '</td>' +
+                        '<td class="text-start" style="display: none;">' + response.data[i].modDt.replace('T', ' ').substring(0, 16) + '</td>' +
                         '</tr>';
                     $("#scenario-table-body").append(newRow);
                 }

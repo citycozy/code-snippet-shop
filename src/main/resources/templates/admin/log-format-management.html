@@ -87,7 +87,7 @@
                 <!-- 나머지 테이블 행들도 동일하게 작성 -->
                 </tbody>
             </table>
-            <div class="d-grid gap-2">
+            <div class="text-end">
                 <a id="create-key-btn" class="btn btn-outline-success" type="button" data-bs-toggle="modal" data-bs-target="#create-key-modal"><b>로그 포맷 생성</b></a>
                 <a class="btn btn-outline-primary" type="button" href="\key-management"><b>키 관리</b></a>
                 <a class="btn btn-outline-primary" type="button" href="\scenario-management"><b>시나리오 관리</b></a>
@@ -104,14 +104,14 @@
         <div class="modal-content">
             <div class="modal-header d-flex justify-content-between row">
                 <h3 class="col-4"></h3>
-                <h5 class="modal-title mx-auto independent-block col-4"><b> 로그 포맷 관리</b></h5>
-                <button type="button" class="btn-close col-4" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title mx-auto independent-block col-4 text-center"><b> 로그 포맷 관리</b></h5>
+                <div class="text-end col-4"><button type="button" class="btn-close col-4" data-bs-dismiss="modal" aria-label="Close"></button></div>
             </div>
 
             <div class="modal-body">
                 <div class="modal-body">
-                    <div>
-                        <table class="table table-dark table-striped table-hover">
+                    <div class="mb-1">
+                        <table class="table table-dark table-striped table-hover mb-0">
                             <thead>
                             <tr>
                                 <td colspan="2" class="col-6 text-center">
@@ -121,8 +121,8 @@
                             </thead>
                             <tbody>
                             <tr class="text-end">
-                                <td class="col-6">
-                                    로그 포맷 이름
+                                <td class="col-6 text-center">
+                                    <b>로그 포맷 이름</b>
                                 </td>
                                 <td class="col-6">
                                     <input id ="nameModal" class="form-control" type="text" placeholder="입력">
@@ -137,19 +137,16 @@
                             <tr>
                                 <td colspan="2">
                                     <label>
-                                        <textarea id="descriptionModal" class="custom-textarea" rows="3" cols="90"></textarea>
+                                        <textarea id="descriptionModal" class="custom-textarea" rows="3" cols="90" style="width:718px;"></textarea>
                                     </label>
-                                </td>
-                            </tr>
-                            <tr class="text-end">
-                                <td colspan="2">
-                                    <button id="key-update-reset-btn" class="btn btn-primary">Reset</button>
-                                    <button id="key-update-btn" class="btn btn-success">Update</button>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
-
+                        <div class="text-end mt-1">
+                            <button id="key-update-reset-btn" class="btn btn-outline-primary">리셋</button>
+                            <button id="key-update-btn" class="btn btn-success">수정</button>
+                        </div>
                     </div>
 
                     <div>
@@ -201,7 +198,7 @@
 
                     </div>
                     <div class="d-grid gap-2">
-                        <button id="log-format-delete-btn" class="btn btn-outline-danger" type="button" ><b>로그 포맷 삭제</b></button>
+                        <button id="log-format-delete-btn" class="btn btn-danger" type="button" ><b>로그 포맷 삭제</b></button>
                         <!--                        <button class="btn btn-outline-danger" type="button"><b>중지</b></button>-->
                     </div>
                 </div>
@@ -217,8 +214,8 @@
         <div class="modal-content">
             <div class="modal-header d-flex justify-content-between row">
                 <h3 class="col-4"></h3>
-                <h5 class="modal-title mx-auto independent-block col-4"><b> 로그 포맷 생성</b></h5>
-                <button type="button" class="btn-close col-4" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title mx-auto independent-block col-4 text-center"><b> 로그 포맷 생성</b></h5>
+                <div class="text-end col-4"><button type="button" class="btn-close col-4" data-bs-dismiss="modal" aria-label="Close"></button></div>
             </div>
 
             <div class="modal-body">
@@ -294,7 +291,7 @@
                     </div>
                     <div class="d-grid gap-2">
                         <button id="add-key-form-btn" class="btn btn-outline-success" type="button"><b>+ 키 폼 추가 +</b></button>
-                        <button id="add-log-format-btn" class="btn btn-outline-danger" type="button" hidden="hidden"><b>로그 포맷 생성</b></button>
+                        <button id="add-log-format-btn" class="btn btn-danger" type="button" hidden="hidden"><b>로그 포맷 생성</b></button>
 
                         <!--                        <button class="btn btn-outline-danger" type="button"><b>중지</b></button>-->
                     </div>
@@ -397,7 +394,7 @@
         $('#nameModal').val(name);
         $('#nameModal').attr('placeholder',name);
         // '#typeModal' 요소에 select 태그를 추가하고 원하는 option을 선택합니다
-        $('#typeModal').html('<select class="form-control" data-placeholder="데이터 타입 선택" id="filterType" name="filterType" required style="border: 3px solid black;">' +
+        $('#typeModal').html('<select class="form-select" data-placeholder="데이터 타입 선택" id="filterType" name="filterType" required style="border: 3px solid black;">' +
             '<option value="number">숫자</option>' +
             '<option value="string">문자</option>' +
             '</select>');
@@ -477,6 +474,9 @@
     createKeyModal._element.addEventListener('hidden.bs.modal', function () {
         // key create 모달이 숨겨질 때 active 클래스를 key craete 버튼에서 제거
         $('#create-key-btn').removeClass('active');
+        $('#log-format-key-table-body').empty();
+
+        $('#add-log-format-btn').attr('hidden',true);
     });
 
 
@@ -501,7 +501,7 @@
         console.log(updateLogFormat);
         $.ajax({
             type: "PUT",
-            url: "/api/log-formats  /"+$(this).val(),
+            url: "/api/log-formats/"+$(this).val(),
             contentType: "application/json", // JSON 형식으로 전송한다는 것을 명시
             data: JSON.stringify(updateLogFormat), // JSON 데이터를 문자열로 변환하여 전송
             dataType: "json",
@@ -589,7 +589,7 @@
 
     })
 
-    let keySelect = '<div class="row"><select class="js-example-basic-single selectBox" data-placeholder="키 선택" name="key"  style="width : 50%;" id="key-select" required>' +
+    let keySelect = '<div class="row"><select class="js-example-basic-single selectBox" data-placeholder="키 선택" name="key"  style="width : 300px;" id="key-select" required>' +
             '<option value="cust_id">고객번호</option>' +
             '<option value="cust_age">고객나이</option>' +
             '<option value="loc" style="z-index:100;">고객주소</option>' +
@@ -603,7 +603,7 @@
             url: "/api/keys",
             dataType: "json",
             success: function (response) {
-                keySelect = '<div class="row"><select class="js-example-basic-single selectBox" data-placeholder="키 선택" name="key"  style="width : 50%;" id="key-select" required>';
+                keySelect = '<div class="row"><select class="js-example-basic-single selectBox" data-placeholder="키 선택" name="key"  style="width : 300px;" id="key-select" required>';
                 console.log("Success:", response);
                 console.log(response.data[0]);
                 for (var i = 0; i < response.data.length; i++) {
@@ -647,7 +647,7 @@
 
 
 
-        $('#log-format-key-table-body').append('<tr class="text-center"><td>'+keyChoice+'</td><td>'+keySelect+'</td></tr>');
+        $('#log-format-key-table-body').append('<tr class="text-center"><td class="col-6">'+keyChoice+'</td><td>'+keySelect+'</td></tr>');
         //$('#key-select').select2();
 
         $('.code-form-delete-btn').click(function(){
@@ -670,11 +670,11 @@
                         '<th scope="row">' +
                         '<input class="form-check-input" type="checkbox" value="">' +
                         '</th>' +
-                        '<td class="text-end">' + response.data[i].logFormatId + '</td>' +
+                        '<td class="text-center">' + response.data[i].logFormatId + '</td>' +
                         '<td class="text-start">' + response.data[i].name + '</td>' +
                         '<td class="text-start">' + response.data[i].description + '</td>' +
-                        '<td class="text-start" style="display: none;">' + response.data[i].regDt + '</td>' +
-                        '<td class="text-start" style="display: none;">' + response.data[i].modDt + '</td>' +
+                        '<td class="text-start" style="display: none;">' + response.data[i].regDt.replace('T', ' ').substring(0, 16) + '</td>' +
+                        '<td class="text-start" style="display: none;">' + response.data[i].modDt.replace('T', ' ').substring(0, 16) + '</td>' +
                         '</tr>';
                     $("#log-format-table-body").append(newRow);
                 }

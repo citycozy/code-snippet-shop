@@ -68,26 +68,16 @@
                     <th scope="col">#</th>
                     <th scope="col">ID</th>
                     <th scope="col">NAME</th>
-                    <th scope="col">LogFormatName</th>
                     <th scope="col">Description</th>
                     <th scope="col">Status</th>
                 </tr>
                 </thead>
                 <tbody id="scenario-table-body">
-                <tr onclick="highlightRow(this)" data-bs-toggle="modal" data-bs-target="#sidebarModal">
-                    <th scope="row">
-                        <input class="form-check-input" type="checkbox" value="">
-                    </th>
-                    <td>0</td>
-                    <td>테스트 행</td>
-                    <td>로그포맷 이름</td>
-                    <td>테스트 용 html text 행</td>
-                    <td>배포안됨</td>
-                </tr>
+
                 <!-- 나머지 테이블 행들도 동일하게 작성 -->
                 </tbody>
             </table>
-            <div class="d-grid gap-2">
+            <div class="text-end">
                 <a class="btn btn-outline-warning" type="button" href="\scenario-creation"><b>시나리오 생성</b></a>
                 <a class="btn btn-outline-primary" type="button" href="\key-management"><b>키 관리</b></a>
                 <a class="btn btn-outline-primary" type="button" href="\log-format-management"><b>로그 포맷 관리</b></a>
@@ -316,13 +306,13 @@
                         '<th scope="row">' +
                         '<input class="form-check-input" type="checkbox" value="">' +
                         '</th>' +
-                        '<td class="text-end">' + response.data[i].scenarioId + '</td>' +
+                        '<td class="text-center">' + response.data[i].scenarioId + '</td>' +
                         '<td class="text-start">' + response.data[i].name + '</td>' +
-                        '<td class="text-start">' + response.data[i].logFormat + '</td>' +
+                        '<td style="display: none;" class="text-start">' + response.data[i].logFormat + '</td>' +
                         '<td class="text-start">' + response.data[i].description + '</td>' +
-                        '<td class="text-start">' + response.data[i].status + '</td>' +
-                        '<td class="text-start" style="display: none;">' + response.data[i].regDt + '</td>' +
-                        '<td class="text-start"style="display: none;">' + response.data[i].modDt + '</td>' +
+                        '<td class="text-center">' + response.data[i].status + '</td>' +
+                        '<td class="text-start" style="display: none;">' + response.data[i].regDt.replace('T', ' ').substring(0, 16) + '</td>' +
+                        '<td class="text-start"style="display: none;">' + response.data[i].modDt.replace('T', ' ').substring(0, 16) + '</td>' +
                         '<td style="display: none;">' + response.data[i].topic_creation_enabled + '</td>' +
                         '<td style="display: none;">' + response.data[i].db_loaded + '</td>' +
                         '<td style="display: none;">' + response.data[i].hadoop_loaded + '</td>' +
