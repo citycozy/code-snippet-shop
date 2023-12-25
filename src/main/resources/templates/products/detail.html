@@ -14,50 +14,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <!--    아이콘-->
     <!-- header css -->
-    <link rel="stylesheet" th:href="@{static/css/header.css}">
+    <link rel="stylesheet" th:href="@{css/header.css}">
     <!-- item-detail css -->
-    <link rel="stylesheet" th:href="@{static/css/item-detail.css}">
+    <link rel="stylesheet" th:href="@{css/item-detail.css}">
 
     <!-- main-tag css -->
-    <link rel="stylesheet" th:href="@{static/css/main-tag.css}">
+    <link rel="stylesheet" th:href="@{css/main-tag.css}">
+
     <title>상품 상세</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const urlParams = new URLSearchParams(window.location.search);
-            const itemId = urlParams.get('itemId');
-
-            // 서버 엔드포인트 URL
-            const apiUrl = `http://localhost:8080/api/files/${itemId}`;
-
-            // 이미지 엘리먼트 가져오기
-            const imgElement = document.getElementById('dynamicImage');
-
-            // AJAX 요청 보내기
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', apiUrl, true);
-
-            // 요청 완료 후의 처리
-            xhr.onload = function () {
-                if (xhr.status >= 200 && xhr.status < 300) {
-                    // 성공적으로 파일 경로를 받아왔을 때 이미지 엘리먼트에 설정
-                    const imagePath = xhr.responseText;
-                    imgElement.src = `http://localhost:8080${imagePath}`;
-                } else {
-                    // 오류 발생 시 처리
-                    console.error('Error:', xhr.statusText);
-                }
-            };
-
-            // 네트워크 오류 처리
-            xhr.onerror = function () {
-                console.error('Network error');
-            };
-
-            // 요청 보내기
-            xhr.send();
-        });
     </script>
-
 </head>
 <body>
 <div th:replace="~{/includes/header :: header}"></div>

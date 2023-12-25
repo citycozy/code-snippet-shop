@@ -15,6 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Service
 @AllArgsConstructor
@@ -42,11 +45,9 @@ public class FileService {
 //    }
 
     public void uploadFileToFileSystem(MultipartFile file, Brand brand, Item item) throws IOException {
-        String FOLDER_PATH = "static/images/products/"; // 클래스패스 상의 경로를 사용합니다.
+        String FOLDER_PATH = "images/products/"; // 파일 시스템 상의 경로를 사용합니다.
         String fileName = file.getOriginalFilename();
         String filePath = FOLDER_PATH + fileName;
-
-        Resource resource = new ClassPathResource(filePath);
 
         FileData fileData = fileRepository.save(
                 FileData.builder()
@@ -56,10 +57,13 @@ public class FileService {
                         .brand(brand)
                         .build()
         );
-        // 파일 경로
-        file.transferTo(new File(resource.getURI()));
 
+        // 파일 경로
+        Path path = Paths.get(FOLDER_PATH, fileName);
+        Files.createDirectories(path.getParent());
+        Files.write(path, file.getBytes());
     }
+
     public String getFilePathByItemId(Long itemId) {
         FileData fileData = fileRepository.findByItem_ItemId(itemId);
 

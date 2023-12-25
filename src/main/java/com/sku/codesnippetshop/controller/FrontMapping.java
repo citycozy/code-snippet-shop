@@ -30,7 +30,7 @@ public class FrontMapping {
     }
 
 
-    @GetMapping("detail")
+    @GetMapping("detail/{itemId}")
     public String detail() {
         return "products/detail";
     }
