@@ -33,6 +33,19 @@ public class CodeTableController {
         }
     }
 
+    /*코드 테이블 생성 컨트롤러
+param : 생성 코드 테이블 info */
+    @PostMapping("/add-new-one")
+    public ResponseFormat<Void> addCodeTable(@RequestBody CodeTableCreateDTO create) {
+        try {
+            codeTableService.createCodeTable(create);
+            return ResponseFormat.success(ResponseStatus.SUCCESS_CREATE);
+        } catch (RuntimeException e) {
+            return ResponseFormat.error(ResponseStatus.FAIL_BAD_REQUEST);
+        }
+    }
+
+
     /*특정 키의 코드 테이블 전부 읽기 컨트롤러
     param : X */
     @GetMapping("/{keyId}")

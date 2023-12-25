@@ -193,7 +193,7 @@
                     </div>
                     <div class="d-grid gap-2">
                         <button id="add-code-form-btn-exist" class="btn btn-outline-success" type="button"><b>+ 코드 추가 폼 +</b></button>
-                        <button id="add-code-btn-exist" class="btn btn-danger" type="button" hidden="hidden"><b>추가</b></button>
+                        <button id="add-code-btn-exist" class="btn btn-danger" type="button" hidden="hidden"><b>삭제</b></button>
 
 <!--                        <button class="btn btn-outline-danger" type="button"><b>중지</b></button>-->
                     </div>
@@ -334,6 +334,48 @@
     </div>
 </div>
 
+<div class="modal fade" id="code-add-success-modal" tabindex="-1" aria-labelledby="sidebarModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center">
+            <div class="modal-body">
+                <img src="https://cdn.icon-icons.com/icons2/1515/PNG/512/success_105075.png" alt="이미지 설명" class="mb-3"  style="width:50px;">
+                <h4 style="color:green;"><b>코드 테이블 추가 성공</b></h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="code-delete-success-modal" tabindex="-1" aria-labelledby="sidebarModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center">
+            <div class="modal-body">
+                <img src="https://cdn.icon-icons.com/icons2/1515/PNG/512/success_105075.png" alt="이미지 설명" class="mb-3"  style="width:50px;">
+                <h4 style="color:green;"><b>코드 테이블 삭제 성공</b></h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 모달 창 -->
+<div class="modal fade" id="key-validation-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center">
+            <!--            <div class="modal-header">-->
+            <!--                <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>-->
+            <!--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+            <!--            </div>-->
+
+            <div class="modal-body">
+                <img class="mb-3" src="https://cdn.icon-icons.com/icons2/1515/PNG/512/warning_105171.png" style="width:50px;"alt="">
+                <h4 style="color:red;"><b>폼을 완성해주세요</b></h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <div th:replace="~{/includes/footer :: footer}"></div>
@@ -347,6 +389,7 @@
         $('#filterType').val("");
         $('#descriptionModal').val("");
     })
+    let selectedKeyId;
     function highlightRow(row) {
         // 기존에 활성화된 행에서 active 클래스 제거
         var activeRow = $('tr.active');
@@ -357,6 +400,7 @@
         // 클릭된 행에 active 클래스 추가
         $(row).addClass('active');
         let id = $(row).find('td:eq(0)').text();
+        selectedKeyId=id;
         let name = $(row).find('td:eq(1)').text();
         let type = $(row).find('td:eq(2)').text();
         let description = $(row).find('td:eq(3)').text();
@@ -412,9 +456,25 @@
                         '<td class="text-start" style="display: none;">' + response.data[i].modDt + '</td>' +
                         '</tr>';
 
-
+                    let codeTableId = response.data[i].codeTableId;
                     $("#code-table-body-exist").append(newRow);
                     $('.code-form-delete-btn').click(function(){
+
+                        $.ajax({
+                            type: "DELETE",
+                            url: "/api/code-tables/"+codeTableId,
+                            success: function (response) {
+                                $('#code-delete-success-modal').modal('show');
+                                setTimeout(function() {
+                                    $('#code-delete-success-modal').modal('hide');
+                                }, 1500);
+
+                            },
+                            error: function (error) {
+                                console.error("Error:", error);
+                                // 에러 처리
+                            }
+                        });
                         $(this).parent().parent().parent().remove();
                     })
                 }
@@ -454,17 +514,63 @@
     $('#add-code-form-btn-exist').click(function(){
 
         let inputForm = '<input class="form-control" type="text" placeholder="입력">';
-        let inputFormWithDeleteBtn = '<div class="row"><input class="form-control" type="text" placeholder="입력" style="width: 300px;"><a class="btn btn-danger col-2 text-center code-form-delete-btn" type="button" href="#"><b>X</b></a><div></div></div>';
+        let inputFormWithDeleteBtn = '<div class="row"><input class="form-control" type="text" placeholder="입력" style="width: 300px;"><a class="btn btn-primary col-2 text-center code-form-add-btn" type="button" href="#"><b>추가</b></a><div></div></div>';
 
         $('#code-table-body-exist').append('<tr class="text-center"><td>'+inputForm+'</td><td>'+inputFormWithDeleteBtn+'</td></tr>');
-        $('.code-form-delete-btn').click(function(){
-            $(this).parent().parent().parent().remove();
+        $('.code-form-add-btn').click(function(){
+            let name = $(this).parent().parent().parent().find('td:eq(0) input').val();
+            let code = $(this).parent().parent().parent().find('td:eq(1) input').val();
+            let keyId = selectedKeyId;
+            let newCodeTable = {
+                "name" : name,
+                "code" : code,
+                "keyId" : keyId
+            }
+            console.log(newCodeTable);
+            $.ajax({
+                type: "POST",
+                url: "/api/code-tables/add-new-one",
+                contentType: "application/json", // JSON 형식으로 전송한다는 것을 명시
+                data: JSON.stringify(newCodeTable), // JSON 데이터를 문자열로 변환하여 전송
+                dataType: "json",
+                success: function (response) {
+                    $('#code-add-success-modal').modal('show');
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1500);
+                },
+                error: function (error) {
+                    console.error("Error:", error);
+                    // 에러 처리
+                }
+            });
+
         })
-        $('#add-code-btn-exist').removeAttr("hidden");
+        //$('#add-code-btn-exist').removeAttr("hidden");
     });
 
-
+    $('#add-code-btn-exist').click(function(){
+        // $.ajax({
+        //     type: "DELETE",
+        //     url: "/api/key/"+"",
+        //     success: function () {
+        //         $('#delete-success-modal').modal('show');
+        //         setTimeout(function() {
+        //             // 원하는 작업을 수행
+        //             location.reload();
+        //         }, 1500);
+        //     },
+        //     error: function (error) {
+        //         console.error("Error:", error);
+        //         // 에러 처리
+        //     }
+        // });
+    })
     $('#key-update-btn').click(function(){
+        if($('#exist-key-name-input').val()=="" || $('#filterType').val() == "" ||$('#descriptionModal').val() == ""){
+            $("#key-validation-modal").modal('show');
+            return;
+        }
         var updateKey = {
             "name": $('#exist-key-name-input').val(),
             "type": $('#filterType').val(),
@@ -496,7 +602,10 @@
     })
     //키 생성 및 코드 테이블 생성
     $('#add-key-btn').click(function() {
-
+        if($('#key-create-name').val() == "" || $('#key-create-type').val() =="" || $('#key-create-description').val() == "" ){
+            $("#key-validation-modal").modal('show');
+            return;
+        }
         var newKey = {
             "name": $('#key-create-name').val(),
             "type": $('#key-create-type').val(),

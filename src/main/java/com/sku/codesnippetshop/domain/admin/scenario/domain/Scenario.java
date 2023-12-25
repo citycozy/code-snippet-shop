@@ -69,14 +69,18 @@ public class Scenario extends BaseEntity {
         this.status = false;
     }
 
-    public void updateScenario(ScenarioUpdateDTO update) {
+    public void publishScenario(ScenarioUpdateDTO update) {
         this.name = update.getName();
         this.description = update.getDescription();
         this.topic_creation_enabled = update.getTopic_creation_enabled();
         this.consumer_concurrency = update.getConsumer_concurrency();
         this.db_loaded = update.getDb_loaded();
         this.hadoop_loaded = update.getHadoop_loaded();
-        this.status = update.getStatus();
+        this.status = true;
+    }
+
+    public void stopScenario() {
+        this.status = false;
     }
 
     public static ScenarioReadDTO entityToDto(Scenario scenario){
@@ -91,6 +95,8 @@ public class Scenario extends BaseEntity {
                 .status(scenario.getStatus())
                 .regDt(scenario.getRegDt())
                 .modDt(scenario.getModDt())
+                .logFormatId(scenario.getLogFormat().getId())
+                .filterId(scenario.getFilter().getId())
                 .build();
     }
 

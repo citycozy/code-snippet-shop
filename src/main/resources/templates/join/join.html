@@ -113,9 +113,7 @@
 </div>
 
 <div th:replace="~{/includes/footer :: footer}"></div>
-<label>
-    <input id="test" type="text">
-</label>
+
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
@@ -160,7 +158,7 @@
             }
 
             // 아이디 사용 가능한지 확인한 다음 사용 가능하면 회원 가입 처리
-            $.ajax("/member/id_check?username=" + $('#username').val())
+            $.ajax("/api/members/id_check?username=" + $('#username').val())
                 .done(() => {
                     join();
                 })

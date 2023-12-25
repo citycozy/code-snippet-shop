@@ -46,12 +46,27 @@ public class ScenarioController {
         }
     }
 
+
+
     /*시나리오 수정 컨트롤러
     param : 수정 시나리오 info */
-    @PutMapping("/{scenarioId}")
-    public ResponseFormat<Void> updateBoardByBoardId(@PathVariable(value = "scenarioId")Long scenarioId, @RequestBody ScenarioUpdateDTO update) {
+    @PutMapping("/publish/{scenarioId}")
+    public ResponseFormat<Void> publish(@PathVariable(value = "scenarioId")Long scenarioId, @RequestBody ScenarioUpdateDTO update) {
         try {
-            scenarioService.updateScenario(update, scenarioId);
+            scenarioService.publishScenario(update, scenarioId);
+            return ResponseFormat.success(com.sku.codesnippetshop.global.response.ResponseStatus.SUCCESS_NO_CONTENT);
+        } catch (NotFoundException e) {
+            return ResponseFormat.error(com.sku.codesnippetshop.global.response.ResponseStatus.FAIL_NOT_FOUND);
+        } catch (RuntimeException e) {
+            return ResponseFormat.error(com.sku.codesnippetshop.global.response.ResponseStatus.FAIL_BAD_REQUEST);
+        }
+    }
+    /*시나리오 수정 컨트롤러
+param : 수정 시나리오 info */
+    @PutMapping("/stop/{scenarioId}")
+    public ResponseFormat<Void> stop(@PathVariable(value = "scenarioId")Long scenarioId) {
+        try {
+            scenarioService.stopScenario(scenarioId);
             return ResponseFormat.success(com.sku.codesnippetshop.global.response.ResponseStatus.SUCCESS_NO_CONTENT);
         } catch (NotFoundException e) {
             return ResponseFormat.error(com.sku.codesnippetshop.global.response.ResponseStatus.FAIL_NOT_FOUND);

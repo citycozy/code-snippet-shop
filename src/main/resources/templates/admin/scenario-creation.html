@@ -83,6 +83,7 @@
                 <progress class="progress mb-3" value="66" min="0" max="100" style="width: 100%;"></progress>
             </div>
         </div>
+
         <form id="filterForm">
             <!-- Filter form fields -->
             <div class="row">
@@ -102,9 +103,7 @@
             <div class="row">
                 <div class="col mb-3">
                     <select class="js-example-basic-single selectBox" data-placeholder="키 선택" name="key"  style="width : 100%;" id="key" required>
-                        <option value="cust_id">고객번호</option>
-                        <option value="cust_age">고객나이</option>
-                        <option value="loc">고객주소</option>
+
                     </select>
                 </div>
                 <div class="col mb-3">
@@ -308,6 +307,14 @@
                             <th colspan="2" class="text-center">
                                 키 맵
                             </th>
+                            <tr class="mb-1">
+                                <td class="col-6 text-center">
+                                    <b>키 이름</b>
+                                </td>
+                                <td class="col-6 text-center">
+                                    <b>키 설명</b>
+                                </td>
+                            </tr>
                             </thead>
                             <tbody id="code-table-body-exist">
                             <tr class="mb-1">
@@ -350,6 +357,96 @@
         </div>
     </div>
 </div>
+<!-- 모달 창 -->
+<div class="modal fade" id="filter-select-first" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center">
+            <!--            <div class="modal-header">-->
+            <!--                <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>-->
+            <!--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+            <!--            </div>-->
+
+            <div class="modal-body">
+                <img class="mb-3" src="https://cdn.icon-icons.com/icons2/1515/PNG/512/warning_105171.png" style="width:50px;"alt="">
+                <h4 style="color:red;"><b>필터를 먼저 추가해주세요</b></h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 모달 창 -->
+<div class="modal fade" id="input-check-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center">
+            <!--            <div class="modal-header">-->
+            <!--                <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>-->
+            <!--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+            <!--            </div>-->
+
+            <div class="modal-body">
+                <img class="mb-3" src="https://cdn.icon-icons.com/icons2/1515/PNG/512/warning_105171.png" style="width:50px;"alt="">
+                <h4 style="color:red;"><b>필터 폼을 완성해주세요</b></h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="create-success-modal" tabindex="-1" aria-labelledby="sidebarModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center">
+            <div class="modal-body">
+                <img src="https://cdn.icon-icons.com/icons2/1515/PNG/512/success_105075.png" alt="이미지 설명" class="mb-3"  style="width:50px;">
+                <h4 style="color:green;"><b>시나리오 생성 성공</b></h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- key-create SideBar Modal -->
+<div class="modal fade" id="create-scenario-modal" tabindex="-1" aria-labelledby="sidebarModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-sidebar modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="modal-body">
+                    <div>
+                        <table class="table table-dark table-striped table-hover">
+                            <tbody>
+                                <tr>
+                                    <td class="col-6 text-center">
+                                        <label for="name"><b>시나리오 이름</b></label>
+                                    </td>
+                                    <td class="col-6 text-center">
+                                        <input type="text" class="form-control" id="name" placeholder="시나리오 이름을 입력하세요" style="border: 3px solid black;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-6 text-center">
+                                        <label for="description"><b>시나리오 설명</b></label>
+                                    </td>
+                                    <td class="col-6 text-center">
+                                        <textarea class="form-control" id="description" placeholder="시나리오 설명을 입력하세요" style="border: 3px solid black;"></textarea>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-danger" id="scenario-create-btn2" > 시나리오 생성 </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div th:replace="~{/includes/footer :: footer}"></div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 <script>
@@ -359,41 +456,101 @@
     });
 </script>
 <script>
+    $('#scenario-create-btn').click(function() {
+        if(filterTree.length == 0){
+            $("#filter-select-first").modal('show');
+            return;
+        }
+        $('#create-scenario-modal').modal('show');
+    });
     //시나리오 생성 클릭
-    $('#scenario-create-btn').click(function(){
+    $('#scenario-create-btn2').click(function(){
+        $('#create-scenario-modal').modal('hide');
 
-
+        //로그포맷 id set
         let activeRow = $('tr.active');
         let logFormatId = activeRow.find('td:eq(0)').text();
+        let filterId;
+        //필터 설정
+        const outputArray = [];
+        let currentObject = {};
+        filterTree.forEach(item => {
+            if ("key" in item) {
+                // 현재 객체에 키, 연산자, 값, 필터 타입 설정
+                currentObject = {
+                    "key": item.key,
+                    "operator": item.operator,
+                    "value": item.value,
+                    "filterType": item.filterType
+                };
+            } else if ("logicalOperator" in item) {
+                // 현재 객체에 논리 연산자 설정
+                currentObject.logicalOperator = item.logicalOperator;
+                // 완성된 객체를 결과 배열에 추가
+                outputArray.push(currentObject);
+            }
+        });
 
-        let newScenario = {
-            "name": "이름",
-            "description":"설명",
-            "logFormatId" : logFormatId,
-            "filterId" : 1
-        };
-        console.log(logFormatId);
+        // 마지막 객체에 논리 연산자가 없다면 추가
+        if (filterTree.length!=1) {
+            outputArray.push(filterTree[filterTree.length - 1]);
+        }
+
+        console.log(outputArray);
+
+
+
         $.ajax({
             type: "POST",
-            url: "/api/scenarios",
+            url: "/api/filters",
             contentType: "application/json", // JSON 형식으로 전송한다는 것을 명시
-            data: JSON.stringify(newScenario), // JSON 데이터를 문자열로 변환하여 전송
+            data: JSON.stringify(outputArray), // JSON 데이터를 문자열로 변환하여 전송
             dataType: "json",
             success: function (response) {
                 console.log("Success:", response);
+                filterId = response.data;
+
+                //시나리오 지정
+                let newScenario = {
+                    "name": $('#name').val(),
+                    "description": $('#description').val(),
+                    "logFormatId" : logFormatId,
+                    "filterId" : filterId
+                };
+                console.log(logFormatId);
+                $.ajax({
+                    type: "POST",
+                    url: "/api/scenarios",
+                    contentType: "application/json", // JSON 형식으로 전송한다는 것을 명시
+                    data: JSON.stringify(newScenario), // JSON 데이터를 문자열로 변환하여 전송
+                    dataType: "json",
+                    success: function (response) {
+                        console.log("Success:", response);
+
+                        $('#create-success-modal').modal('show');
+                        $('.progress').val(100);
+                        setTimeout(function() {
+                            // 원하는 작업을 수행
+                            location.href= "/scenario-management";
+                        }, 1500);
+                    },
+                    error: function (error) {
+                        console.error("Error:", error);
+                        // 에러 처리
+                    }
+                });
 
 
-                // $('.progress').val(100);
-                // setTimeout(function() {
-                //     // 원하는 작업을 수행
-                //     location.href= "/scenario-management";
-                // }, 1500);
+
             },
             error: function (error) {
                 console.error("Error:", error);
                 // 에러 처리
             }
         });
+
+
+
         // $('.progress').val(100);
         // setTimeout(function() {
         //     // 원하는 작업을 수행
@@ -462,6 +619,12 @@
         } else {
             logFormatContainer.attr("hidden", true);
         }
+
+
+        $('#code-table-body-exist tr').each(function(index, element) {
+            // 각 <tr>에 대한 작업 수행
+            $("#key").append(`<option value="`+$(element).find('td:eq(0) b').text() +`">`+$(element).find('td:eq(1) b').text() +`</option>`);
+        });
     });
 
 
@@ -507,7 +670,15 @@
         var operator = $('#operator').val();
         var value = $('#value').val();
         var filterType = $('#filterType').val();
+        if(key == null ||key == ""|| operator == null ||operator == "" || value == null ||value=="" || filterType == null||filterType==""){
+            $('#input-check-modal').modal('show');
 
+            console.log("key:" + key );
+            console.log("operator:" + operator );
+            console.log("value:" + value );
+            console.log("filterType:" + filterType );
+            return;
+        }
         // Create filter object
         var filter = {
             key: key,
@@ -553,7 +724,8 @@
             // Display the logical operator
             displayLogicalOperator(logicalOperator);
         }else{
-            alert("필터를 먼저 추가해주세요.");
+            //필터를 먼저 추가해주세요.
+            $('#filter-select-first').modal('show');
         }
 
     }
@@ -623,7 +795,7 @@
         $('#filterTreeButtons button').eq(index).parent().remove();
         // $('#filterTreeButtons').children().eq(index).remove();
         $('#filterDisplay').children().eq(index).remove();
-        alert(index);
+
 
         // 갱신된 필터 트리를 다시 렌더링
         renderFilterTree();
@@ -634,7 +806,7 @@
 
     function resetForm() {
         // Reset the form fields
-        $('#key').val('');
+
         $('#operator').val('');
         $('#value').val('');
         $('#type').val('number');
@@ -785,10 +957,10 @@
                 for (var i = 0; i < response.data.length; i++) {
                     var newRow = '<tr class="mb-1">' +
                         '<td class="col-6 text-center">' +
-                        '<b>키 코드 : '+ response.data[i].name+'</b>'+
+                        '<b>'+ response.data[i].name+'</b>'+
                         '</td>' +
-                        '<td>' +'<div class="row">'+
-                        '<b>키 설명 : ' + response.data[i].description+'</b>'+
+                        '<td class="text-center">' +'<div class="row">'+
+                        '<b>' + response.data[i].description+'</b>'+
                         '</div>'+
                         '</td>' +
                         '<td class="text-start" style="display: none;">' + response.data[i].codeTableId + '</td>' +

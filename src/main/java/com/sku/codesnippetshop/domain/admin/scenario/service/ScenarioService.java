@@ -54,12 +54,23 @@ public class ScenarioService {
     /*키 수정 서비스
     param : 수정 키 아이디(pk), 수정 info*/
     @Transactional
-    public void updateScenario(ScenarioUpdateDTO update, Long scenarioId){
+    public void publishScenario(ScenarioUpdateDTO update, Long scenarioId){
 
         Scenario scenario = scenarioRepository.findById(scenarioId)
                 .orElseThrow(()-> new NotFoundException(ResponseStatus.FAIL_NOT_FOUND));
 
-        scenario.updateScenario(update);
+        scenario.publishScenario(update);
+    }
+
+    /*키 수정 서비스
+param : 수정 키 아이디(pk), 수정 info*/
+    @Transactional
+    public void stopScenario(Long scenarioId){
+
+        Scenario scenario = scenarioRepository.findById(scenarioId)
+                .orElseThrow(()-> new NotFoundException(ResponseStatus.FAIL_NOT_FOUND));
+
+        scenario.stopScenario();
     }
 
     /*키 삭제 서비스
