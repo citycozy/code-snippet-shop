@@ -159,6 +159,7 @@
                     <div class="text-end">
                         <button id="publish-btn" class="btn btn-danger btn-lg" type="button"><b>배포</b></button>
                         <button id="stop-btn" class="btn btn-danger btn-lg" type="button"><b>중지</b></button>
+                        <button id="delete-btn" class="btn btn-danger btn-lg" type="button"><b>삭제</b></button>
                     </div>
                 </div>
             </div>
@@ -186,7 +187,16 @@
         </div>
     </div>
 </div>
-
+<div class="modal fade" id="delete-success-modal" tabindex="-1" aria-labelledby="sidebarModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center">
+            <div class="modal-body">
+                <img src="https://cdn.icon-icons.com/icons2/1515/PNG/512/success_105075.png" alt="이미지 설명" class="mb-3"  style="width:50px;">
+                <h4 style="color:green;"><b>시나리오 삭제 성공</b></h4>
+            </div>
+        </div>
+    </div>
+</div>
 <div th:replace="~{/includes/footer :: footer}"></div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -236,6 +246,7 @@
 
         $('#publish-btn').val(scenarioId);
         $('#stop-btn').val(scenarioId);
+        $('#delete-btn').val(scenarioId);
         if(topicCreationEnabled === "true"){
             $('#topicCreationEnabledModal').prop('checked', true);
         }else{
@@ -278,7 +289,25 @@
 
         // 여기에 원하는 로직을 추가하면 됩니다.
     });
-
+    $('#delete-btn').click(function(){
+        let scenarioId = $(this).val();
+        $.ajax({
+            type: "DELETE",
+            url: "/api/scenarios/"+scenarioId,
+            success: function (response) {
+                console.log("Success:", response);
+                $('#delete-success-modal').modal('show');
+                setTimeout(function() {
+                    // 원하는 작업을 수행
+                    location.href= "/scenario-management";
+                }, 1500);
+            },
+            error: function (error) {
+                console.error("Error:", error);
+                // 에러 처리
+            }
+        });
+    })
 
     $('#stop-btn').click(function(){
         let scenarioId = $(this).val();

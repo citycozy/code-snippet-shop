@@ -516,7 +516,7 @@
         let inputForm = '<input class="form-control" type="text" placeholder="입력">';
         let inputFormWithDeleteBtn = '<div class="row"><input class="form-control" type="text" placeholder="입력" style="width: 300px;"><a class="btn btn-primary col-2 text-center code-form-add-btn" type="button" href="#"><b>추가</b></a><div></div></div>';
 
-        $('#code-table-body-exist').append('<tr class="text-center"><td>'+inputForm+'</td><td>'+inputFormWithDeleteBtn+'</td></tr>');
+        $('#code-table-body-exist').append('<tr class="text-center"><td class="col-6">'+inputForm+'</td><td>'+inputFormWithDeleteBtn+'</td></tr>');
         $('.code-form-add-btn').click(function(){
             let name = $(this).parent().parent().parent().find('td:eq(0) input').val();
             let code = $(this).parent().parent().parent().find('td:eq(1) input').val();
