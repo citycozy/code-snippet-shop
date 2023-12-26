@@ -131,6 +131,96 @@
             });
         }
 
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script>
+        function fetchData() {
+            $.ajax({
+                url: '/api/products',
+                type: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    // Assuming the server response is an array of items
+                    var items = response.data; // Adjust this based on your actual response structure
+                    // Now you can use the 'items' variable as needed
+                    console.log('Fetched data:', items);
+
+                    items.forEach(function (item) {
+                        // 새로운 카드 생성
+                        var card = $('<div>').addClass('col');
+                        var itemId = item.itemId;
+                        var imgPath;
+
+                        $.ajax({
+                            type: 'GET',
+                            url: '/api/files/' + itemId, // 파일 다운로드 엔드포인트
+                            success: function(filePath) {
+                                // 이미지 경로를 사용하여 이미지 엘리먼트를 동적으로 생성
+                                card.append(
+                                    $('<div>').addClass('card shadow-sm').append(
+                                        $('<div>').addClass('imgBox').append(
+                                            $('<a>').attr('href', '/detail/' + item.itemId).append(
+                                                $('<img>').attr('src', filePath).addClass('d-block w-100').attr('alt', '')
+                                            )
+                                        ),
+                                        $('<div>').addClass('card-body').append(
+                                            $('<div>').addClass('item__info').append(
+                                                $('<strong>').addClass('item__name').text(item.name),
+                                                $('<div>').addClass('item__model-wrap').append(
+                                                    $('<span>').addClass('item__content').text(item.content)
+                                                ),
+                                                $('<div>').addClass('item__bottom').append(
+                                                    $('<div>').addClass('item__discount-wrap').append(
+                                                        $('<span>').addClass('item__price item__price--mem').append(
+                                                            $('<strong>').addClass('item__number').text(item.price + '원')
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                );
+                                const fixedHeight = 300; // 원하는 높이
+                                card.find('.imgBox').css({
+                                    'height': fixedHeight + 'px', // 원하는 높이
+                                    'overflow': 'hidden',
+                                    'position': 'relative' // 상대 위치 설정
+                                });
+
+// 이미지에 대한 스타일
+                                card.find('.img-fluid').css({
+                                    'width': '100%',
+                                    'height': '100%',
+                                    'object-fit': 'cover', // 이미지가 부모 요소에 맞춰질 때 비율 유지
+                                    'position': 'absolute', // 절대 위치 설정
+                                    'top': '50%', // 세로 중앙 정렬을 위해 top 50% 설정
+                                    'transform': 'translateY(-50%)' // 세로 중앙 정렬을 위해 translateY 사용
+                                });
+                                card.click(function() {
+                                    // 클릭 시 /detail/{itemId}로 이동
+                                    window.location.href = '/detail/' + item.itemId;
+                                });
+                                // 생성한 카드를 원하는 곳에 추가
+                                $('.row-cols-1.row-cols-sm-2.row-cols-md-3.g-3').append(card);                         },
+                            error: function(xhr, status, error) {
+                                console.error('Error:', error);
+                            }
+                        });
+                        // 카드 내용 추가
+
+                    });
+                },
+                error: function (error) {
+                    console.error('Error fetching data:', error);
+                }
+            });
+        }
+
+
+        $(document).ready(function () {
+            fetchData(); // 함수 호출
+        });
+
+    </script>
 
         $(document).ready(function () {
             fetchData(); // 함수 호출
@@ -145,216 +235,16 @@
 
     <section class="py-5 text-center container border-bottom">
         <img src="/images/Main-Logo.png" width="400px" alt="">
-
-        <!--            <div class="row py-lg-5">-->
-        <!--                <div class="col-lg-6 col-md-8 mx-auto">-->
-        <!--                    <h1 class="fw-light">Album example</h1>-->
-        <!--                    <p class="lead text-body-secondary">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>-->
-        <!--                    <p>-->
-        <!--                        <a href="#" class="btn btn-primary my-2">Main call to action</a>-->
-        <!--                        <a href="#" class="btn btn-secondary my-2">Secondary action</a>-->
-        <!--                    </p>-->
-        <!--                </div>-->
-        <!--            </div>-->
     </section>
 
     <div class="album py-5 bg-body-tertiary">
         <div class="container">
-
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <div class="imgBox">
-                            <a href="/detail">
-                                <img onclick="_paq.push(['trackEvent', 'Menu', 'Freedom']);" src="/images/products/1.jpg" class="d-block w-100" alt="">
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <div class="item__info"><strong class="item__name">LG 디오스 오브제컬렉션 김치톡톡</strong>
-                                <div class="item__model-wrap"><span class="item__sku">Z402MEE153</span></div>
-                                <div class="item__bottom">
-                                    <div class="item__discount-wrap"><span
-                                            class="item__price item__price--mem"><strong
-                                            class="item__number">1,890,000</strong>원</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <div class="imgBox">
-                            <a href="/detail">
-                                <img src="/images/products/2.jpg" class="d-block w-100" alt="">
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <div class="item__info"><strong class="item__name">LG 디오스 오브제컬렉션 김치톡톡</strong>
-                                <div class="item__model-wrap"><span class="item__sku">Z402MEE153</span></div>
-                                <div class="item__bottom">
-                                    <div class="item__discount-wrap"><span
-                                            class="item__price item__price--mem"><strong
-                                            class="item__number">1,890,000</strong>원</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <div class="imgBox">
-                            <a href="/detail">
-                                <img src="/images/products/3.jpg" class="d-block w-100" alt="">
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <div class="item__info"><strong class="item__name">LG 디오스 오브제컬렉션 김치톡톡</strong>
-                                <div class="item__model-wrap"><span class="item__sku">Z402MEE153</span></div>
-                                <div class="item__bottom">
-                                    <div class="item__discount-wrap"><span
-                                            class="item__price item__price--mem"><strong
-                                            class="item__number">1,890,000</strong>원</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <div class="imgBox">
-                            <a href="/detail">
-                                <img src="/images/products/4.jpg" class="d-block w-100" alt="">
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <div class="item__info"><strong class="item__name">LG 디오스 오브제컬렉션 김치톡톡</strong>
-                                <div class="item__model-wrap"><span class="item__sku">Z402MEE153</span></div>
-                                <div class="item__bottom">
-                                    <div class="item__discount-wrap"><span
-                                            class="item__price item__price--mem"><strong
-                                            class="item__number">1,890,000</strong>원</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <div class="imgBox">
-                            <a href="/detail">
-                                <img src="/images/products/5.jpg" class="d-block w-100" alt="">
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <div class="item__info"><strong class="item__name">LG 디오스 오브제컬렉션 김치톡톡</strong>
-                                <div class="item__model-wrap"><span class="item__sku">Z402MEE153</span></div>
-                                <div class="item__bottom">
-                                    <div class="item__discount-wrap"><span
-                                            class="item__price item__price--mem"><strong
-                                            class="item__number">1,890,000</strong>원</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <div class="imgBox">
-                            <a href="/detail">
-                                <img src="/images/products/6.jpg" class="d-block w-100" alt="">
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <div class="item__info"><strong class="item__name">LG 디오스 오브제컬렉션 김치톡톡</strong>
-                                <div class="item__model-wrap"><span class="item__sku">Z402MEE153</span></div>
-                                <div class="item__bottom">
-                                    <div class="item__discount-wrap"><span
-                                            class="item__price item__price--mem"><strong
-                                            class="item__number">1,890,000</strong>원</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <div class="imgBox">
-                            <a href="/detail">
-                                <img src="/images/products/7.jpg" class="d-block w-100" alt="">
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <div class="item__info"><strong class="item__name">LG 디오스 오브제컬렉션 김치톡톡</strong>
-                                <div class="item__model-wrap"><span class="item__sku">Z402MEE153</span></div>
-                                <div class="item__bottom">
-                                    <div class="item__discount-wrap"><span
-                                            class="item__price item__price--mem"><strong
-                                            class="item__number">1,890,000</strong>원</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <div class="imgBox">
-                            <a href="/detail">
-                                <img src="/images/products/8.jpg" class="d-block w-100" alt="">
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <div class="item__info"><strong class="item__name">LG 디오스 오브제컬렉션 김치톡톡</strong>
-                                <div class="item__model-wrap"><span class="item__sku">Z402MEE153</span></div>
-                                <div class="item__bottom">
-                                    <div class="item__discount-wrap"><span
-                                            class="item__price item__price--mem"><strong
-                                            class="item__number">1,890,000</strong>원</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <div class="imgBox">
-                            <a href="/detail">
-                                <img src="/images/products/10.jpg" class="d-block w-100" alt="">
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <div class="item__info"><strong class="item__name">LG 디오스 오브제컬렉션 김치톡톡</strong>
-                                <div class="item__model-wrap"><span class="item__sku">Z402MEE153</span></div>
-                                <div class="item__bottom">
-                                    <div class="item__discount-wrap"><span
-                                            class="item__price item__price--mem"><strong
-                                            class="item__number">1,890,000</strong>원</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-
-
-
-
-
 
             </div>
         </div>
     </div>
+
 
 </main>
 

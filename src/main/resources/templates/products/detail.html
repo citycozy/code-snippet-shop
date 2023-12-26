@@ -20,78 +20,123 @@
 
     <!-- main-tag css -->
     <link rel="stylesheet" th:href="@{/css/main-tag.css}">
+
     <title>상품 상세</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script>
+
+        var quantity = 1
+
+        var url = window.location.href;
+
+        // Use regular expression to extract numbers
+        var match = url.match(/\/(\d+)$/);
+
+        if (match) {
+            var itemId = match[1];  // Use match[1] instead of match[0]
+            console.log(itemId);
+        }
+
+        function fetchData() {
+            $.ajax({
+                url: '/api/products/' + itemId,
+                type: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    var item = response.data;
+                    console.log(item);
+                    // Fetch image file path
+                    $.ajax({
+                        type: 'GET',
+                        url: 'http://localhost:8080/api/files/' + itemId,
+                        success: function (filePath) {
+                            console.log(filePath);
+                            // Create a card element
+                            var card = $('<div>').addClass('row row-cols-6 row-cols-sm-2 row-cols-md-2 g-6');
+
+                            // Append product details to the card
+                            card.append(
+                                $('<div>').addClass(' d-flex flex-column align-items-center').append(
+                                    $('<div>').addClass('imgBox').append(
+                                        $('<div>').html('<br>'),
+                                        $('<img>').attr('src', '/' + filePath).addClass('d-block img-fluid').attr('alt', '').css({
+                                            'width': '700px',
+                                            'height': '500px'
+                                        })
+                                    )
+                                ),
+                                $('<div>').addClass('col-6').append(
+                                    $('<div>').addClass('p-3').append(
+                                        $('<div>').addClass('d-flex justify-content-between').append(
+                                            $('<span>').addClass('text-right').html('<h1><b>' + item.name + '</b></h1>')
+                                        ),
+                                        $('<div>').addClass('d-flex justify-content-between').append(
+                                            $('<span>').addClass('text-right').html('<h3><b>' + item.content + '</b></h3>')
+                                        )
+                                    ),
+                                    $('<div>').addClass('border-bottom p-3').append(
+                                        $('<div>').addClass('d-flex justify-content-between').append(
+                                            $('<span>').addClass('text-left').html('<b>상품 가격</b>'),
+                                            $('<span>').addClass('text-right').html('<b>' + item.price + '</b>')
+                                        )
+                                    ),
+                                    $('<div>').addClass('quantity-div p-3 border-bottom text-center').append(
+                                        $('<div>').addClass('row').append(
+                                            $('<div>').addClass('col-5 col-md-5 text-center').html('<b>수량</b>'),
+                                            $('<div>').addClass('col-5 col-md-5 text-center').append(
+                                                $('<button>').addClass('btn btn-sm btn-secondary quantity-button').attr('type', 'button').data('action', 'decrease').html('<i class="fas fa-minus"></i>'),
+                                                $('<span>').html(' '),
+                                                $('<span>').addClass('text-center short-input').html(quantity), // Use text() to display the quantity variable
+                                                $('<span>').html(' '),
+                                                $('<button>').addClass('btn btn-sm btn-secondary quantity-button').attr('type', 'button').data('action', 'increase').html('<i class="fas fa-plus"></i>')
+                                            )
+                                        )
+                                    ),
+                                    $('<div>').addClass('product-btn-div border-bottom text-center p-3').append(
+                                        $('<button>').addClass('btn btn-light col-5 btn-lg').attr('type', 'button').html('장바구니'),
+                                        $('<span>').html(' '),
+                                        $('<span>').html(' '),
+                                        $('<span>').html(' '),
+                                        $('<button>').addClass('btn btn-dark col-5 btn-lg').attr('type', 'button').html('구매하기')
+                                    )
+                                )
+                            );
+
+                            // Replace the content inside the main tag with the generated card
+                            $('.container.row-3').append(card);
+
+                        },
+                        error: function (error) {
+                            console.error('Error fetching image data:', error);
+                        }
+                    });
+                },
+                error: function (error) {
+                    console.error('Error fetching product data:', error);
+                }
+            });
+        }
+
+
+        $(document).ready(function () {
+            fetchData(); // 함수 호출
+        });
+    </script>
+
 </head>
 <body>
 <div th:replace="~{/includes/header :: header}"></div>
 
 
 <main>
-    <div class="container">
-        <div class="row row-cols-6 row-cols-sm-2 row-cols-md-2 g-6">
-            <div class="col-6 d-flex flex-column align-items-center" id="product-section">
-                <div id="imgBox" class="">
-                    <img src="/images/products/1.jpg" class="d-block img-fluid" alt="">
-                </div>
+    <div>
+        <br><br><br>
+    </div>
+    <div class="container row-3">
 
-                <div id="box-btn-detail" class="product-btn-div border-bottom text-center p-3 d-flex">
-                    <button type="button" id="btnDetail" class="btn btn-light col-5 btn-lg">제품 상세</button>
-                    <button type="button" id="btnReview" class="btn btn-dark col-5 btn-lg">후기</button>
-                </div>
-            </div>
-
-
-
-            <div class="col-6" id="item-information">
-                <div id="product-name-div" class="p-3"><h1 id="product-name"><b>상품 이름</b></h1></div>
-                <div id="product-price-div" class="border-bottom p-3">
-                    <div class="d-flex justify-content-between">
-                        <span class="text-left">상품 가격</span>
-                        <span class="text-right">100000원</span>
-                    </div>
-                </div>
-
-                <div class="quantity-div p-3 border-bottom text-center">
-                    <div class="row">
-                        <div class="col-5 col-md-5 text-center">수량</div>
-                        <div class="col-5 col-md-5 text-center">
-                            <button type="button" class="btn btn-sm btn-secondary quantity-button" data-action="decrease">
-                                <i class="fas fa-minus"></i>
-                            </button>
-
-                            <input type="number" class="text-center short-input" value="1">
-
-                            <button type="button" class="btn btn-sm btn-secondary quantity-button" data-action="increase">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <div id="box-btn-buy" class="product-btn-div border-bottom text-center p-3">
-                    <button type="button" id="btnCart" class="btn btn-light col-5 btn-lg">장바구니</button>
-                    <button type="button" id="btnDirect" class="btn btn-dark col-5 btn-lg">구매하기</button>
-                </div>
-
-                <div id="suggest-div" class="p-3">
-                    <div><b>이런 제품은 어떠신가요?</b></div>
-
-                    <ul id="suggest-list" class="list-unstyled list-inline row">
-                        <li id="suggest-first" class="col-6 col-md-4">
-                            <img src="/images/products/2.jpg" class="d-block img-fluid" alt="">
-                        </li>
-                        <li id="suggest-second" class="col-6 col-md-4">
-                            <img src="/images/products/3.jpg" class="d-block img-fluid" alt="">
-                        </li>
-                    </ul>
-                </div>
-
-
-            </div>
-        </div>
-
+    </div>
+    <div>
+        <br><br><br>
     </div>
 </main>
 

@@ -1,13 +1,19 @@
-#item-information{
-    background: white;
+.col-6 {
+    background: lightgray;
     border-radius: 25px;
+    padding: 20px; /* 예시로 추가된 패딩 값 */
 }
-#product-price{
-    align-items: flex-end;
+
+#product-price {
+    display: flex;
+    justify-content: flex-end;
 }
-#box-btn>button{
+
+#box-btn > button {
     border-radius: 25px;
+    margin: 5px; /* 예시로 추가된 여백 값 */
 }
-.short-input{
+
+.short-input {
     width: 40px;
 }

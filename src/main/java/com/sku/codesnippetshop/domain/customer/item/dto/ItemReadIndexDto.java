@@ -6,10 +6,10 @@ import lombok.*;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class ItemUpdateDto {
+public class ItemReadIndexDto {
 
+    private Long itemId;
     private String name;
     private String content;
-    private int quantity;
     private String price;
 }

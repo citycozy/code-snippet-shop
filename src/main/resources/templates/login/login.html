@@ -57,5 +57,45 @@
 
 </main>
 <div th:replace="~{/includes/footer :: footer}"></div>
+
+<script>
+    function submitForm() {
+        var email = document.getElementById("floatingInput").value;
+        var password = document.getElementById("floatingPassword").value;
+
+        var loginData = {
+            username: email,
+            password: password
+        };
+
+        // AJAX로 서버에 로그인 요청 보내기
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/api/members/login", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    // 로그인 성공 처리
+                    console.log("로그인 성공");
+                    window.location.href = "/";  // 로그인 성공 시 페이지 이동
+
+                } else {
+                    // 로그인 실패 처리
+                    console.error("로그인 실패");
+                    window.location.href = "/login";  // 로그인 성공 시 페이지 이동
+
+                }
+            }
+        };
+
+        xhr.send(JSON.stringify(loginData));
+    }
+
+    function register() {
+        // 회원 가입 버튼 클릭 시 처리
+        window.location.href = "/join"
+    }
+</script>
 </body>
 </html>
