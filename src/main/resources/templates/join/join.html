@@ -136,7 +136,7 @@
                         $("#email_msg").text("좋은 아이디네요!").attr("class", "success text-muted small");
                     } else {
                         $("#email_msg").text("이미 사용 중인 아이디 입니다.").attr("class", "fail text-muted small");
-                }
+                    }
                 },
                 error: function () {
                     console.log("서버 오류입니다.");
@@ -162,7 +162,7 @@
                 url: "/api/members/email-check",
                 method: "POST",
                 contentType: "application/json",
-                data: JSON.stringify({ username: $('#username').val() }),
+                data: JSON.stringify({username: $('#username').val()}),
                 dataType: "json",
             })
                 .done(() => {
@@ -172,8 +172,6 @@
                     $('#username_msg').text("사용 중인 아이디입니다.").attr('class', 'fail text-muted small').focus();
                 });
         });
-
-
     });
 
     //회원 가입
@@ -243,13 +241,13 @@
         let $email = $("#email");
         let $email_msg = $("#email_msg");
         $email_msg.text("");
-        return check($email.val(), emailPattern, "정확한 이메일을 입력하세요",  $("#email_msg"));
+        return check($email.val(), emailPattern, "정확한 이메일을 입력하세요", $("#email_msg"));
     }
 
     function passwordCheck() {
         let $password = $("#password");
         let $password_msg = $("#password_msg");
-        $password_msg.text="";
+        $password_msg.text = "";
         // alert("!");
         return check($password.val(), passwordPattern, "비밀번호는 영숫자와 특수문자 8~10자입니다", $("#password_msg"));
     }
@@ -280,7 +278,7 @@
         let $name = $("#name");
         let $name_msg = $("#name_msg");
         $name_msg.text("");
-        return check($name.val(), namePattern, "이름은 한글 2~10자입니다",  $("#name_msg"));
+        return check($name.val(), namePattern, "이름은 한글 2~10자입니다", $("#name_msg"));
     }
 </script>
 </body>
