@@ -7,8 +7,9 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ScenarioCreateDTO {
+    private Long filterId;
+    private Long logFormatId;
     private String name;
-    private String logFormat;
     private String description;
 
 }

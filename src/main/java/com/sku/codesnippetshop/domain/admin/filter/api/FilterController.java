@@ -24,10 +24,9 @@ public class FilterController {
     /* 필터 테이블 생성 컨트롤러
     param : 생성 필터 테이블 info */
     @PostMapping
-    public ResponseFormat<Void> createFilter(@RequestBody FilterCreateDto create) {
+    public ResponseFormat<Long> createFilter(@RequestBody List<FilterCreateDto> createDtoList) {
         try {
-            filterService.createFilter(create);
-            return ResponseFormat.success(ResponseStatus.SUCCESS_CREATE);
+            return ResponseFormat.successWithData(ResponseStatus.SUCCESS_CREATE,filterService.createFilter(createDtoList));
         } catch (RuntimeException e) {
             return ResponseFormat.error(ResponseStatus.FAIL_BAD_REQUEST);
         }
@@ -46,19 +45,19 @@ public class FilterController {
         }
     }
 
-    /* 필터 수정 컨트롤러
-   param : 수정 필터 테이블 info */
-    @PutMapping("/{filterId}")
-    public ResponseFormat<Void> updateFilterByFilterId(@PathVariable(value = "filterId")Long filterId, @RequestBody FilterUpdateDTO update) {
-        try {
-            filterService.updateFilter(update, filterId);
-            return ResponseFormat.success(com.sku.codesnippetshop.global.response.ResponseStatus.SUCCESS_NO_CONTENT);
-        } catch (NotFoundException e) {
-            return ResponseFormat.error(com.sku.codesnippetshop.global.response.ResponseStatus.FAIL_NOT_FOUND);
-        } catch (RuntimeException e) {
-            return ResponseFormat.error(com.sku.codesnippetshop.global.response.ResponseStatus.FAIL_BAD_REQUEST);
-        }
-    }
+//    /* 필터 수정 컨트롤러
+//   param : 수정 필터 테이블 info */
+//    @PutMapping("/{filterId}")
+//    public ResponseFormat<Void> updateFilterByFilterId(@PathVariable(value = "filterId")Long filterId, @RequestBody FilterUpdateDTO update) {
+//        try {
+//            filterService.updateFilter(update, filterId);
+//            return ResponseFormat.success(com.sku.codesnippetshop.global.response.ResponseStatus.SUCCESS_NO_CONTENT);
+//        } catch (NotFoundException e) {
+//            return ResponseFormat.error(com.sku.codesnippetshop.global.response.ResponseStatus.FAIL_NOT_FOUND);
+//        } catch (RuntimeException e) {
+//            return ResponseFormat.error(com.sku.codesnippetshop.global.response.ResponseStatus.FAIL_BAD_REQUEST);
+//        }
+//    }
 
     /* 필터 삭제 컨트롤러
     param : 삭제 필터 filterId*/

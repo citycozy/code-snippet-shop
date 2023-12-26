@@ -8,6 +8,10 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class FilterCreateDto {
 
-    String name;
-    String description;
+    private String key;
+    private Long filterId;
+    private String logicalOperator;
+    private String value;
+
+
 }

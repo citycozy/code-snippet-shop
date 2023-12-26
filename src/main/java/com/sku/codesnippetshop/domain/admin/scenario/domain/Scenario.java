@@ -26,11 +26,11 @@ public class Scenario extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "log_format_id", referencedColumnName = "log_format_id")
-    private LogFormat logFormatId;
+    private LogFormat logFormat;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "filter_id", referencedColumnName = "filter_id")
-    private Filter filterId;
+    private Filter filter;
 
 
     @Column(name = "name", length = 100)
@@ -56,7 +56,9 @@ public class Scenario extends BaseEntity {
 
 
     @Builder
-    public Scenario(Long scenarioId, String name, String description) {
+    public Scenario(Long scenarioId, String name, String description, LogFormat logFormat, Filter filter) {
+        this.logFormat = logFormat;
+        this.filter = filter;
         this.id = scenarioId;
         this.name = name;
         this.description = description;
@@ -67,14 +69,18 @@ public class Scenario extends BaseEntity {
         this.status = false;
     }
 
-    public void updateScenario(ScenarioUpdateDTO update) {
+    public void publishScenario(ScenarioUpdateDTO update) {
         this.name = update.getName();
         this.description = update.getDescription();
         this.topic_creation_enabled = update.getTopic_creation_enabled();
         this.consumer_concurrency = update.getConsumer_concurrency();
         this.db_loaded = update.getDb_loaded();
         this.hadoop_loaded = update.getHadoop_loaded();
-        this.status = update.getStatus();
+        this.status = true;
+    }
+
+    public void stopScenario() {
+        this.status = false;
     }
 
     public static ScenarioReadDTO entityToDto(Scenario scenario){
@@ -87,11 +93,17 @@ public class Scenario extends BaseEntity {
                 .hadoop_loaded(scenario.getHadoop_loaded())
                 .scenarioId(scenario.getId())
                 .status(scenario.getStatus())
+                .regDt(scenario.getRegDt())
+                .modDt(scenario.getModDt())
+                .logFormatId(scenario.getLogFormat().getId())
+                .filterId(scenario.getFilter().getId())
                 .build();
     }
 
-    public static Scenario dtoToEntity(ScenarioCreateDTO create){
+    public static Scenario dtoToEntity(ScenarioCreateDTO create, LogFormat logFormat, Filter filter){
         return Scenario.builder()
+                .logFormat(logFormat)
+                .filter(filter)
                 .name(create.getName())
                 .description(create.getDescription())
                 .build();
